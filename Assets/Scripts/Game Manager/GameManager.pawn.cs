@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -15,6 +14,7 @@ namespace Omnis.TicTacToe
 
         #region Interfaces
         public float PawnBreatheScale => pawnBreatheScale;
+        public Sprite GetSpriteOfParty(Party party, int pawnStage) => Instance.Settings.partySprites.First(p => p.partyName == party).sprites[pawnStage];
         #endregion
 
         #region Functions

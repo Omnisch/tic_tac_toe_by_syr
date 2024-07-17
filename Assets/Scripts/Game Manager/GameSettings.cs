@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -8,5 +10,13 @@ namespace Omnis.TicTacToe
         [Header("Pawn")]
         public float amplitude;
         public float frequency;
+        public List<PartySprites> partySprites;
+    }
+
+    [Serializable]
+    public class PartySprites
+    {
+        public Party partyName;
+        [SerializeField] public Sprite[] sprites;
     }
 }

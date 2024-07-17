@@ -24,7 +24,7 @@ namespace Omnis.TicTacToe
         }
         private void CreateGridSet(Transform center)
         {
-            
+            Instantiate(gridSetPrefab, center);
         }
         #endregion
 

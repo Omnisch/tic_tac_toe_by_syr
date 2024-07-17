@@ -30,6 +30,9 @@ namespace Omnis.TicTacToe
         }
         private void NextStage()
         {
+            if (stages.Length == 0)
+                return;
+
             if (++stageIndex >= stages.Length)
                 stageIndex = 0;
 

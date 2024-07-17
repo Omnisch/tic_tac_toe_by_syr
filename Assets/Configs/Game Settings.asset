@@ -14,3 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 0.08
   frequency: 0.25
+  partySprites:
+  - partyName: 1
+    sprites:
+    - {fileID: 21300000, guid: e450b2e2cfea3784d9f4da6195f514e4, type: 3}
+    - {fileID: 21300000, guid: 60cdf151a96c30f4b92346b5db01e927, type: 3}
+    - {fileID: 21300000, guid: 05362392ae5ee8b438e0e74139ac3a56, type: 3}
+    - {fileID: 21300000, guid: 477128bbe90aec642abeea3f4080fd17, type: 3}
+  - partyName: 2
+    sprites:
+    - {fileID: 21300000, guid: 33add0cb52714654fba4dc9ef732e731, type: 3}
+    - {fileID: 21300000, guid: 3868a9fa3eeff804e9defc4635905547, type: 3}
+    - {fileID: 21300000, guid: 998d30cf1be4a224f9bb6b057b1f50a1, type: 3}
+    - {fileID: 21300000, guid: fc6b5ace83a9ee349bf7f45b16cb13ec, type: 3}

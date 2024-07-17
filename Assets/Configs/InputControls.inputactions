@@ -1,0 +1,68 @@
+{
+    "name": "InputControls",
+    "maps": [
+        {
+            "name": "Admin",
+            "id": "b237e11d-471f-488e-84d3-49558b8e449b",
+            "actions": [
+                {
+                    "name": "DebugTest",
+                    "type": "Button",
+                    "id": "9af4e490-fbcb-473b-9398-5542ef808707",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "89365e8c-e966-460c-9ae3-a143621faf43",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "DebugTest",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player",
+            "id": "f9ae0def-2999-43fb-b103-ec142ae2fd52",
+            "actions": [
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "468c8b50-dbe8-4a29-a2c1-1f2fc6b51d9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6b745cab-1b9e-45f2-8cd3-32f71bec2cc3",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "PC",
+            "bindingGroup": "PC",
+            "devices": []
+        }
+    ]
+}
