@@ -1,29 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Omnis
 {
+    [ExecuteInEditMode]
     [RequireComponent(typeof(Camera))]
-    public class FrameDither : MonoBehaviour
+    public class CameraRendering : MonoBehaviour
     {
         #region Serialized Fields
+        [SerializeField] private List<Camera> backgroundCameras;
+        [SerializeField] private List<Camera> foregroundCameras;
         [SerializeField] private Material frameDitherMat;
         #endregion
 
         #region Fields
-        private Camera selfCamera;
         #endregion
 
         #region Life Cycle
-        private void Start()
-        {
-            selfCamera = GetComponent<Camera>();
-        }
-
         private void OnRenderImage(RenderTexture source, RenderTexture destination)
         {
-            Graphics.Blit(source, destination, frameDitherMat);
+            backgroundCameras.ForEach(camera => Graphics.Blit(camera.targetTexture, destination));
+            foregroundCameras.ForEach(camera => Graphics.Blit(camera.targetTexture, destination));
         }
         #endregion
     }
