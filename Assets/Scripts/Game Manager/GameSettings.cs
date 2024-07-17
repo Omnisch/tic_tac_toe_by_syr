@@ -10,6 +10,9 @@ namespace Omnis.TicTacToe
         [Header("Pawn")]
         public float amplitude;
         public float frequency;
+        [Space]
+        public float scalingSpeed;
+        public float highlightScale;
         public List<PartySprites> partySprites;
     }
 

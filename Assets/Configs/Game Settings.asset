@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   amplitude: 0.08
   frequency: 0.25
+  scalingSpeed: 8
+  highlightScale: 1.12
   partySprites:
   - partyName: 1
     sprites:

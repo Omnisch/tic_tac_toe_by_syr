@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FrameDither
+  m_Name: CanvasDither
   m_Shader: {fileID: 4800000, guid: bd5c2b746d9dc3842b9e4c993d77073d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
