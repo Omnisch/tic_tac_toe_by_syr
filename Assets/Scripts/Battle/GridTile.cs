@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Omnis.TicTacToe
 {
-    public class GridTile : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+    public class GridTile : MonoBehaviour
     {
         #region Serialized Fields
         #endregion
@@ -22,20 +22,6 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Unity Methods
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnPointerClick(PointerEventData eventData)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            throw new System.NotImplementedException();
-        }
         #endregion
     }
 }

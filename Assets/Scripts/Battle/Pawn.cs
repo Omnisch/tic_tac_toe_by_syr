@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Omnis.TicTacToe
 {
@@ -12,6 +13,7 @@ namespace Omnis.TicTacToe
         #region Fields
         private bool isHidden;
         private bool doBreatheAnim;
+        private bool isPointed;
         private float spriteScale;
         private float SpriteScale
         {
@@ -22,27 +24,41 @@ namespace Omnis.TicTacToe
                 transform.localScale = value * Vector3.one;
             }
         }
+        private Coroutine coroutine;
         #endregion
 
         #region Interfaces
+        public bool IsPointed
+        {
+            get => isPointed;
+            set
+            {
+                isPointed = value;
+                if (value) Highlight();
+                else ToNeutralScale();
+            }
+        }
+
         public void Appear()
         {
-            StartCoroutine(IAppear());
+            coroutine = StartCoroutine(IAppear());
         }
 
         public void Disappear()
         {
-            StartCoroutine(IDisappear());
+            coroutine = StartCoroutine(IDisappear());
         }
 
         public void ToNeutralScale()
         {
-            StartCoroutine(IToNeutralScale());
+            if (coroutine != null) return;
+            coroutine = StartCoroutine(IToNeutralScale());
         }
 
         public void Highlight()
         {
-            StartCoroutine(IHighlight());
+            if (coroutine != null) return;
+            coroutine = StartCoroutine(IHighlight());
         }
         #endregion
 
@@ -62,6 +78,7 @@ namespace Omnis.TicTacToe
             SpriteScale = 1f;
             isHidden = false;
             doBreatheAnim = true;
+            coroutine = null;
         }
 
         private IEnumerator IDisappear()
@@ -78,6 +95,7 @@ namespace Omnis.TicTacToe
 
             SpriteScale = 0f;
             isHidden = true;
+            coroutine = null;
         }
 
         private IEnumerator IToNeutralScale()
@@ -105,6 +123,7 @@ namespace Omnis.TicTacToe
 
             SpriteScale = 1f;
             doBreatheAnim = true;
+            coroutine = null;
         }
 
         private IEnumerator IHighlight()
@@ -120,6 +139,7 @@ namespace Omnis.TicTacToe
             }
 
             SpriteScale = GameManager.Instance.Settings.highlightScale;
+            coroutine = null;
         }
         #endregion
 
@@ -128,6 +148,7 @@ namespace Omnis.TicTacToe
         {
             isHidden = true;
             doBreatheAnim = false;
+            IsPointed = false;
             SpriteScale = 0f;
             transform.localScale = Vector3.zero;
         }
@@ -135,6 +156,23 @@ namespace Omnis.TicTacToe
         {
             if (doBreatheAnim && GameManager.Instance)
                 SpriteScale = GameManager.Instance.PawnBreatheScale;
+        }
+        #endregion
+
+        #region Handlers
+        protected void OnPointerEnter()
+        {
+            IsPointed = true;
+        }
+
+        protected void OnPointerExit()
+        {
+            IsPointed = false;
+        }
+
+        protected void OnInteract()
+        {
+            Debug.Log("Interacted.");
         }
         #endregion
     }

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +12,10 @@ namespace Omnis.TicTacToe
         [SerializeField] private Logic adminLogic;
         #endregion
 
+        #region Fields
+        private List<Collider> PointerHits;
+        #endregion
+
         #region Functions
         private void FlushInput() {}
         #endregion
@@ -19,6 +25,8 @@ namespace Omnis.TicTacToe
         {
             foreach (var map in playerInput.actions.actionMaps)
                 map.Enable();
+
+            PointerHits = new();
         }
 
         private void OnEnable()
@@ -36,12 +44,21 @@ namespace Omnis.TicTacToe
         #region Handlers
         protected void OnInteract()
         {
-
+            PointerHits.ForEach(hit => hit.SendMessage("OnInteract", options: SendMessageOptions.DontRequireReceiver));
         }
 
         protected void OnDebugTest()
         {
             adminLogic.Invoke();
+        }
+
+        protected void OnPointer(InputValue value)
+        {
+            Ray r = Camera.main.ScreenPointToRay(value.Get<Vector2>());
+            var newHits = Physics.RaycastAll(r).Select(hit => hit.collider).ToList();
+            PointerHits.Except(newHits).ToList().ForEach(hit => hit.SendMessage("OnPointerExit", options: SendMessageOptions.DontRequireReceiver));
+            newHits.Except(PointerHits).ToList().ForEach(hit => hit.SendMessage("OnPointerEnter", options: SendMessageOptions.DontRequireReceiver));
+            PointerHits = newHits;
         }
         #endregion
     }
