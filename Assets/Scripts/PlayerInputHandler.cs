@@ -36,12 +36,11 @@ namespace Omnis.TicTacToe
         #region Handlers
         protected void OnInteract()
         {
-            Debug.Log("L");
+
         }
 
         protected void OnDebugTest()
         {
-            Debug.Log("F");
             adminLogic.Invoke();
         }
         #endregion
