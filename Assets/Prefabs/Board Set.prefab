@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8731283426407908992}
-  - component: {fileID: -6017225490558811327}
+  - component: {fileID: 5325789945143143442}
   m_Layer: 0
-  m_Name: Grid Set
+  m_Name: Board Set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +41,7 @@ Transform:
   - {fileID: 4426642540958238454}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-6017225490558811327
+--- !u!114 &5325789945143143442
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -50,7 +50,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7611835223221957966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e263b5df815e93d45988f62dc53437f5, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ac86f6bf71596459459450aa13d33d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1280315880102577009

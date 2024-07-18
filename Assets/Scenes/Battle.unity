@@ -501,7 +501,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e82580cc5e84404b93d3399c0002242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stages: []
+  chessboard: {fileID: 1569675559}
+  stages:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1012324790}
+        m_TargetAssemblyTypeName: Omnis.TicTacToe.BattleManager, Assembly-CSharp
+        m_MethodName: InitPawns
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &1124710813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1124710814}
+  m_Layer: 0
+  m_Name: Player 2 Toolbar Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1124710814
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1124710813}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 8.6, y: -6.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1569675558}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1160689387
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +697,6 @@ Transform:
   m_Children:
   - {fileID: 1313901098}
   - {fileID: 1569675558}
-  - {fileID: 1781834724}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1260316500
@@ -664,7 +709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1260316501}
   m_Layer: 6
-  m_Name: Present Center
+  m_Name: Present Grid Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -870,7 +915,7 @@ MonoBehaviour:
   callback:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1781834723}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
         m_MethodName: Appear
         m_Mode: 1
@@ -909,7 +954,7 @@ MonoBehaviour:
   callback:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1781834723}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
         m_MethodName: Disappear
         m_Mode: 1
@@ -955,6 +1000,8 @@ Transform:
   - {fileID: 1622955680}
   - {fileID: 1260316501}
   - {fileID: 1688605905}
+  - {fileID: 1619069347}
+  - {fileID: 1124710814}
   m_Father: {fileID: 1236486049}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1569675559
@@ -969,11 +1016,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f86ad3edd30057a4e94a3ab2bdf003c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridSetCenters:
+  boardSetPivots:
   - {fileID: 1622955680}
   - {fileID: 1260316501}
   - {fileID: 1688605905}
-  gridSetPrefab: {fileID: 7611835223221957966, guid: 576bd507c8d66d64a9e9c2d069da7e0c, type: 3}
+  boardSetPrefab: {fileID: 7611835223221957966, guid: 576bd507c8d66d64a9e9c2d069da7e0c, type: 3}
+  toolbarPivots:
+  - {fileID: 1619069347}
+  - {fileID: 1124710814}
+  toolbarPrefab: {fileID: 8116761955945649582, guid: 15ebf75278bc21947ab8fd361a31d1df, type: 3}
+--- !u!1 &1619069346
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1619069347}
+  m_Layer: 0
+  m_Name: Player 1 Toolbar Transform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1619069347
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1619069346}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -8.8, y: -6.6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1569675558}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1622955679
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,7 +1066,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1622955680}
   m_Layer: 6
-  m_Name: Past Center
+  m_Name: Past Grid Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1015,7 +1097,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1688605905}
   m_Layer: 6
-  m_Name: Future Center
+  m_Name: Future Grid Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1036,79 +1118,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1569675558}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1781834722
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1236486049}
-    m_Modifications:
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_Name
-      value: Pawn
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
---- !u!114 &1781834723 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8991361498019081127, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-  m_PrefabInstance: {fileID: 1781834722}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d1f4776e6cc57449cd36cd2818f302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1781834724 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-  m_PrefabInstance: {fileID: 1781834722}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2048815187
 GameObject:
   m_ObjectHideFlags: 0

@@ -5,15 +5,16 @@ using UnityEngine.EventSystems;
 
 namespace Omnis.TicTacToe
 {
-    public class Pawn : MonoBehaviour
+    public class Pawn : PointerBase
     {
         #region Serialized Fields
+        [SerializeField] private PawnId id;
+        [SerializeField] private SpriteRenderer spriteRenderer;
         #endregion
 
         #region Fields
         private bool isHidden;
         private bool doBreatheAnim;
-        private bool isPointed;
         private float spriteScale;
         private float SpriteScale
         {
@@ -28,7 +29,7 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Interfaces
-        public bool IsPointed
+        public override bool IsPointed
         {
             get => isPointed;
             set
@@ -36,6 +37,16 @@ namespace Omnis.TicTacToe
                 isPointed = value;
                 if (value) Highlight();
                 else ToNeutralScale();
+            }
+        }
+
+        public PawnId Id
+        {
+            get => id;
+            set
+            {
+                id = value;
+                spriteRenderer.sprite = GameManager.Instance.Settings.partySprites[(int)id.party].sprites[(int)id.stage];
             }
         }
 
@@ -160,19 +171,9 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Handlers
-        protected void OnPointerEnter()
+        protected override void OnInteract()
         {
-            IsPointed = true;
-        }
-
-        protected void OnPointerExit()
-        {
-            IsPointed = false;
-        }
-
-        protected void OnInteract()
-        {
-            Debug.Log("Interacted.");
+            Debug.Log("Clicked on pawn.");
         }
         #endregion
     }

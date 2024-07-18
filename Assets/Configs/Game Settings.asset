@@ -15,8 +15,11 @@ MonoBehaviour:
   amplitude: 0.08
   frequency: 0.25
   scalingSpeed: 8
-  highlightScale: 1.2
+  highlightScale: 1.25
   partySprites:
+  - partyName: 0
+    sprites:
+    - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   - partyName: 1
     sprites:
     - {fileID: 21300000, guid: e450b2e2cfea3784d9f4da6195f514e4, type: 3}

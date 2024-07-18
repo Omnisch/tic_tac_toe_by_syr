@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +6,15 @@ namespace Omnis.TicTacToe
     public class ChessboardManager : MonoBehaviour
     {
         #region Serialized Fields
-        [SerializeField] private List<Transform> gridSetCenters;
-        [SerializeField] private GameObject gridSetPrefab;
+        [SerializeField] private List<Transform> boardSetPivots;
+        [SerializeField] private GameObject boardSetPrefab;
+        [SerializeField] private List<Transform> toolbarPivots;
+        [SerializeField] private GameObject toolbarPrefab;
         #endregion
 
         #region Fields
+        private List<BoardSet> boardSets;
+        private List<ToolbarSet> toolbarSets;
         #endregion
 
         #region Interfaces
@@ -20,11 +23,12 @@ namespace Omnis.TicTacToe
         #region Functions
         private void InitChessboard()
         {
-            gridSetCenters.ForEach(center => CreateGridSet(center));
+            boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot));
+            toolbarPivots.ForEach(pivot => CreateGridSet(toolbarPrefab, pivot));
         }
-        private void CreateGridSet(Transform center)
+        private void CreateGridSet(GameObject prefab, Transform pivot)
         {
-            Instantiate(gridSetPrefab, center);
+            Instantiate(prefab, pivot);
         }
         #endregion
 

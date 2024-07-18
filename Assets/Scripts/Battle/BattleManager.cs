@@ -3,9 +3,10 @@ using UnityEngine.Events;
 
 namespace Omnis.TicTacToe
 {
-    public class BattleManager : MonoBehaviour
+    public partial class BattleManager : MonoBehaviour
     {
         #region Serialized Fields
+        [SerializeField] private ChessboardManager chessboard;
         [SerializeField] private UnityEvent[] stages;
         #endregion
 
