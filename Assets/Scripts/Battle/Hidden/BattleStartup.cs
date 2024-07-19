@@ -15,4 +15,9 @@ namespace Omnis.TicTacToe
         public GameMode mode;
         public List<PawnId> pawnIds;
     }
+
+    public enum GameMode
+    {
+        Standard,
+    }
 }

@@ -5,7 +5,7 @@ namespace Omnis.TicTacToe
 {
     public partial class GameManager
     {
-        #region Serialized Fields
+        #region Fields
         private static GameManager instance;
         #endregion
 

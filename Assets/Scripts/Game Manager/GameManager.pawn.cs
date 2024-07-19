@@ -14,7 +14,7 @@ namespace Omnis.TicTacToe
 
         #region Interfaces
         public float PawnBreatheScale => pawnBreatheScale;
-        public Sprite GetSpriteOfParty(Party party, int pawnStage) => Instance.Settings.partySprites.First(p => p.partyName == party).sprites[pawnStage];
+        public Sprite GetSpriteOfParty(Party party, int type) => Instance.Settings.partySprites.First(p => p.partyName == party).sprites[type];
         #endregion
 
         #region Functions

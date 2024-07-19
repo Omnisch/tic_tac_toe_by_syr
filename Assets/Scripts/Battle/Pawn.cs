@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Omnis.TicTacToe
 {
@@ -25,6 +24,11 @@ namespace Omnis.TicTacToe
                 transform.localScale = value * Vector3.one;
             }
         }
+        private float SpriteAlpha
+        {
+            get => transform.GetComponent<SpriteRenderer>().color.a;
+            set => transform.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, value);
+        }
         #endregion
 
         #region Interfaces
@@ -45,7 +49,7 @@ namespace Omnis.TicTacToe
             set
             {
                 id = value;
-                spriteRenderer.sprite = GameManager.Instance.Settings.partySprites[(int)id.party].sprites[(int)id.type];
+                spriteRenderer.sprite = GameManager.Instance.GetSpriteOfParty(id.party, id.type);
             }
         }
 
@@ -53,21 +57,30 @@ namespace Omnis.TicTacToe
         {
             isInteractive = doBreatheAnim = false;
             StopAllCoroutines();
-            StartCoroutine(EaseZoom(1f, () => isInteractive = doBreatheAnim = true));
+            StartCoroutine(EaseScale(1f, () => isInteractive = doBreatheAnim = true));
+        }
+
+        public void Cover()
+        {
+            SpriteScale = 2f;
+            SpriteAlpha = 0f;
+            isInteractive = doBreatheAnim = false;
+            StartCoroutine(EaseScale(1f, () => isInteractive = doBreatheAnim = true));
+            StartCoroutine(EaseAlpha(1f));
         }
 
         public void Disappear()
         {
             isInteractive = doBreatheAnim = false;
             StopAllCoroutines();
-            StartCoroutine(EaseZoom(0f, () => isInteractive = true));
+            StartCoroutine(EaseScale(0f, () => isInteractive = true));
         }
 
         public void DisappearAndDestroy()
         {
             isInteractive = doBreatheAnim = false;
             StopAllCoroutines();
-            StartCoroutine(EaseZoom(0f, () => Destroy(gameObject)));
+            StartCoroutine(EaseScale(0f, () => Destroy(gameObject)));
         }
 
         public void FlashOff()
@@ -83,7 +96,7 @@ namespace Omnis.TicTacToe
 
             doBreatheAnim = false;
             StopAllCoroutines();
-            StartCoroutine(EaseZoom(1f, () => doBreatheAnim = true));
+            StartCoroutine(EaseScale(1f, () => doBreatheAnim = true));
         }
 
         public void Highlight()
@@ -93,28 +106,47 @@ namespace Omnis.TicTacToe
 
             doBreatheAnim = false;
             StopAllCoroutines();
-            StartCoroutine(EaseZoom(GameManager.Instance.Settings.highlightScale));
+            StartCoroutine(EaseScale(GameManager.Instance.Settings.highlightScale));
         }
         #endregion
 
         #region Functions
-        private IEnumerator EaseZoom(float destScale, System.Action callback = null)
+        private IEnumerator EaseScale(float destScale, System.Action callback = null)
         {
-            float epsilon = GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
-            if (SpriteScale > destScale)
-                while (SpriteScale > destScale + epsilon)
-                {
-                    SpriteScale -= GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
-                    yield return new WaitForSecondsRealtime(Time.deltaTime);
-                }
-            else
+            float epsilon = 2f * GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
+            if (SpriteScale < destScale)
                 while (SpriteScale < destScale - epsilon)
                 {
                     SpriteScale += GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
                     yield return new WaitForSecondsRealtime(Time.deltaTime);
                 }
+            else
+                while (SpriteScale > destScale + epsilon)
+                {
+                    SpriteScale -= GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
+                    yield return new WaitForSecondsRealtime(Time.deltaTime);
+                }
             SpriteScale = destScale;
 
+            callback?.Invoke();
+        }
+
+        private IEnumerator EaseAlpha(float destAlpha, System.Action callback = null)
+        {
+            float epsilon = 2f * GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
+            if (SpriteAlpha < destAlpha)
+                while (SpriteAlpha < destAlpha - epsilon)
+                {
+                    SpriteAlpha += GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
+                    yield return new WaitForSecondsRealtime(Time.deltaTime);
+                }
+            else
+                while (SpriteAlpha > destAlpha + epsilon)
+                {
+                    SpriteAlpha -= GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
+                    yield return new WaitForSecondsRealtime(Time.deltaTime);
+                }
+            SpriteAlpha = destAlpha;
             callback?.Invoke();
         }
         #endregion
@@ -136,53 +168,8 @@ namespace Omnis.TicTacToe
 
         private void OnDestroy()
         {
-            Debug.LogWarning("OnDestroy() of Pawn needs to be fixed.");
+            id.parent.GetComponent<GridTile>().RemovePawn(this);
         }
         #endregion
-
-        #region Handlers
-        protected override void OnInteract()
-        {
-            Debug.Log("Clicked on pawn.");
-        }
-        #endregion
-    }
-
-    [System.Serializable]
-    public struct PawnId
-    {
-        public Party party;
-        public int type;
-        public Transform parent;
-        public bool canHighlight;
-
-        public PawnId(Party party, Transform parent, bool canHighlight = true)
-        {
-            this.party = party;
-            this.type = 0;
-            this.parent = parent;
-            this.canHighlight = canHighlight;
-        }
-        public PawnId(Party party, PawnStage stage, Transform parent, bool canHighlight = true)
-        {
-            this.party = party;
-            this.type = (int)stage;
-            this.parent = parent;
-            this.canHighlight = canHighlight;
-        }
-        public PawnId(Party party, ToolType type, Transform parent, bool canHighlight = true)
-        {
-            this.party = party;
-            this.type = (int)type;
-            this.parent = parent;
-            this.canHighlight = canHighlight;
-        }
-        public PawnId(Party party, HintType type, Transform parent, bool canHighlight = true)
-        {
-            this.party = party;
-            this.type = (int)type;
-            this.parent = parent;
-            this.canHighlight = canHighlight;
-        }
     }
 }

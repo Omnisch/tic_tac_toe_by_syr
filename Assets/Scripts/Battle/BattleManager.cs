@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,7 +9,7 @@ namespace Omnis.TicTacToe
     {
         #region Serialized Fields
         [SerializeField] private ChessboardManager chessboard;
-        [SerializeField] private UnityEvent[] stages;
+        [SerializeField] private List<UnityEvent> stages;
         #endregion
 
         #region Fields
@@ -39,10 +40,10 @@ namespace Omnis.TicTacToe
 
         private void NextStage()
         {
-            if (stages.Length == 0)
+            if (stages.Count == 0)
                 return;
 
-            if (++stageIndex >= stages.Length)
+            if (++stageIndex >= stages.Count)
                 stageIndex = 0;
 
             stages[stageIndex]?.Invoke();

@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Omnis.TicTacToe
 {
@@ -9,7 +7,6 @@ namespace Omnis.TicTacToe
     {
         #region Serialized Fields
         [SerializeField] private GameObject pawnPrefab;
-        [SerializeField] private GameObject highlightPawnPrefab;
         [SerializeField] private HintType hintType;
         #endregion
 
@@ -28,7 +25,10 @@ namespace Omnis.TicTacToe
                 else pawns[0].Disappear();
             }
         }
-        public void SpawnPawn(PawnId pawnId, bool instantAppear = false)
+
+        public Pawn GetPawn(int i) => pawns[i];
+
+        public void AddPawn(PawnId pawnId, bool instantAppear = false)
         {
             if (!pawnId.parent) pawnId.parent = transform;
             var newPawn = Instantiate(pawnPrefab, pawnId.parent).GetComponent<Pawn>();
@@ -37,6 +37,7 @@ namespace Omnis.TicTacToe
             newPawn.transform.position += new Vector3(0, 0, -pawns.Count);
             if (instantAppear) newPawn.Appear();
         }
+        public void RemovePawn(Pawn pawn) => pawns.Remove(pawn);
         #endregion
 
         #region Functions
@@ -46,7 +47,7 @@ namespace Omnis.TicTacToe
         private void Start()
         {
             pawns = new();
-            SpawnPawn(new PawnId(Party.Hint, hintType, transform, false));
+            AddPawn(new PawnId(Party.Hint, hintType, transform, false));
         }
         #endregion
 
