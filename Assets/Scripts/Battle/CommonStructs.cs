@@ -1,5 +1,10 @@
 namespace Omnis.TicTacToe
 {
+    public enum GameMode
+    {
+        Standard,
+    }
+
     public enum Party
     {
         Null,

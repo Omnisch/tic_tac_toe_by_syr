@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464eec925fab3864d9530b238f75d137, type: 3}
   m_Name: Game Settings
   m_EditorClassIdentifier: 
+  startups: {fileID: 11400000, guid: 87485fb7e9b34b84db9d1563123cf23f, type: 2}
   amplitude: 0.08
   frequency: 0.25
   scalingSpeed: 8
@@ -19,7 +20,7 @@ MonoBehaviour:
   partySprites:
   - partyName: 0
     sprites:
-    - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    - {fileID: 21300000, guid: 3f8ccc89dfbf7664fa0f584588541913, type: 3}
   - partyName: 1
     sprites:
     - {fileID: 21300000, guid: e450b2e2cfea3784d9f4da6195f514e4, type: 3}

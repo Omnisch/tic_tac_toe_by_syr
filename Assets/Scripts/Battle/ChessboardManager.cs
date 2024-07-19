@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -13,22 +14,27 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Fields
-        private List<BoardSet> boardSets;
-        private List<ToolbarSet> toolbarSets;
+        private List<GridSet> boardSets;
+        private List<GridSet> toolbarSets;
         #endregion
 
         #region Interfaces
+        public List<BoardSet> BoardSets => new(boardSets.Select(set => set as BoardSet));
+        public List<ToolbarSet> ToolbarSets => new(toolbarSets.Select(set => set as ToolbarSet));
         #endregion
 
         #region Functions
         private void InitChessboard()
         {
-            boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot));
-            toolbarPivots.ForEach(pivot => CreateGridSet(toolbarPrefab, pivot));
+            boardSets = new();
+            toolbarSets = new();
+            boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, boardSets));
+            toolbarPivots.ForEach(pivot => CreateGridSet(toolbarPrefab, pivot, toolbarSets));
         }
-        private void CreateGridSet(GameObject prefab, Transform pivot)
+        private void CreateGridSet(GameObject prefab, Transform pivot, List<GridSet> gridSet)
         {
-            Instantiate(prefab, pivot);
+            var go = Instantiate(prefab, pivot);
+            gridSet.Add(go.GetComponent<GridSet>());
         }
         #endregion
 
