@@ -13,7 +13,7 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Fields
-        private bool isHidden;
+        private bool isInteractive;
         private bool doBreatheAnim;
         private float spriteScale;
         private float SpriteScale
@@ -25,7 +25,6 @@ namespace Omnis.TicTacToe
                 transform.localScale = value * Vector3.one;
             }
         }
-        private Coroutine coroutine;
         #endregion
 
         #region Interfaces
@@ -46,118 +45,84 @@ namespace Omnis.TicTacToe
             set
             {
                 id = value;
-                spriteRenderer.sprite = GameManager.Instance.Settings.partySprites[(int)id.party].sprites[(int)id.stage];
+                spriteRenderer.sprite = GameManager.Instance.Settings.partySprites[(int)id.party].sprites[(int)id.type];
             }
         }
 
         public void Appear()
         {
-            coroutine = StartCoroutine(IAppear());
+            isInteractive = doBreatheAnim = false;
+            StopAllCoroutines();
+            StartCoroutine(EaseZoom(1f, () => isInteractive = doBreatheAnim = true));
         }
 
         public void Disappear()
         {
-            coroutine = StartCoroutine(IDisappear());
+            isInteractive = doBreatheAnim = false;
+            StopAllCoroutines();
+            StartCoroutine(EaseZoom(0f, () => isInteractive = true));
+        }
+
+        public void DisappearAndDestroy()
+        {
+            isInteractive = doBreatheAnim = false;
+            StopAllCoroutines();
+            StartCoroutine(EaseZoom(0f, () => Destroy(gameObject)));
+        }
+
+        public void FlashOff()
+        {
+            isInteractive = doBreatheAnim = false;
+            StopAllCoroutines();
+            Destroy(gameObject);
         }
 
         public void ToNeutralScale()
         {
-            if (coroutine != null) return;
-            coroutine = StartCoroutine(IToNeutralScale());
+            if (!isInteractive) return;
+
+            doBreatheAnim = false;
+            StopAllCoroutines();
+            StartCoroutine(EaseZoom(1f, () => doBreatheAnim = true));
         }
 
         public void Highlight()
         {
-            if (coroutine != null) return;
-            coroutine = StartCoroutine(IHighlight());
+            if (!id.canHighlight) return;
+            if (!isInteractive) return;
+
+            doBreatheAnim = false;
+            StopAllCoroutines();
+            StartCoroutine(EaseZoom(GameManager.Instance.Settings.highlightScale));
         }
         #endregion
 
         #region Functions
-        private IEnumerator IAppear()
+        private IEnumerator EaseZoom(float destScale, System.Action callback = null)
         {
-            if (!isHidden) yield break;
-
-            doBreatheAnim = false;
-
-            while (SpriteScale < 1f)
-            {
-                SpriteScale += GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
-                yield return new WaitForSecondsRealtime(Time.deltaTime);
-            }
-
-            SpriteScale = 1f;
-            isHidden = false;
-            doBreatheAnim = true;
-            coroutine = null;
-        }
-
-        private IEnumerator IDisappear()
-        {
-            if (isHidden) yield break;
-
-            doBreatheAnim = false;
-
-            while (SpriteScale > 0f)
-            {
-                SpriteScale -= GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
-                yield return new WaitForSecondsRealtime(Time.deltaTime);
-            }
-
-            SpriteScale = 0f;
-            isHidden = true;
-            coroutine = null;
-        }
-
-        private IEnumerator IToNeutralScale()
-        {
-            if (isHidden) yield break;
-
-            doBreatheAnim = false;
-
-            if (SpriteScale > 1f)
-            {
-                while (SpriteScale > 1f)
+            float epsilon = GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
+            if (SpriteScale > destScale)
+                while (SpriteScale > destScale + epsilon)
                 {
                     SpriteScale -= GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
                     yield return new WaitForSecondsRealtime(Time.deltaTime);
                 }
-            }
             else
-            {
-                while (SpriteScale < 1f)
+                while (SpriteScale < destScale - epsilon)
                 {
                     SpriteScale += GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
                     yield return new WaitForSecondsRealtime(Time.deltaTime);
                 }
-            }
+            SpriteScale = destScale;
 
-            SpriteScale = 1f;
-            doBreatheAnim = true;
-            coroutine = null;
-        }
-
-        private IEnumerator IHighlight()
-        {
-            if (isHidden) yield break;
-
-            doBreatheAnim = false;
-
-            while (SpriteScale < GameManager.Instance.Settings.highlightScale)
-            {
-                SpriteScale += GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
-                yield return new WaitForSecondsRealtime(Time.deltaTime);
-            }
-
-            SpriteScale = GameManager.Instance.Settings.highlightScale;
-            coroutine = null;
+            callback?.Invoke();
         }
         #endregion
 
         #region Unity Methods
         private void Start()
         {
-            isHidden = true;
+            isInteractive = false;
             doBreatheAnim = false;
             IsPointed = false;
             SpriteScale = 0f;
@@ -168,6 +133,11 @@ namespace Omnis.TicTacToe
             if (doBreatheAnim && GameManager.Instance)
                 SpriteScale = GameManager.Instance.PawnBreatheScale;
         }
+
+        private void OnDestroy()
+        {
+            Debug.LogWarning("OnDestroy() of Pawn needs to be fixed.");
+        }
         #endregion
 
         #region Handlers
@@ -176,5 +146,43 @@ namespace Omnis.TicTacToe
             Debug.Log("Clicked on pawn.");
         }
         #endregion
+    }
+
+    [System.Serializable]
+    public struct PawnId
+    {
+        public Party party;
+        public int type;
+        public Transform parent;
+        public bool canHighlight;
+
+        public PawnId(Party party, Transform parent, bool canHighlight = true)
+        {
+            this.party = party;
+            this.type = 0;
+            this.parent = parent;
+            this.canHighlight = canHighlight;
+        }
+        public PawnId(Party party, PawnStage stage, Transform parent, bool canHighlight = true)
+        {
+            this.party = party;
+            this.type = (int)stage;
+            this.parent = parent;
+            this.canHighlight = canHighlight;
+        }
+        public PawnId(Party party, ToolType type, Transform parent, bool canHighlight = true)
+        {
+            this.party = party;
+            this.type = (int)type;
+            this.parent = parent;
+            this.canHighlight = canHighlight;
+        }
+        public PawnId(Party party, HintType type, Transform parent, bool canHighlight = true)
+        {
+            this.party = party;
+            this.type = (int)type;
+            this.parent = parent;
+            this.canHighlight = canHighlight;
+        }
     }
 }

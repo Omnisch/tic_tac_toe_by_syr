@@ -15,7 +15,7 @@ MonoBehaviour:
   startupSets:
   - mode: 0
     pawnIds:
-    - party: 0
+    - party: 3
       stage: 0
       parent: {fileID: 0}
     - party: 1
@@ -36,6 +36,6 @@ MonoBehaviour:
     - party: 2
       stage: 0
       parent: {fileID: 0}
-    - party: 0
+    - party: 3
       stage: 0
       parent: {fileID: 0}

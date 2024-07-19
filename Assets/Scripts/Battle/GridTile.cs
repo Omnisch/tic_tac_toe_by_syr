@@ -8,22 +8,34 @@ namespace Omnis.TicTacToe
     public class GridTile : PointerBase
     {
         #region Serialized Fields
+        [SerializeField] private GameObject pawnPrefab;
+        [SerializeField] private GameObject highlightPawnPrefab;
+        [SerializeField] private HintType hintType;
         #endregion
 
         #region Fields
-        private int x;
-        private int y;
+        private List<Pawn> pawns;
         #endregion
 
         #region Interfaces
         public override bool IsPointed
         {
             get => isPointed;
-            set => isPointed = value;
+            set
+            {
+                isPointed = value;
+                if (isPointed) pawns[0].Appear();
+                else pawns[0].Disappear();
+            }
         }
-        public void SpawnPawn(PawnId id)
+        public void SpawnPawn(PawnId pawnId, bool instantAppear = false)
         {
-
+            if (!pawnId.parent) pawnId.parent = transform;
+            var newPawn = Instantiate(pawnPrefab, pawnId.parent).GetComponent<Pawn>();
+            pawns.Add(newPawn);
+            newPawn.Id = pawnId;
+            newPawn.transform.position += new Vector3(0, 0, -pawns.Count);
+            if (instantAppear) newPawn.Appear();
         }
         #endregion
 
@@ -31,6 +43,11 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Unity Methods
+        private void Start()
+        {
+            pawns = new();
+            SpawnPawn(new PawnId(Party.Hint, hintType, transform, false));
+        }
         #endregion
 
         #region Handlers

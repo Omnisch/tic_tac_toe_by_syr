@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,9 +27,16 @@ namespace Omnis.TicTacToe
         private void InitBattle()
         {
             stageIndex = -1;
+            StartCoroutine(StartBattle());
+        }
+
+        private IEnumerator StartBattle()
+        {
+            yield return new WaitForFixedUpdate();
 
             NextStage();
         }
+
         private void NextStage()
         {
             if (stages.Length == 0)
@@ -39,6 +47,7 @@ namespace Omnis.TicTacToe
 
             stages[stageIndex]?.Invoke();
         }
+
         private void Settle(Party winningParty)
         {
 

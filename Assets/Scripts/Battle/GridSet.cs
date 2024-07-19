@@ -18,7 +18,7 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Unity Methods
-        private void Start()
+        protected void Start()
         {
             gridTiles = transform.GetComponentsInChildren<GridTile>().ToList();
         }

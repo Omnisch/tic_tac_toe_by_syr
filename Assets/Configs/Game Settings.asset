@@ -20,7 +20,7 @@ MonoBehaviour:
   partySprites:
   - partyName: 0
     sprites:
-    - {fileID: 21300000, guid: 3f8ccc89dfbf7664fa0f584588541913, type: 3}
+    - {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   - partyName: 1
     sprites:
     - {fileID: 21300000, guid: e450b2e2cfea3784d9f4da6195f514e4, type: 3}
@@ -33,3 +33,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 3868a9fa3eeff804e9defc4635905547, type: 3}
     - {fileID: 21300000, guid: 998d30cf1be4a224f9bb6b057b1f50a1, type: 3}
     - {fileID: 21300000, guid: fc6b5ace83a9ee349bf7f45b16cb13ec, type: 3}
+  - partyName: 3
+    sprites:
+    - {fileID: 21300000, guid: 3f8ccc89dfbf7664fa0f584588541913, type: 3}
+  - partyName: 4
+    sprites:
+    - {fileID: 21300000, guid: 849df13f4d7cb6442ba98f5a48281389, type: 3}
+    - {fileID: 21300000, guid: 7661be44ba0cc004a9adcf29c4d6a514, type: 3}
+    - {fileID: 21300000, guid: e35d388f800e7d64a80ad305414a1f05, type: 3}

@@ -10,6 +10,8 @@ namespace Omnis.TicTacToe
         Null,
         Nature,
         Artifact,
+        Tool,
+        Hint,
     }
 
     public enum PawnStage
@@ -20,24 +22,15 @@ namespace Omnis.TicTacToe
         Phase3,
     }
 
-    [System.Serializable]
-    public struct PawnId
+    public enum ToolType
     {
-        public Party party;
-        public PawnStage stage;
-        public UnityEngine.Transform parent;
+        Shovel,
+    }
 
-        public PawnId(Party party, PawnStage stage, UnityEngine.Transform parent)
-        {
-            this.party = party;
-            this.stage = stage;
-            this.parent = parent;
-        }
-        public PawnId(Party party, UnityEngine.Transform parent)
-        {
-            this.party = party;
-            this.stage = PawnStage.Phase0;
-            this.parent = parent;
-        }
+    public enum HintType
+    {
+        BoardHover,
+        ToolHover,
+        ToolInteracted,
     }
 }
