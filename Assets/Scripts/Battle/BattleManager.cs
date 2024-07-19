@@ -8,50 +8,27 @@ namespace Omnis.TicTacToe
     public partial class BattleManager : MonoBehaviour
     {
         #region Serialized Fields
-        [SerializeField] private ChessboardManager chessboard;
-        [SerializeField] private List<UnityEvent> stages;
+        public GameMode gameMode;
+        public ChessboardManager chessboard;
         #endregion
 
         #region Fields
-        private int stageIndex;
         #endregion
 
         #region Interfaces
-        public Party WinningParty { set => Settle(value); }
-        public void FinishStage()
-        {
-            NextStage();
-        }
         #endregion
 
         #region Functions
         private void InitBattle()
         {
-            stageIndex = -1;
-            StartCoroutine(StartBattle());
+            StartCoroutine(CreateStartup());
         }
-
-        private IEnumerator StartBattle()
+        private IEnumerator CreateStartup()
         {
+            GameManager.Instance.Player.CanInteract = false;
             yield return new WaitForFixedUpdate();
-
-            NextStage();
-        }
-
-        private void NextStage()
-        {
-            if (stages.Count == 0)
-                return;
-
-            if (++stageIndex >= stages.Count)
-                stageIndex = 0;
-
-            stages[stageIndex]?.Invoke();
-        }
-
-        private void Settle(Party winningParty)
-        {
-
+            yield return chessboard.InitStartupByMode(GameMode.Standard);
+            GameManager.Instance.Player.CanInteract = true;
         }
         #endregion
 

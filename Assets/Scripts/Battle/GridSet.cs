@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Omnis.TicTacToe
 {
-    public abstract class GridSet : MonoBehaviour
+    public class GridSet : MonoBehaviour
     {
         #region Fields
         protected List<GridTile> gridTiles;
@@ -14,11 +14,8 @@ namespace Omnis.TicTacToe
         public List<GridTile> GridTiles => gridTiles;
         #endregion
 
-        #region Functions
-        #endregion
-
         #region Unity Methods
-        protected void Start()
+        private void Start()
         {
             gridTiles = transform.GetComponentsInChildren<GridTile>().ToList();
         }

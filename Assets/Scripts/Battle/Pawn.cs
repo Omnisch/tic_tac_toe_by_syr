@@ -1,10 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
 {
-    public class Pawn : PointerBase
+    public class Pawn : MonoBehaviour
     {
         #region Serialized Fields
         [SerializeField] private PawnId id;
@@ -12,8 +11,7 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Fields
-        private bool isInteractive;
-        private bool doBreatheAnim;
+        private bool doBreathe;
         private float spriteScale;
         private float SpriteScale
         {
@@ -32,17 +30,6 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Interfaces
-        public override bool IsPointed
-        {
-            get => isPointed;
-            set
-            {
-                isPointed = value;
-                if (value) Highlight();
-                else ToNeutralScale();
-            }
-        }
-
         public PawnId Id
         {
             get => id;
@@ -55,56 +42,51 @@ namespace Omnis.TicTacToe
 
         public void Appear()
         {
-            isInteractive = doBreatheAnim = false;
+            doBreathe = false;
             StopAllCoroutines();
-            StartCoroutine(EaseScale(1f, () => isInteractive = doBreatheAnim = true));
+            StartCoroutine(EaseScale(1f, () => doBreathe = true));
         }
 
         public void Cover()
         {
             SpriteScale = 2f;
             SpriteAlpha = 0f;
-            isInteractive = doBreatheAnim = false;
-            StartCoroutine(EaseScale(1f, () => isInteractive = doBreatheAnim = true));
+            doBreathe = false;
+            StartCoroutine(EaseScale(1f, () => doBreathe = true));
             StartCoroutine(EaseAlpha(1f));
         }
 
         public void Disappear()
         {
-            isInteractive = doBreatheAnim = false;
+            doBreathe = false;
             StopAllCoroutines();
-            StartCoroutine(EaseScale(0f, () => isInteractive = true));
+            StartCoroutine(EaseScale(0f));
         }
 
         public void DisappearAndDestroy()
         {
-            isInteractive = doBreatheAnim = false;
+            doBreathe = false;
             StopAllCoroutines();
             StartCoroutine(EaseScale(0f, () => Destroy(gameObject)));
         }
 
         public void FlashOff()
         {
-            isInteractive = doBreatheAnim = false;
+            doBreathe = false;
             StopAllCoroutines();
             Destroy(gameObject);
         }
 
         public void ToNeutralScale()
         {
-            if (!isInteractive) return;
-
-            doBreatheAnim = false;
+            doBreathe = false;
             StopAllCoroutines();
-            StartCoroutine(EaseScale(1f, () => doBreatheAnim = true));
+            StartCoroutine(EaseScale(1f, () => doBreathe = true));
         }
 
         public void Highlight()
         {
-            if (!id.canHighlight) return;
-            if (!isInteractive) return;
-
-            doBreatheAnim = false;
+            doBreathe = false;
             StopAllCoroutines();
             StartCoroutine(EaseScale(GameManager.Instance.Settings.highlightScale));
         }
@@ -154,21 +136,14 @@ namespace Omnis.TicTacToe
         #region Unity Methods
         private void Start()
         {
-            isInteractive = false;
-            doBreatheAnim = false;
-            IsPointed = false;
+            doBreathe = false;
             SpriteScale = 0f;
             transform.localScale = Vector3.zero;
         }
         private void Update()
         {
-            if (doBreatheAnim && GameManager.Instance)
+            if (id.canBreathe && doBreathe)
                 SpriteScale = GameManager.Instance.PawnBreatheScale;
-        }
-
-        private void OnDestroy()
-        {
-            id.parent.GetComponent<GridTile>().RemovePawn(this);
         }
         #endregion
     }

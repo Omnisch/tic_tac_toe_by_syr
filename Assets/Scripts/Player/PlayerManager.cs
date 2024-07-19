@@ -11,18 +11,29 @@ namespace Omnis.TicTacToe
 
         #region Fields
         private bool canInteract;
-        private Party turn;
-        private Pawn activePawn;
         #endregion
 
         #region Interfaces
+        public bool CanInteract
+        {
+            get => canInteract;
+            set
+            {
+                canInteract = value;
+                GameManager.Instance.SendMessage("SetInputEnabled", value);
+                Cursor.visible = canInteract;
+            }
+        }
+        public Party ActiveParty { get; set; }
+        public GridTile FirstTile { get; set; }
+        public GridTile SecondTile { get; set; }
         #endregion
 
         #region Functions
         #endregion
 
         #region Unity Methods
-        private void Awake()
+        private void Start()
         {
             GameManager.Instance.Player = this;
         }

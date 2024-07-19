@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -19,10 +20,7 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Interfaces
-        public List<BoardSet> BoardSets => new(boardSets.Select(set => set as BoardSet));
-        public List<ToolbarSet> ToolbarSets => new(toolbarSets.Select(set => set as ToolbarSet));
-
-        public void InitStartupByName(string startupName) => InitStartup((GameMode)System.Enum.Parse(typeof(GameMode), startupName));
+        public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
         #endregion
 
         #region Functions
@@ -39,14 +37,15 @@ namespace Omnis.TicTacToe
             gridSet.Add(go.GetComponent<GridSet>());
         }
 
-        private void InitStartup(GameMode mode)
+        private IEnumerator InitStartup(GameMode mode)
         {
-            var pawnIds = GameManager.Instance.Settings.startups.startupSets.First(startup => startup.mode == mode).pawnIds;
+            var pawnIds = GameManager.Instance.Settings.startups.startupSets.Find(startup => startup.mode == mode).pawnIds;
             for (int i = 0; i < toolbarSets.Count; i++)
             {
                 for (int j = 0; j < toolbarSets[0].GridTiles.Count; j++)
                 {
-                    toolbarSets[i].GridTiles[j].AddPawn(pawnIds[toolbarSets[0].GridTiles.Count * i + j], true);
+                    toolbarSets[i].GridTiles[j].AddPawn(pawnIds[toolbarSets[0].GridTiles.Count * i + j]).Appear();
+                    yield return new WaitForSeconds(0.4f);
                 }
             }
         }

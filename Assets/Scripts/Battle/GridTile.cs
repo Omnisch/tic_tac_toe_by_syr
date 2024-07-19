@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Omnis.TicTacToe
 {
-    public class GridTile : PointerBase
+    public abstract class GridTile : PointerBase
     {
         #region Serialized Fields
         [SerializeField] private GameObject pawnPrefab;
@@ -11,50 +11,44 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Fields
-        private List<Pawn> pawns;
+        protected List<Pawn> pawns;
+        protected List<Pawn> hintPawns;
         #endregion
 
         #region Interfaces
-        public override bool IsPointed
-        {
-            get => isPointed;
-            set
-            {
-                isPointed = value;
-                if (isPointed) pawns[0].Appear();
-                else pawns[0].Disappear();
-            }
-        }
+        public List<Pawn> Pawns => pawns;
 
-        public Pawn GetPawn(int i) => pawns[i];
-
-        public void AddPawn(PawnId pawnId, bool instantAppear = false)
-        {
-            if (!pawnId.parent) pawnId.parent = transform;
-            var newPawn = Instantiate(pawnPrefab, pawnId.parent).GetComponent<Pawn>();
-            pawns.Add(newPawn);
-            newPawn.Id = pawnId;
-            newPawn.transform.position += new Vector3(0, 0, -pawns.Count);
-            if (instantAppear) newPawn.Appear();
-        }
-        public void RemovePawn(Pawn pawn) => pawns.Remove(pawn);
+        public Pawn AddPawn(PawnId pawnId) => AddPawn(pawns, pawnId);
+        public void RemovePawn(PawnId pawnId) => RemovePawn(pawns, pawnId);
         #endregion
 
         #region Functions
-        #endregion
-
-        #region Unity Methods
-        private void Start()
+        protected Pawn AddPawn(List<Pawn> pawnList, PawnId pawnId)
         {
-            pawns = new();
-            AddPawn(new PawnId(Party.Hint, hintType, transform, false));
+            var newPawn = Instantiate(pawnPrefab, transform).GetComponent<Pawn>();
+            pawnList.Add(newPawn);
+            newPawn.Id = pawnId;
+            newPawn.transform.position += new Vector3(0, 0, -(hintPawns.Count + pawns.Count));
+            return newPawn;
+        }
+
+        protected void RemovePawn(List<Pawn> pawnList, PawnId pawnId)
+        {
+            if (pawnList.Count == 0) return;
+            var pawn = pawnList.Find(p => p.Id.SameWith(pawnId));
+            pawn.DisappearAndDestroy();
+            pawnList.Remove(pawn);
         }
         #endregion
 
-        #region Handlers
-        protected override void OnInteract()
+        #region Unity Methods
+        protected override void Start()
         {
-            Debug.Log("Clicked on grid tile.");
+            pawns = new();
+            hintPawns = new();
+            AddPawn(hintPawns, new PawnId(Party.Hint, hintType, false));
+
+            base.Start();
         }
         #endregion
     }

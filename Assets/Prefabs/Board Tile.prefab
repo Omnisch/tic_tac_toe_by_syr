@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 7651773960906821537}
   - component: {fileID: 3774317980200829685}
-  - component: {fileID: 3167411842648169438}
+  - component: {fileID: 833243631228782135}
   m_Layer: 0
-  m_Name: Board Grid
+  m_Name: Board Tile
   m_TagString: Untagged
   m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -54,7 +54,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 3, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3167411842648169438
+--- !u!114 &833243631228782135
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -63,7 +63,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1935674505515349541}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d49fcb563ea349a4eb596a15b6f4c76d, type: 3}
+  m_Script: {fileID: 11500000, guid: c4ac86f6bf71596459459450aa13d33d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pawnPrefab: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
+  hintType: 0
+  Interactable: 0

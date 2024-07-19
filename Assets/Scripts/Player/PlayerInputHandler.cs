@@ -16,6 +16,10 @@ namespace Omnis.TicTacToe
         private List<Collider> PointerHits;
         #endregion
 
+        #region Interfaces
+        public void SetInputEnabled(bool value) => enabled = value;
+        #endregion
+
         #region Functions
         private void FlushInput() {}
         #endregion
