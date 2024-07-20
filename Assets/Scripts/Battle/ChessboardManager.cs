@@ -16,22 +16,41 @@ namespace Omnis.TicTacToe
 
         #region Fields
         private List<GridSet> boardSets;
-        private List<GridSet> toolbarSets;
+        private List<GridSet> toolkitSets;
         #endregion
 
         #region Interfaces
         public List<GridSet> BoardSets => boardSets;
-        public List<GridSet> ToolkitSets => toolbarSets;
+        public List<GridSet> ToolkitSets => toolkitSets;
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
+        public void MultiPhases(GridTile tile)
+        {
+            for (int i = 0; i < boardSets.Count; i++)
+            {
+                for (int j = 0; j < boardSets[i].GridTiles.Count; j++)
+                {
+                    if (boardSets[i].GridTiles[j] == tile)
+                    {
+                        for (int remain = i + 1; remain < boardSets.Count; remain++)
+                        {
+                            if (boardSets[remain].GridTiles[j].Pawns.Count > 0) break;
+                            boardSets[remain].GridTiles[j].AddNextPhaseOf(tile);
+                            tile = boardSets[remain].GridTiles[j];
+                        }
+                        break;
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Functions
         private void InitChessboard()
         {
             boardSets = new();
-            toolbarSets = new();
+            toolkitSets = new();
             boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, boardSets));
-            toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, toolbarSets));
+            toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, toolkitSets));
         }
         private void CreateGridSet(GameObject prefab, Transform pivot, List<GridSet> gridSet)
         {
@@ -42,11 +61,11 @@ namespace Omnis.TicTacToe
         private IEnumerator InitStartup(GameMode mode)
         {
             var pawnIds = GameManager.Instance.Settings.startups.startupSets.Find(startup => startup.mode == mode).pawnIds;
-            for (int i = 0; i < toolbarSets.Count; i++)
+            for (int i = 0; i < toolkitSets.Count; i++)
             {
-                for (int j = 0; j < toolbarSets[0].GridTiles.Count; j++)
+                for (int j = 0; j < toolkitSets[0].GridTiles.Count; j++)
                 {
-                    toolbarSets[i].GridTiles[j].AddPawn(pawnIds[toolbarSets[0].GridTiles.Count * i + j]).Appear();
+                    toolkitSets[i].GridTiles[j].AddPawn(pawnIds[toolkitSets[0].GridTiles.Count * i + j]).Appear();
                     yield return new WaitForSeconds(0.4f);
                 }
             }

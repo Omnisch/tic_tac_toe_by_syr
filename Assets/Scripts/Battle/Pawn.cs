@@ -27,6 +27,7 @@ namespace Omnis.TicTacToe
             get => transform.GetComponent<SpriteRenderer>().color.a;
             set => transform.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, value);
         }
+        private int coroutinePriority;
         #endregion
 
         #region Interfaces
@@ -43,8 +44,7 @@ namespace Omnis.TicTacToe
         public void Appear()
         {
             doBreathe = false;
-            StopAllCoroutines();
-            StartCoroutine(EaseScale(1f, () => doBreathe = true));
+            if (CoroutineIsPrior(1)) StartCoroutine(EaseScale(1f, () => doBreathe = true));
         }
 
         public void Cover()
@@ -52,22 +52,23 @@ namespace Omnis.TicTacToe
             SpriteScale = 2f;
             SpriteAlpha = 0f;
             doBreathe = false;
-            StartCoroutine(EaseScale(1f, () => doBreathe = true));
-            StartCoroutine(EaseAlpha(1f));
+            if (CoroutineIsPrior(1))
+            {
+                StartCoroutine(EaseScale(1f, () => doBreathe = true));
+                StartCoroutine(EaseAlpha(1f));
+            }
         }
 
         public void Disappear()
         {
             doBreathe = false;
-            StopAllCoroutines();
-            StartCoroutine(EaseScale(0f));
+            if (CoroutineIsPrior(2)) StartCoroutine(EaseScale(0f));
         }
 
         public void DisappearAndDestroy()
         {
             doBreathe = false;
-            StopAllCoroutines();
-            StartCoroutine(EaseScale(0f, () => Destroy(gameObject)));
+            if (CoroutineIsPrior(2)) StartCoroutine(EaseScale(0f, () => Destroy(gameObject)));
         }
 
         public void Show()
@@ -75,29 +76,26 @@ namespace Omnis.TicTacToe
             SpriteAlpha = 1f;
         }
 
+        public void HalfShow()
+        {
+            SpriteAlpha = 0.5f;
+        }
+
         public void Hide()
         {
             SpriteAlpha = 0f;
         }
 
-        public void HideAndDestroy()
-        {
-            StopAllCoroutines();
-            Destroy(gameObject);
-        }
-
         public void ToNeutralScale()
         {
             doBreathe = false;
-            StopAllCoroutines();
-            StartCoroutine(EaseScale(1f, () => doBreathe = true));
+            if (CoroutineIsPrior(0)) StartCoroutine(EaseScale(1f, () => doBreathe = true));
         }
 
         public void Highlight()
         {
             doBreathe = false;
-            StopAllCoroutines();
-            StartCoroutine(EaseScale(GameManager.Instance.Settings.highlightScale));
+            if (CoroutineIsPrior(0)) StartCoroutine(EaseScale(GameManager.Instance.Settings.highlightScale));
         }
         #endregion
 
@@ -120,6 +118,7 @@ namespace Omnis.TicTacToe
             SpriteScale = destScale;
 
             callback?.Invoke();
+            coroutinePriority = 0;
         }
 
         private IEnumerator EaseAlpha(float destAlpha, System.Action callback = null)
@@ -138,7 +137,20 @@ namespace Omnis.TicTacToe
                     yield return new WaitForSecondsRealtime(Time.deltaTime);
                 }
             SpriteAlpha = destAlpha;
+
             callback?.Invoke();
+            coroutinePriority = 0;
+        }
+
+        private bool CoroutineIsPrior(int priority)
+        {
+            if (priority < coroutinePriority) return false;
+            else
+            {
+                StopAllCoroutines();
+                coroutinePriority = priority;
+                return true;
+            }
         }
         #endregion
 

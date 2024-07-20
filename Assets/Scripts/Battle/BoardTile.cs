@@ -31,7 +31,7 @@ namespace Omnis.TicTacToe
             get => selected;
             set
             {
-
+                if (pawns.Count > 0) return;
                 selected = value;
             }
         }

@@ -17,7 +17,12 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Interfaces
-        public void SetInputEnabled(bool value) => enabled = value;
+        public void SetInputEnabled(bool value)
+        {
+            enabled = value;
+            Cursor.visible = value;
+        }
+                
         #endregion
 
         #region Functions

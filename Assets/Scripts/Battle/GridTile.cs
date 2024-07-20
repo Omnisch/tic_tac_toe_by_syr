@@ -18,6 +18,18 @@ namespace Omnis.TicTacToe
 
         #region Interfaces
         public List<Pawn> Pawns => pawns;
+        public override bool Interactable
+        {
+            get => interactable;
+            set
+            {
+                interactable = value;
+                if (interactable)
+                    pawns.ForEach(pawn => pawn.Show());
+                else
+                    pawns.ForEach(pawn => pawn.HalfShow());
+            }
+        }
         public virtual bool Selected
         {
             get => selected;
@@ -25,7 +37,9 @@ namespace Omnis.TicTacToe
         }
 
         public Pawn AddPawn(PawnId pawnId) => AddPawn(pawns, pawnId);
-        public void RemovePawn(PawnId pawnId) => RemovePawn(pawns, pawnId);
+        public void CopyPawnsFrom(GridTile other) => other.Pawns.ForEach(pawn => this.AddPawn(pawn.Id).Appear());
+        public void AddNextPhaseOf(GridTile other) => other.Pawns.ForEach(pawn => this.AddPawn(new(pawn.Id.party, pawn.Id.NextType)).Appear());
+        public void RemoveAll() => RemoveAll(ref pawns);
         #endregion
 
         #region Functions
@@ -34,16 +48,15 @@ namespace Omnis.TicTacToe
             var newPawn = Instantiate(pawnPrefab, transform).GetComponent<Pawn>();
             pawnList.Add(newPawn);
             newPawn.Id = pawnId;
-            newPawn.transform.position += new Vector3(0, 0, -(hintPawns.Count + pawns.Count));
+            newPawn.transform.position -= new Vector3(0, 0, 1 + (hintPawns.Count + pawns.Count));
             return newPawn;
         }
 
-        protected void RemovePawn(List<Pawn> pawnList, PawnId pawnId)
+        protected void RemoveAll(ref List<Pawn> pawnList)
         {
             if (pawnList.Count == 0) return;
-            var pawn = pawnList.Find(p => p.Id.SameWith(pawnId));
-            pawn.DisappearAndDestroy();
-            pawnList.Remove(pawn);
+            pawnList.ForEach(pawn => pawn.DisappearAndDestroy());
+            pawnList = new();
         }
         #endregion
 

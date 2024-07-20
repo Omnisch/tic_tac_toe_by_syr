@@ -13,10 +13,16 @@ namespace Omnis.TicTacToe
             this.type = 0;
             this.canBreathe = canBreathe;
         }
-        public PawnId(Party party, PawnStage stage, bool canBreathe = true)
+        public PawnId(Party party, int type, bool canBreathe = true)
         {
             this.party = party;
-            this.type = (int)stage;
+            this.type = type;
+            this.canBreathe = canBreathe;
+        }
+        public PawnId(Party party, PawnPhase phase, bool canBreathe = true)
+        {
+            this.party = party;
+            this.type = (int)phase;
             this.canBreathe = canBreathe;
         }
         public PawnId(Party party, ToolType type, bool canBreathe = true)
@@ -33,6 +39,7 @@ namespace Omnis.TicTacToe
         }
 
         public bool SameWith(PawnId other) => this.party == other.party && this.type == other.type;
+        public int NextType => (this.type + 1) % System.Enum.GetNames(typeof(PawnPhase)).Length;
     }
 
     public enum Party
@@ -44,7 +51,7 @@ namespace Omnis.TicTacToe
         Hint,
     }
 
-    public enum PawnStage
+    public enum PawnPhase
     {
         Phase0,
         Phase1,

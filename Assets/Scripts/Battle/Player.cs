@@ -4,24 +4,24 @@ using UnityEngine;
 
 namespace Omnis.TicTacToe
 {
-    public partial class Player : MonoBehaviour
+    public partial class Player
     {
         #region Fields
         private GridSet toolkit;
-        private bool canInteract;
+        private bool active;
         private GridTile firstTile;
         private GridTile secondTile;
         #endregion
 
         #region Interfaces
-        public bool CanInteract
+        public bool Active
         {
-            get => canInteract;
+            get => active;
             set
             {
-                canInteract = value;
-                GameManager.Instance.SendMessage("SetInputEnabled", value);
-                Cursor.visible = canInteract;
+                active = value;
+                if (active) toolkit.ActiveAll();
+                else toolkit.DeactiveAll();
             }
         }
         public GridTile FirstTile
@@ -53,18 +53,6 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Functions
-        #endregion
-
-        #region Unity Methods
-        private void Start()
-        {
-            GameManager.Instance.Player = this;
-        }
-
-        private void OnDestroy()
-        {
-            if (GameManager.Instance.Player == this) GameManager.Instance.Player = null;
-        }
         #endregion
     }
 }

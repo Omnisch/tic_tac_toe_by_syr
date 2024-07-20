@@ -10,38 +10,66 @@ namespace Omnis.TicTacToe
         #region Serialized Fields
         public GameMode gameMode;
         public ChessboardManager chessboard;
-        public List<Player> players;
+        [SerializeField] private List<UnityEvent> postTurnCallback;
         #endregion
 
         #region Fields
+        private Party winnerParty;
+        private List<Player> players;
+        private int currPlayerIndex;
+        private int CurrPlayerIndex
+        {
+            get => currPlayerIndex;
+            set
+            {
+                currPlayerIndex = value % players.Count;
+                GameManager.Instance.Player = players[currPlayerIndex];
+                players.ForEach(player => player.Active = player == GameManager.Instance.Player);
+            }
+        }
         #endregion
 
         #region Interfaces
         #endregion
 
         #region Functions
-        private void InitBattle()
+        private IEnumerator BattleRoutine()
         {
+            winnerParty = Party.Null;
             players = new();
-            Player player1 = new(chessboard.ToolkitSets[0]);
-            Player player2 = new(chessboard.ToolkitSets[1]);
+
+            yield return new WaitForFixedUpdate();
+
+            Player player0 = new(chessboard.ToolkitSets[0]);
+            Player player1 = new(chessboard.ToolkitSets[1]);
+            players.Add(player0);
             players.Add(player1);
-            players.Add(player2);
-            StartCoroutine(CreateStartup());
+
+            yield return CreateStartup();
+
+            CurrPlayerIndex = 0;
+
+            while (winnerParty == Party.Null)
+            {
+                yield return new WaitUntil(() => GameManager.Instance.Player.SecondTile != null);
+                Debug.Log(GameManager.Instance.Player.SecondTile);
+                yield return PlayerMove();
+                postTurnCallback[currPlayerIndex].Invoke();
+                CurrPlayerIndex++;
+            }
         }
         private IEnumerator CreateStartup()
         {
-            yield return new WaitForFixedUpdate();
-            GameManager.Instance.Player.CanInteract = false;
+            GameManager.Instance.SendMessage("SetInputEnabled", false);
             yield return chessboard.InitStartupByMode(GameMode.Standard);
-            GameManager.Instance.Player.CanInteract = true;
+            GameManager.Instance.SendMessage("SetInputEnabled", true);
         }
         #endregion
 
         #region Unity Methods
         private void Start()
         {
-            InitBattle();
+            StartCoroutine(BattleRoutine());
         }
         #endregion
     }
