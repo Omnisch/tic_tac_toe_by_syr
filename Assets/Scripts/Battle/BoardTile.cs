@@ -25,6 +25,16 @@ namespace Omnis.TicTacToe
                     hintPawns[0].Disappear();
             }
         }
+
+        public override bool Selected
+        {
+            get => selected;
+            set
+            {
+
+                selected = value;
+            }
+        }
         #endregion
 
         #region Functions
@@ -38,11 +48,7 @@ namespace Omnis.TicTacToe
         {
             if (!Interactable) return;
 
-            if (GameManager.Instance.Player.FirstTile)
-            {
-                GameManager.Instance.Player.SecondTile = this;
-                Debug.Log(1);
-            }
+            GameManager.Instance.Player.SecondTile = this;
         }
         #endregion
     }

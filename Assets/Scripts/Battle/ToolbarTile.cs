@@ -21,9 +21,29 @@ namespace Omnis.TicTacToe
             {
                 isPointed = value;
                 if (isPointed && pawns.Count > 0)
-                    hintPawns[0].Appear();
+                    hintPawns.ForEach(hintPawn => hintPawn.Appear());
+                else if (!selected)
+                    hintPawns.ForEach(hintPawn => hintPawn.Disappear());
+            }
+        }
+
+        public override bool Selected
+        {
+            get => selected;
+            set
+            {
+                selected = value;
+                if (selected)
+                {
+                    pawns.ForEach(pawn => pawn.Highlight());
+                    hintPawns.Find(pawn => pawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Show();
+                }
                 else
-                    hintPawns[0].Disappear();
+                {
+                    pawns.ForEach(pawn => pawn.ToNeutralScale());
+                    hintPawns.ForEach(hintPawn => hintPawn.Disappear());
+                    hintPawns.Find(pawn => pawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Hide();
+                }
             }
         }
         #endregion
@@ -36,7 +56,7 @@ namespace Omnis.TicTacToe
         {
             base.Start();
 
-            AddPawn(hintPawns, new PawnId(Party.Hint, HintType.ToolInteracted, false));
+            AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted, false)).Hide();
         }
         #endregion
 
@@ -46,8 +66,6 @@ namespace Omnis.TicTacToe
             if (!Interactable) return;
 
             GameManager.Instance.Player.FirstTile = this;
-            pawns.ForEach(pawn => pawn.Highlight());
-            hintPawns.Find(hintPawn => hintPawn.Id.type == (int)HintType.ToolInteracted).Appear();
         }
         #endregion
     }

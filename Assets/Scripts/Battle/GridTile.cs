@@ -13,10 +13,16 @@ namespace Omnis.TicTacToe
         #region Fields
         protected List<Pawn> pawns;
         protected List<Pawn> hintPawns;
+        protected bool selected;
         #endregion
 
         #region Interfaces
         public List<Pawn> Pawns => pawns;
+        public virtual bool Selected
+        {
+            get => selected;
+            set => selected = value;
+        }
 
         public Pawn AddPawn(PawnId pawnId) => AddPawn(pawns, pawnId);
         public void RemovePawn(PawnId pawnId) => RemovePawn(pawns, pawnId);
@@ -46,7 +52,7 @@ namespace Omnis.TicTacToe
         {
             pawns = new();
             hintPawns = new();
-            AddPawn(hintPawns, new PawnId(Party.Hint, hintType, false));
+            AddPawn(hintPawns, new(Party.Hint, hintType, false));
 
             base.Start();
         }

@@ -25,8 +25,8 @@ namespace Omnis.TicTacToe
         }
         private IEnumerator CreateStartup()
         {
-            GameManager.Instance.Player.CanInteract = false;
             yield return new WaitForFixedUpdate();
+            GameManager.Instance.Player.CanInteract = false;
             yield return chessboard.InitStartupByMode(GameMode.Standard);
             GameManager.Instance.Player.CanInteract = true;
         }

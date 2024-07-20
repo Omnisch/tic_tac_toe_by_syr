@@ -16,7 +16,7 @@ MonoBehaviour:
   amplitude: 0.08
   frequency: 0.25
   scalingSpeed: 8
-  highlightScale: 1.25
+  highlightScale: 1.2
   partySprites:
   - partyName: 0
     sprites:

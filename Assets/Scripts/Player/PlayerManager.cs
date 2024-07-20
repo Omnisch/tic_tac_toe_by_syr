@@ -11,6 +11,8 @@ namespace Omnis.TicTacToe
 
         #region Fields
         private bool canInteract;
+        private GridTile firstTile;
+        private GridTile secondTile;
         #endregion
 
         #region Interfaces
@@ -25,8 +27,27 @@ namespace Omnis.TicTacToe
             }
         }
         public Party ActiveParty { get; set; }
-        public GridTile FirstTile { get; set; }
-        public GridTile SecondTile { get; set; }
+        public GridTile FirstTile
+        {
+            get => firstTile;
+            set
+            {
+                if (firstTile) firstTile.Selected = false;
+                firstTile = value;
+                if (firstTile) firstTile.Selected = true;
+            }
+        }
+        public GridTile SecondTile
+        {
+            get => secondTile;
+            set
+            {
+                if (!FirstTile) return;
+                if (secondTile) secondTile.Selected = false;
+                secondTile = value;
+                if (secondTile) secondTile.Selected = true;
+            }
+        }
         #endregion
 
         #region Functions

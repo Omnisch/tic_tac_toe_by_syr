@@ -70,9 +70,18 @@ namespace Omnis.TicTacToe
             StartCoroutine(EaseScale(0f, () => Destroy(gameObject)));
         }
 
-        public void FlashOff()
+        public void Show()
         {
-            doBreathe = false;
+            SpriteAlpha = 1f;
+        }
+
+        public void Hide()
+        {
+            SpriteAlpha = 0f;
+        }
+
+        public void HideAndDestroy()
+        {
             StopAllCoroutines();
             Destroy(gameObject);
         }
