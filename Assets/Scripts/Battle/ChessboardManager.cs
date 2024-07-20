@@ -65,7 +65,7 @@ namespace Omnis.TicTacToe
             {
                 for (int j = 0; j < toolkitSets[0].GridTiles.Count; j++)
                 {
-                    toolkitSets[i].GridTiles[j].AddPawn(pawnIds[toolkitSets[0].GridTiles.Count * i + j]).Appear();
+                    toolkitSets[i].GridTiles[j].AddPawn(pawnIds[toolkitSets[0].GridTiles.Count * i + j]);
                     yield return new WaitForSeconds(0.4f);
                 }
             }

@@ -56,7 +56,7 @@ namespace Omnis.TicTacToe
         {
             base.Start();
 
-            AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted, false)).Hide();
+            AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted, false), false);
         }
         #endregion
 

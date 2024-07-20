@@ -36,20 +36,21 @@ namespace Omnis.TicTacToe
             set => selected = value;
         }
 
-        public Pawn AddPawn(PawnId pawnId) => AddPawn(pawns, pawnId);
-        public void CopyPawnsFrom(GridTile other) => other.Pawns.ForEach(pawn => this.AddPawn(pawn.Id).Appear());
-        public void AddNextPhaseOf(GridTile other) => other.Pawns.ForEach(pawn => this.AddPawn(new(pawn.Id.party, pawn.Id.NextType)).Appear());
+        public void AddPawn(PawnId pawnId, bool showInstantly = true) => AddPawn(pawns, pawnId, showInstantly);
+        public void CopyPawnsFrom(GridTile other) => other.Pawns.ForEach(pawn => this.AddPawn(pawn.Id));
+        //public void NextPhase() => 
+        public void AddNextPhaseOf(GridTile other) => other.Pawns.ForEach(pawn => this.AddPawn(new(pawn.Id.party, pawn.Id.NextType)));
         public void RemoveAll() => RemoveAll(ref pawns);
         #endregion
 
         #region Functions
-        protected Pawn AddPawn(List<Pawn> pawnList, PawnId pawnId)
+        protected void AddPawn(List<Pawn> pawnList, PawnId pawnId, bool showInstantly)
         {
             var newPawn = Instantiate(pawnPrefab, transform).GetComponent<Pawn>();
             pawnList.Add(newPawn);
             newPawn.Id = pawnId;
             newPawn.transform.position -= new Vector3(0, 0, 1 + (hintPawns.Count + pawns.Count));
-            return newPawn;
+            if (showInstantly) newPawn.Appear();
         }
 
         protected void RemoveAll(ref List<Pawn> pawnList)
@@ -65,7 +66,7 @@ namespace Omnis.TicTacToe
         {
             pawns = new();
             hintPawns = new();
-            AddPawn(hintPawns, new(Party.Hint, hintType, false));
+            AddPawn(hintPawns, new(Party.Hint, hintType, false), false);
 
             base.Start();
         }
