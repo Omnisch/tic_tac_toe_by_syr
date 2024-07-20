@@ -10,6 +10,7 @@ namespace Omnis.TicTacToe
         #region Serialized Fields
         public GameMode gameMode;
         public ChessboardManager chessboard;
+        public List<Player> players;
         #endregion
 
         #region Fields
@@ -21,6 +22,11 @@ namespace Omnis.TicTacToe
         #region Functions
         private void InitBattle()
         {
+            players = new();
+            Player player1 = new(chessboard.ToolkitSets[0]);
+            Player player2 = new(chessboard.ToolkitSets[1]);
+            players.Add(player1);
+            players.Add(player2);
             StartCoroutine(CreateStartup());
         }
         private IEnumerator CreateStartup()

@@ -11,12 +11,12 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Fields
-        private PlayerManager player;
+        private Player player;
         #endregion
 
         #region Interfaces
         public GameSettings Settings => settings;
-        public PlayerManager Player
+        public Player Player
         {
             get => player;
             set => player = value;

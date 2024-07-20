@@ -4,12 +4,10 @@ using UnityEngine;
 
 namespace Omnis.TicTacToe
 {
-    public class PlayerManager : MonoBehaviour
+    public partial class Player : MonoBehaviour
     {
-        #region Serialized Fields
-        #endregion
-
         #region Fields
+        private GridSet toolkit;
         private bool canInteract;
         private GridTile firstTile;
         private GridTile secondTile;
@@ -26,7 +24,6 @@ namespace Omnis.TicTacToe
                 Cursor.visible = canInteract;
             }
         }
-        public Party ActiveParty { get; set; }
         public GridTile FirstTile
         {
             get => firstTile;
@@ -47,6 +44,11 @@ namespace Omnis.TicTacToe
                 secondTile = value;
                 if (secondTile) secondTile.Selected = true;
             }
+        }
+
+        public Player(GridSet toolkit)
+        {
+            this.toolkit = toolkit;
         }
         #endregion
 

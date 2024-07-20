@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2798933732794598126}
   - component: {fileID: 6700055003444399559}
   m_Layer: 0
-  m_Name: Toolbar Set
+  m_Name: Toolkit Set
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

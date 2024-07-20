@@ -10,8 +10,8 @@ namespace Omnis.TicTacToe
         #region Serialized Fields
         [SerializeField] private List<Transform> boardSetPivots;
         [SerializeField] private GameObject boardSetPrefab;
-        [SerializeField] private List<Transform> toolbarPivots;
-        [SerializeField] private GameObject toolbarPrefab;
+        [SerializeField] private List<Transform> toolkitPivots;
+        [SerializeField] private GameObject toolkitPrefab;
         #endregion
 
         #region Fields
@@ -20,6 +20,8 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Interfaces
+        public List<GridSet> BoardSets => boardSets;
+        public List<GridSet> ToolkitSets => toolbarSets;
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
         #endregion
 
@@ -29,7 +31,7 @@ namespace Omnis.TicTacToe
             boardSets = new();
             toolbarSets = new();
             boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, boardSets));
-            toolbarPivots.ForEach(pivot => CreateGridSet(toolbarPrefab, pivot, toolbarSets));
+            toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, toolbarSets));
         }
         private void CreateGridSet(GameObject prefab, Transform pivot, List<GridSet> gridSet)
         {

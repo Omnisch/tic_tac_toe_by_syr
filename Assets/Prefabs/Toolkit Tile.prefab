@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3181283972784116257}
   - component: {fileID: 952998452854073423}
   m_Layer: 0
-  m_Name: Toolbar Tile
+  m_Name: Toolkit Tile
   m_TagString: Untagged
   m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

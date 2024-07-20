@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 274866517}
   - component: {fileID: 274866518}
   m_Layer: 6
-  m_Name: Player1 Toolbar
+  m_Name: Player1 Toolkit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -336,7 +336,7 @@ GameObject:
   - component: {fileID: 650513331}
   - component: {fileID: 650513332}
   m_Layer: 6
-  m_Name: Player2 Toolbar
+  m_Name: Player2 Toolkit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -595,6 +595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: 0
   chessboard: {fileID: 1569675559}
+  players: []
 --- !u!1 &1124710813
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,7 +606,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1124710814}
   m_Layer: 0
-  m_Name: Player 2 Toolbar Transform
+  m_Name: Player 2 Toolkit Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1082,7 +1083,7 @@ GameObject:
   - component: {fileID: 1477785873}
   - component: {fileID: 1477785874}
   m_Layer: 0
-  m_Name: PlayerManager
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1228,10 +1229,10 @@ MonoBehaviour:
   - {fileID: 1260316501}
   - {fileID: 1688605905}
   boardSetPrefab: {fileID: 7611835223221957966, guid: 576bd507c8d66d64a9e9c2d069da7e0c, type: 3}
-  toolbarPivots:
+  toolkitPivots:
   - {fileID: 1619069347}
   - {fileID: 1124710814}
-  toolbarPrefab: {fileID: 8116761955945649582, guid: 15ebf75278bc21947ab8fd361a31d1df, type: 3}
+  toolkitPrefab: {fileID: 8116761955945649582, guid: 15ebf75278bc21947ab8fd361a31d1df, type: 3}
 --- !u!1 &1619069346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,7 +1243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1619069347}
   m_Layer: 0
-  m_Name: Player 1 Toolbar Transform
+  m_Name: Player 1 Toolkit Transform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

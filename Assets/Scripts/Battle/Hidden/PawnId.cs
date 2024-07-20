@@ -54,7 +54,8 @@ namespace Omnis.TicTacToe
 
     public enum ToolType
     {
-        Shovel,
+        Shovel1,
+        Shovel2,
     }
 
     public enum HintType

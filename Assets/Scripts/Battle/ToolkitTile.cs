@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Omnis.TicTacToe
 {
-    public class ToolbarTile : GridTile
+    public class ToolkitTile : GridTile
     {
         #region Serialized Fields
         #endregion
