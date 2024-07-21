@@ -19,11 +19,11 @@ namespace Omnis.TicTacToe
             switch (player.FirstTile.Pawns[0].Id.party)
             {
                 case Party.Nature:
-                    Transport();
+                    yield return Transport();
                     chessboard.MultiPhases(player.SecondTile);
                     break;
                 case Party.Artifact:
-                    Transport();
+                    yield return Transport();
                     chessboard.MultiPhases(player.SecondTile);
                     break;
                 case Party.Tool:
@@ -55,10 +55,10 @@ namespace Omnis.TicTacToe
             player.FirstTile = null;
         }
 
-        private void Transport()
+        private IEnumerator Transport()
         {
             Player player = GameManager.Instance.Player;
-            player.SecondTile.CopyPawnsFrom(player.FirstTile);
+            yield return player.SecondTile.CopyPawnsFrom(player.FirstTile);
             player.FirstTile.RemoveAll();
         }
 

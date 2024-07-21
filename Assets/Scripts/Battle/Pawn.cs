@@ -181,4 +181,11 @@ namespace Omnis.TicTacToe
         }
         #endregion
     }
+
+    public enum PawnInitState
+    {
+        Appear,
+        DoNotAppear,
+        Transparent,
+    }
 }

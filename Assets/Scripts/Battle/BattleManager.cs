@@ -52,7 +52,6 @@ namespace Omnis.TicTacToe
             while (winnerParty == Party.Null)
             {
                 yield return new WaitUntil(() => GameManager.Instance.Player.SecondTile != null);
-                Debug.Log(GameManager.Instance.Player.SecondTile);
                 yield return PlayerMove();
                 postTurnCallback[currPlayerIndex].Invoke();
                 CurrPlayerIndex++;

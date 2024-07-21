@@ -21,9 +21,9 @@ namespace Omnis.TicTacToe
             {
                 isPointed = value;
                 if (isPointed && pawns.Count > 0)
-                    hintPawns.ForEach(hintPawn => StartCoroutine(hintPawn.Appear()));
+                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Appear()));
                 else if (!selected)
-                    hintPawns.ForEach(hintPawn => StartCoroutine(hintPawn.Disappear()));
+                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Disappear()));
             }
         }
 
@@ -49,14 +49,10 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Functions
-        #endregion
-
-        #region Unity Methods
-        protected override void Start()
+        protected override void OnStart()
         {
-            base.Start();
-
-            AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted, false), false);
+            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Tool, false), PawnInitState.DoNotAppear));
+            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted, false), PawnInitState.Transparent));
         }
         #endregion
 
