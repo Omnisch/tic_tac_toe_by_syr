@@ -15,12 +15,10 @@ namespace Omnis.TicTacToe
             switch (player.FirstTile.Pawns[0].Id.party)
             {
                 case Party.Nature:
-                    yield return Transport(player.FirstTile, player.SecondTile);
-                    yield return chessboard.AddMultiPhases(player.SecondTile);
-                    break;
                 case Party.Artifact:
                     yield return Transport(player.FirstTile, player.SecondTile);
-                    yield return chessboard.AddMultiPhases(player.SecondTile);
+                    if (!chessboard.CheckMove(out winnerParty))
+                        yield return chessboard.AddMultiPhases(player.SecondTile, () => chessboard.CheckMove(out winnerParty));
                     break;
                 case Party.Tool:
                     {

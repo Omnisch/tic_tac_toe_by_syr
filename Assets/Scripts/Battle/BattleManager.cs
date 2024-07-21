@@ -11,7 +11,7 @@ namespace Omnis.TicTacToe
         public GameMode gameMode;
         public ChessboardManager chessboard;
         [SerializeField] private List<UnityEvent> postTurnCallback;
-        [SerializeField] private List<UnityEvent> winningCallback;
+        [SerializeField] private List<PartyCallback> winnerCallback;
         #endregion
 
         #region Fields
@@ -55,7 +55,6 @@ namespace Omnis.TicTacToe
             {
                 if (playerMoveSucceeded)
                 {
-                    chessboard.CheckWinningParty(out winnerParty);
                     if (winnerParty != Party.Null) break;
                     postTurnCallback[CurrPlayerIndex].Invoke();
                     CurrPlayerIndex++;
@@ -69,7 +68,7 @@ namespace Omnis.TicTacToe
 
             // settle
             yield return new WaitForSecondsRealtime(1.5f);
-            winningCallback[(int)winnerParty - 1].Invoke();
+            winnerCallback?.Find(callback => callback.party == winnerParty).callback.Invoke();
         }
         private IEnumerator CreateStartup()
         {
@@ -85,5 +84,12 @@ namespace Omnis.TicTacToe
             StartCoroutine(BattleRoutine());
         }
         #endregion
+    }
+
+    [System.Serializable]
+    public struct PartyCallback
+    {
+        public Party party;
+        public UnityEvent callback;
     }
 }

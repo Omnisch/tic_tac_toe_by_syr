@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -12,6 +11,7 @@ namespace Omnis.TicTacToe
         [SerializeField] private GameObject boardSetPrefab;
         [SerializeField] private List<Transform> toolkitPivots;
         [SerializeField] private GameObject toolkitPrefab;
+        [SerializeField] private List<GridSetCallback> finishBoardCallback;
         #endregion
 
         #region Fields
@@ -25,7 +25,7 @@ namespace Omnis.TicTacToe
         public List<GridSet> ToolkitSets => toolkitSets;
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
 
-        public IEnumerator AddMultiPhases(GridTile tile)
+        public IEnumerator AddMultiPhases(GridTile tile, System.Func<bool> stopCase = null)
         {
             for (int i = 0; i < BoardSets.Count; i++)
                 for (int j = 0; j < BoardSets[i].GridTiles.Count; j++)
@@ -33,9 +33,11 @@ namespace Omnis.TicTacToe
                     {
                         for (int rest = i + 1; rest < BoardSets.Count; rest++)
                         {
-                            if (BoardSets[rest].GridTiles[j].Pawns.Count > 0) yield break;
-                            yield return BoardSets[rest].GridTiles[j].AddNextPhaseOf(tile);
-                            tile = BoardSets[rest].GridTiles[j];
+                            GridTile currTile = BoardSets[rest].GridTiles[j];
+                            if (currTile.Pawns.Count > 0) yield break;
+                            yield return currTile.AddNextPhaseOf(tile);
+                            if (stopCase?.Invoke() ?? false) yield break;
+                            tile = currTile;
                         }
                         yield break;
                     }
@@ -64,11 +66,11 @@ namespace Omnis.TicTacToe
                     }
         }
 
-        public bool CheckWinningParty(out Party winningParty)
+        public bool CheckMove(out Party winnerParty)
         {
-            winningParty = Party.Null;
+            winnerParty = Party.Null;
 
-            CheckFinishBoard();
+            bool hasFinishBoard = CheckFinishBoard();
 
             Dictionary<Party, int> scoreboard = new();
             foreach (var finishBoard in finishBoardMarks)
@@ -77,15 +79,12 @@ namespace Omnis.TicTacToe
                     scoreboard[finishBoard]++;
                 if (scoreboard[finishBoard] >= (finishBoardMarks.Count + 1) / 2)
                 {
-                    winningParty = finishBoard;
+                    winnerParty = finishBoard;
                     break;
                 }
             }
 
-            if (winningParty != Party.Null)
-                return false;
-            else
-                return true;
+            return hasFinishBoard;
         }
         #endregion
 
@@ -120,8 +119,9 @@ namespace Omnis.TicTacToe
             }
         }
 
-        private void CheckFinishBoard()
+        private bool CheckFinishBoard()
         {
+            bool hasFinishBoard = false;
             List<WhatCountAsARow> rowList = GameManager.Instance.Settings.whatCountAsARow;
             for (int i = 0; i < BoardSets.Count; i++)
             {
@@ -134,9 +134,12 @@ namespace Omnis.TicTacToe
                         for (int j = 0; j < rowList[rowIndex].indices.Count; j++)
                             BoardSets[i].GridTiles[rowList[rowIndex].indices[j]].LockDown();
                         finishBoardMarks[i] = pawnIdInARow[0].party;
+                        hasFinishBoard = true;
+                        finishBoardCallback[i].partyCallbacks.Find(callback => callback.party == finishBoardMarks[i]).callback.Invoke();
                     }
                 }
             }
+            return hasFinishBoard;
         }
         private List<PawnId> GetOneRow(GridSet boardSet, WhatCountAsARow row, out bool isFilled)
         {
@@ -171,5 +174,11 @@ namespace Omnis.TicTacToe
             InitChessboard();
         }
         #endregion
+
+        [System.Serializable]
+        private struct GridSetCallback
+        {
+            public List<PartyCallback> partyCallbacks;
+        }
     }
 }
