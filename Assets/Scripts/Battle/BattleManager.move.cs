@@ -7,12 +7,6 @@ namespace Omnis.TicTacToe
 {
     public partial class BattleManager
     {
-        #region Serialized Fields
-        #endregion
-
-        #region Fields
-        #endregion
-
         #region Functions
         private IEnumerator PlayerMove()
         {

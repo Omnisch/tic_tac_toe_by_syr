@@ -7,7 +7,7 @@ namespace Omnis.TicTacToe
     [CreateAssetMenu(menuName = "Omnis/Game Settings")]
     public class GameSettings : ScriptableObject
     {
-        [Header("Startups")]
+        [Header("Settings")]
         public BattleStartup startups;
         [Header("Pawn")]
         public float amplitude;
@@ -16,6 +16,7 @@ namespace Omnis.TicTacToe
         public float scalingSpeed;
         public float highlightScale;
         public List<PartySettings> partySettings;
+        public List<WhatCountAsARow> whatCountAsARow;
     }
 
     [Serializable]
@@ -30,5 +31,11 @@ namespace Omnis.TicTacToe
     public struct PartyTarget
     {
         public List<Party> interactableParty;
+    }
+
+    [System.Serializable]
+    public struct WhatCountAsARow
+    {
+        [Min(0)] public List<int> indices;
     }
 }

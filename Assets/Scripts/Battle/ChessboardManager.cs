@@ -17,12 +17,14 @@ namespace Omnis.TicTacToe
         #region Fields
         private List<GridSet> boardSets;
         private List<GridSet> toolkitSets;
+        private List<Party> finishBoardMarks;
         #endregion
 
         #region Interfaces
         public List<GridSet> BoardSets => boardSets;
         public List<GridSet> ToolkitSets => toolkitSets;
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
+
         public IEnumerator AddMultiPhases(GridTile tile)
         {
             for (int i = 0; i < BoardSets.Count; i++)
@@ -48,6 +50,7 @@ namespace Omnis.TicTacToe
                         {
                             GridTile currTile = BoardSets[rest].GridTiles[j];
                             if (currTile.Pawns.Count == 0) yield break;
+                            if (currTile.Locked) yield break;
                             if (currTile.Pawns[0].Id.party == tile.Pawns[0].Id.party &&
                                 currTile.Pawns[0].Id.type == tile.Pawns[0].Id.NextType)
                             {
@@ -60,6 +63,30 @@ namespace Omnis.TicTacToe
                         yield break;
                     }
         }
+
+        public bool CheckWinningParty(out Party winningParty)
+        {
+            winningParty = Party.Null;
+
+            CheckFinishBoard();
+
+            Dictionary<Party, int> scoreboard = new();
+            foreach (var finishBoard in finishBoardMarks)
+            {
+                if (!scoreboard.TryAdd(finishBoard, 1))
+                    scoreboard[finishBoard]++;
+                if (scoreboard[finishBoard] >= (finishBoardMarks.Count + 1) / 2)
+                {
+                    winningParty = finishBoard;
+                    break;
+                }
+            }
+
+            if (winningParty != Party.Null)
+                return false;
+            else
+                return true;
+        }
         #endregion
 
         #region Functions
@@ -67,13 +94,17 @@ namespace Omnis.TicTacToe
         {
             boardSets = new();
             toolkitSets = new();
+            finishBoardMarks = new();
+
             boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, BoardSets));
             toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, ToolkitSets));
+
+            BoardSets.ForEach(boardset => finishBoardMarks.Add(Party.Null));
         }
-        private void CreateGridSet(GameObject prefab, Transform pivot, List<GridSet> gridSet)
+        private void CreateGridSet(GameObject prefab, Transform pivot, List<GridSet> gridSets)
         {
             var go = Instantiate(prefab, pivot);
-            gridSet.Add(go.GetComponent<GridSet>());
+            gridSets.Add(go.GetComponent<GridSet>());
         }
 
         private IEnumerator InitStartup(GameMode mode)
@@ -87,6 +118,50 @@ namespace Omnis.TicTacToe
                     yield return new WaitForSeconds(0.4f);
                 }
             }
+        }
+
+        private void CheckFinishBoard()
+        {
+            List<WhatCountAsARow> rowList = GameManager.Instance.Settings.whatCountAsARow;
+            for (int i = 0; i < BoardSets.Count; i++)
+            {
+                if (finishBoardMarks[i] != Party.Null) continue;
+                for (int rowIndex = 0; rowIndex < rowList.Count; rowIndex++)
+                {
+                    List<PawnId> pawnIdInARow = GetOneRow(BoardSets[i], rowList[rowIndex], out bool isFilled);
+                    if (isFilled && IsThreeInARow(pawnIdInARow))
+                    {
+                        for (int j = 0; j < rowList[rowIndex].indices.Count; j++)
+                            BoardSets[i].GridTiles[rowList[rowIndex].indices[j]].LockDown();
+                        finishBoardMarks[i] = pawnIdInARow[0].party;
+                    }
+                }
+            }
+        }
+        private List<PawnId> GetOneRow(GridSet boardSet, WhatCountAsARow row, out bool isFilled)
+        {
+            List<PawnId> output = new();
+            isFilled = true;
+            for (int i = 0; i < row.indices.Count; i++)
+            {
+                if (boardSet.GridTiles[row.indices[i]].Pawns.Count == 0)
+                {
+                    isFilled = false;
+                    continue;
+                }
+                output.Add(boardSet.GridTiles[row.indices[i]].Pawns[0].Id);
+            }
+            return output;
+        }
+        private bool IsThreeInARow(List<PawnId> pawnIdInARow)
+        {
+            if (pawnIdInARow.Count == 0) return false;
+            for (int successor = 1; successor < pawnIdInARow.Count; successor++)
+            {
+                if (!pawnIdInARow[0].SameWith(pawnIdInARow[successor]))
+                    return false;
+            }
+            return true;
         }
         #endregion
 

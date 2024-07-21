@@ -204,6 +204,7 @@ namespace Omnis.TicTacToe
     public enum PawnInitState
     {
         Appear,
+        Concentrate,
         DoNotAppear,
         Transparent,
     }

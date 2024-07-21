@@ -66,8 +66,10 @@ namespace Omnis.TicTacToe
         {
             Ray r = Camera.main.ScreenPointToRay(value.Get<Vector2>());
             var newHits = Physics.RaycastAll(r).Select(hit => hit.collider).ToList();
-            PointerHits.Except(newHits).ToList().ForEach(hit => hit?.SendMessage("OnPointerExit", options: SendMessageOptions.DontRequireReceiver));
-            newHits.Except(PointerHits).ToList().ForEach(hit => hit?.SendMessage("OnPointerEnter", options: SendMessageOptions.DontRequireReceiver));
+            foreach (var hit in PointerHits.Except(newHits).ToList())
+                if (hit) hit.SendMessage("OnPointerExit", options: SendMessageOptions.DontRequireReceiver);
+            foreach (var hit in newHits.Except(PointerHits).ToList())
+                if (hit) hit.SendMessage("OnPointerEnter", options: SendMessageOptions.DontRequireReceiver);
             PointerHits = newHits;
         }
         #endregion

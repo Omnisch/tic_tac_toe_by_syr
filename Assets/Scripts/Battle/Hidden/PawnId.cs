@@ -70,5 +70,6 @@ namespace Omnis.TicTacToe
         Board,
         Tool,
         ToolInteracted,
+        Lock,
     }
 }

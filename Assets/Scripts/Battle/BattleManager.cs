@@ -57,12 +57,16 @@ namespace Omnis.TicTacToe
                 yield return PlayerMove();
                 if (playerMoveSucceeded)
                 {
+                    chessboard.CheckWinningParty(out winnerParty);
                     postTurnCallback[currPlayerIndex].Invoke();
                     CurrPlayerIndex++;
                     if (CurrPlayerIndex == 0) yield return TimePass();
                 }
                 GameManager.Instance.Controllable = true;
             }
+
+            // settle
+            Time.timeScale = 0f;
         }
         private IEnumerator CreateStartup()
         {

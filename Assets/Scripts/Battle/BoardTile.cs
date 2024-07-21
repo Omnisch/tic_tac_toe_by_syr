@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 namespace Omnis.TicTacToe
 {
     public class BoardTile : GridTile
@@ -18,6 +14,7 @@ namespace Omnis.TicTacToe
             get => isPointed;
             set
             {
+                if (Locked) return;
                 isPointed = value;
                 if (isPointed && GameManager.Instance.Player.FirstTile)
                     hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Appear()));
@@ -47,7 +44,7 @@ namespace Omnis.TicTacToe
         #region Handlers
         protected override void OnInteract()
         {
-            if (!Interactable) return;
+            if (Locked || !Interactable) return;
 
             GameManager.Instance.Player.SecondTile = this;
         }

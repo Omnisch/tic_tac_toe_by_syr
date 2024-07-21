@@ -15,6 +15,7 @@ namespace Omnis.TicTacToe
         protected List<Pawn> pawns;
         protected List<Pawn> hintPawns;
         protected bool selected;
+        protected bool locked;
         #endregion
 
         #region Interfaces
@@ -24,6 +25,7 @@ namespace Omnis.TicTacToe
             get => interactable;
             set
             {
+                if (locked) return;
                 interactable = value;
                 if (interactable)
                     pawns.ForEach(pawn => pawn.Show());
@@ -35,6 +37,11 @@ namespace Omnis.TicTacToe
         {
             get => selected;
             set => selected = value;
+        }
+        public virtual bool Locked
+        {
+            get => locked;
+            set => locked = value;
         }
 
         public void AddPawn(PawnId pawnId, PawnInitState pawnInitState = PawnInitState.Appear) => StartCoroutine(AddPawn(pawns, pawnId, pawnInitState));
@@ -84,6 +91,11 @@ namespace Omnis.TicTacToe
         {
             pawns.Remove(pawn);
         }
+        public void LockDown()
+        {
+            Locked = true;
+            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Lock, false), PawnInitState.Concentrate));
+        }
         #endregion
 
         #region Functions
@@ -100,6 +112,9 @@ namespace Omnis.TicTacToe
                 case PawnInitState.Appear:
                     yield return newPawn.Appear();
                     break;
+                case PawnInitState.Concentrate:
+                    yield return newPawn.Concentrate();
+                    break;
                 case PawnInitState.DoNotAppear:
                     break;
                 case PawnInitState.Transparent:
@@ -114,6 +129,7 @@ namespace Omnis.TicTacToe
         {
             pawns = new();
             hintPawns = new();
+            Locked = false;
             OnStart();
             base.Start();
         }
