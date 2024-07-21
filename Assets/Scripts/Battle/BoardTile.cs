@@ -37,7 +37,7 @@ namespace Omnis.TicTacToe
         #region Functions
         protected override void OnStart()
         {
-            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Board, false), PawnInitState.DoNotAppear));
+            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Board), PawnInitState.DoNotAppear));
         }
         #endregion
 

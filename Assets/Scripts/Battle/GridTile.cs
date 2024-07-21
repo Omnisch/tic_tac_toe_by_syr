@@ -58,7 +58,7 @@ namespace Omnis.TicTacToe
         {
             foreach (var pawn in pawns)
             {
-                PawnId newId = new(pawn.Id.party, pawn.Id.NextType, pawn.Id.canBreathe);
+                PawnId newId = new(pawn.Id.party, pawn.Id.NextType, pawn.Id.breathType);
                 if (pawn == pawns.Last())
                     yield return pawn.ChangeIdAndRefresh(newId);
                 else
@@ -70,9 +70,9 @@ namespace Omnis.TicTacToe
             foreach (var pawn in other.pawns)
             {
                 if (pawn == other.pawns.Last())
-                    yield return AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType));
+                    yield return AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType, pawn.Id.breathType));
                 else
-                    StartCoroutine(AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType)));
+                    StartCoroutine(AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType, pawn.Id.breathType)));
             }
         }
         public IEnumerator RemoveAllPawns()
@@ -94,7 +94,7 @@ namespace Omnis.TicTacToe
         public void LockDown()
         {
             Locked = true;
-            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Lock, false), PawnInitState.Concentrate));
+            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Lock, BreathType.Rolling), PawnInitState.Concentrate));
         }
         #endregion
 

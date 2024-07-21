@@ -20,7 +20,7 @@ namespace Omnis.TicTacToe
         #region Functions
         private void UpdatePawnBreatheScale()
         {
-            pawnBreatheScale = 1f + Instance.Settings.amplitude * Mathf.Sin(2f * Mathf.PI * Instance.Settings.frequency * Time.realtimeSinceStartup);
+            pawnBreatheScale = Instance.Settings.amplitude * Mathf.Sin(2f * Mathf.PI * Instance.Settings.frequency * Time.realtimeSinceStartup);
         }
         #endregion
     }

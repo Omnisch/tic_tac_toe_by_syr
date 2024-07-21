@@ -192,8 +192,23 @@ namespace Omnis.TicTacToe
         }
         private void Update()
         {
-            if (id.canBreathe && doBreathe)
-                SpriteScale = GameManager.Instance.PawnBreatheScale;
+            if (doBreathe)
+            {
+                switch (Id.breathType)
+                {
+                    case BreathType.None:
+                        break;
+                    case BreathType.Breath:
+                        SpriteScale = 1f + GameManager.Instance.PawnBreatheScale;
+                        break;
+                    case BreathType.Floating:
+                        transform.localPosition = new Vector3(transform.localPosition.x, GameManager.Instance.PawnBreatheScale, transform.localPosition.z);
+                        break;
+                    case BreathType.Rolling:
+                        transform.localRotation = Quaternion.Euler(0f, 0f, 50f * GameManager.Instance.PawnBreatheScale);
+                        break;
+                }
+            }
         }
 
         private void OnDestroy()
