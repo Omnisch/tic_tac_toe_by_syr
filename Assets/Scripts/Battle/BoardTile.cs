@@ -20,9 +20,9 @@ namespace Omnis.TicTacToe
             {
                 isPointed = value;
                 if (isPointed && GameManager.Instance.Player.FirstTile)
-                    hintPawns[0].Appear();
+                    StartCoroutine(hintPawns[0].Appear());
                 else
-                    hintPawns[0].Disappear();
+                    StartCoroutine(hintPawns[0].Disappear());
             }
         }
 

@@ -50,13 +50,14 @@ namespace Omnis.TicTacToe
             pawnList.Add(newPawn);
             newPawn.Id = pawnId;
             newPawn.transform.position -= new Vector3(0, 0, 1 + (hintPawns.Count + pawns.Count));
-            if (showInstantly) newPawn.Appear();
+            if (showInstantly)
+                StartCoroutine(newPawn.Appear());
         }
 
         protected void RemoveAll(ref List<Pawn> pawnList)
         {
             if (pawnList.Count == 0) return;
-            pawnList.ForEach(pawn => pawn.DisappearAndDestroy());
+            pawnList.ForEach(pawn => StartCoroutine(pawn.DisappearAndDestroy()));
             pawnList = new();
         }
         #endregion

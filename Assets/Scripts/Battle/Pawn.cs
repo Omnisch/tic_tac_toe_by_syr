@@ -27,7 +27,8 @@ namespace Omnis.TicTacToe
             get => transform.GetComponent<SpriteRenderer>().color.a;
             set => transform.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, value);
         }
-        private int coroutinePriority;
+        private int easePriority;
+        private IEnumerator easeRoutine;
         #endregion
 
         #region Interfaces
@@ -41,34 +42,58 @@ namespace Omnis.TicTacToe
             }
         }
 
-        public void Appear()
+        public IEnumerator Appear()
         {
             doBreathe = false;
-            if (CoroutineIsPrior(1)) StartCoroutine(EaseScale(1f, () => doBreathe = true));
+            if (EaseIsPrior(1))
+                easeRoutine = EaseScale(1f);
+            yield return easeRoutine;
+            doBreathe = true;
         }
 
-        public void Cover()
+        public IEnumerator Concentrate()
         {
             SpriteScale = 2f;
             SpriteAlpha = 0f;
             doBreathe = false;
-            if (CoroutineIsPrior(1))
+            if (EaseIsPrior(1))
             {
-                StartCoroutine(EaseScale(1f, () => doBreathe = true));
+                easeRoutine = EaseScale(1f);
                 StartCoroutine(EaseAlpha(1f));
             }
+            yield return easeRoutine;
+            doBreathe = true;
         }
 
-        public void Disappear()
+        public IEnumerator Disappear()
         {
             doBreathe = false;
-            if (CoroutineIsPrior(2)) StartCoroutine(EaseScale(0f));
+            if (EaseIsPrior(2))
+                easeRoutine = EaseScale(0f);
+            yield return easeRoutine;
         }
 
-        public void DisappearAndDestroy()
+        public IEnumerator DisappearAndDestroy()
+        {
+            yield return Disappear();
+            Destroy(gameObject);
+        }
+
+        public IEnumerator ToNeutralScale()
         {
             doBreathe = false;
-            if (CoroutineIsPrior(2)) StartCoroutine(EaseScale(0f, () => Destroy(gameObject)));
+            if (EaseIsPrior(0))
+                easeRoutine = EaseScale(1f);
+            yield return easeRoutine;
+            doBreathe = true;
+        }
+
+        public IEnumerator Highlight()
+        {
+            doBreathe = false;
+            if (EaseIsPrior(0))
+                easeRoutine = EaseScale(GameManager.Instance.Settings.highlightScale);
+            yield return easeRoutine;
         }
 
         public void Show()
@@ -85,22 +110,10 @@ namespace Omnis.TicTacToe
         {
             SpriteAlpha = 0f;
         }
-
-        public void ToNeutralScale()
-        {
-            doBreathe = false;
-            if (CoroutineIsPrior(0)) StartCoroutine(EaseScale(1f, () => doBreathe = true));
-        }
-
-        public void Highlight()
-        {
-            doBreathe = false;
-            if (CoroutineIsPrior(0)) StartCoroutine(EaseScale(GameManager.Instance.Settings.highlightScale));
-        }
         #endregion
 
         #region Functions
-        private IEnumerator EaseScale(float destScale, System.Action callback = null)
+        private IEnumerator EaseScale(float destScale)
         {
             float epsilon = 2f * GameManager.Instance.Settings.scalingSpeed * Time.deltaTime;
             if (SpriteScale < destScale)
@@ -117,8 +130,7 @@ namespace Omnis.TicTacToe
                 }
             SpriteScale = destScale;
 
-            callback?.Invoke();
-            coroutinePriority = 0;
+            easePriority = 0;
         }
 
         private IEnumerator EaseAlpha(float destAlpha, System.Action callback = null)
@@ -139,16 +151,16 @@ namespace Omnis.TicTacToe
             SpriteAlpha = destAlpha;
 
             callback?.Invoke();
-            coroutinePriority = 0;
+            easePriority = 0;
         }
 
-        private bool CoroutineIsPrior(int priority)
+        private bool EaseIsPrior(int priority)
         {
-            if (priority < coroutinePriority) return false;
+            if (priority < easePriority) return false;
             else
             {
-                StopAllCoroutines();
-                coroutinePriority = priority;
+                if (easeRoutine != null) StopCoroutine(easeRoutine);
+                easePriority = priority;
                 return true;
             }
         }
@@ -159,7 +171,8 @@ namespace Omnis.TicTacToe
         {
             doBreathe = false;
             SpriteScale = 0f;
-            transform.localScale = Vector3.zero;
+            easePriority = 0;
+            easeRoutine = null;
         }
         private void Update()
         {
