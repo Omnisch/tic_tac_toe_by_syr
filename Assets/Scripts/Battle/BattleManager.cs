@@ -39,6 +39,7 @@ namespace Omnis.TicTacToe
         {
             winnerParty = Party.Null;
             players = new();
+            playerMoveSucceeded = true;
 
             yield return new WaitForFixedUpdate();
 
@@ -46,24 +47,23 @@ namespace Omnis.TicTacToe
             Player player1 = new(chessboard.ToolkitSets[1]);
             players.Add(player0);
             players.Add(player1);
+            CurrPlayerIndex = players.Count - 1;
 
             yield return CreateStartup();
 
-            CurrPlayerIndex = 0;
-
             while (winnerParty == Party.Null)
             {
-                yield return new WaitUntil(() => GameManager.Instance.Player.SecondTile != null);
-                GameManager.Instance.Controllable = false;
-                yield return PlayerMove();
                 if (playerMoveSucceeded)
                 {
                     chessboard.CheckWinningParty(out winnerParty);
-                    postTurnCallback[currPlayerIndex].Invoke();
+                    postTurnCallback[CurrPlayerIndex].Invoke();
                     CurrPlayerIndex++;
                     if (CurrPlayerIndex == 0) yield return TimePass();
                 }
                 GameManager.Instance.Controllable = true;
+                yield return new WaitUntil(() => GameManager.Instance.Player.SecondTile != null);
+                GameManager.Instance.Controllable = false;
+                yield return PlayerMove();
             }
 
             // settle
