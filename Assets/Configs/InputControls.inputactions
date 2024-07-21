@@ -67,7 +67,7 @@
                 {
                     "name": "",
                     "id": "c6626616-fabc-4107-9251-3ff69a17b6ff",
-                    "path": "<Touchscreen>/Press",
+                    "path": "<Touchscreen>/primaryTouch/tap",
                     "interactions": "",
                     "processors": "",
                     "groups": "Android",
@@ -82,6 +82,17 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
+                    "action": "Pointer",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "55be9d67-9578-45f3-af66-89e27ec78b5f",
+                    "path": "<Touchscreen>/primaryTouch/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Android",
                     "action": "Pointer",
                     "isComposite": false,
                     "isPartOfComposite": false
