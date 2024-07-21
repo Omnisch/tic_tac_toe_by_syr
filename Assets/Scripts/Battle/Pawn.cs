@@ -49,6 +49,7 @@ namespace Omnis.TicTacToe
             yield return Appear();
         }
 
+        public void AppearForSerializing() => StartCoroutine(Appear());
         public IEnumerator Appear()
         {
             doBreathe = false;
@@ -72,6 +73,7 @@ namespace Omnis.TicTacToe
             doBreathe = true;
         }
 
+        public void DisappearForSerializing() => StartCoroutine(Disappear());
         public IEnumerator Disappear()
         {
             doBreathe = false;

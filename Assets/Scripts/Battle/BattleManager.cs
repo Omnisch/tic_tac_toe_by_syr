@@ -11,6 +11,7 @@ namespace Omnis.TicTacToe
         public GameMode gameMode;
         public ChessboardManager chessboard;
         [SerializeField] private List<UnityEvent> postTurnCallback;
+        [SerializeField] private List<UnityEvent> winningCallback;
         #endregion
 
         #region Fields

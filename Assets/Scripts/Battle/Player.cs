@@ -59,7 +59,7 @@ namespace Omnis.TicTacToe
                     PartySettings firstTilePartySetting = GameManager.Instance.Settings.partySettings[(int)firstTileId.party];
                     if (!firstTilePartySetting.targets[firstTileId.type].interactableParty.Contains(secondTileId.party))
                     {
-                        Camera.main.GetComponentInParent<ChildrenDither>().Stroke(Vector3.one);
+                        Camera.main.GetComponentInParent<Logic>().Invoke();
                         return;
                     }
                 }

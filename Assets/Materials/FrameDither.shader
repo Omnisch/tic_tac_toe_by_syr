@@ -13,9 +13,10 @@ Shader "Custom/FrameDither"
     {
         Tags
         {
-            "RenderType"="Opaque"
-            "PreviewType"="Plane"
+            "PreviewType" = "Plane"
+            "RenderType"="Transparent"
         }
+        Blend SrcAlpha OneMinusSrcAlpha
         LOD 200
 
         Pass
