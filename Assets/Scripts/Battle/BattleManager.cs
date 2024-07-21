@@ -27,6 +27,7 @@ namespace Omnis.TicTacToe
                 players.ForEach(player => player.Active = player == GameManager.Instance.Player);
             }
         }
+        private bool playerMoveSucceeded;
         #endregion
 
         #region Interfaces
@@ -52,17 +53,22 @@ namespace Omnis.TicTacToe
             while (winnerParty == Party.Null)
             {
                 yield return new WaitUntil(() => GameManager.Instance.Player.SecondTile != null);
+                GameManager.Instance.Controllable = false;
                 yield return PlayerMove();
-                postTurnCallback[currPlayerIndex].Invoke();
-                CurrPlayerIndex++;
-                if (CurrPlayerIndex == 0) yield return TimePass();
+                if (playerMoveSucceeded)
+                {
+                    postTurnCallback[currPlayerIndex].Invoke();
+                    CurrPlayerIndex++;
+                    if (CurrPlayerIndex == 0) yield return TimePass();
+                }
+                GameManager.Instance.Controllable = true;
             }
         }
         private IEnumerator CreateStartup()
         {
-            GameManager.Instance.SendMessage("SetInputEnabled", false);
+            GameManager.Instance.Controllable = false;
             yield return chessboard.InitStartupByMode(GameMode.Standard);
-            GameManager.Instance.SendMessage("SetInputEnabled", true);
+            GameManager.Instance.Controllable = true;
         }
         #endregion
 

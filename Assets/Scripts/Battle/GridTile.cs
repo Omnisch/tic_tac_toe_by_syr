@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Omnis.TicTacToe
 {
-    public abstract class GridTile : PointerBase
+    public class GridTile : PointerBase
     {
         #region Serialized Fields
         [SerializeField] private GameObject pawnPrefab;
@@ -42,17 +42,17 @@ namespace Omnis.TicTacToe
         {
             yield return AddPawn(pawns, pawnId, PawnInitState.Appear);
         }
-        public IEnumerator CopyPawnsFrom(GridTile other)
+        public IEnumerator CopyPawnsFrom(List<Pawn> pawnList)
         {
-            foreach (var otherPawn in other.Pawns)
-                yield return AddPawnRoutine(otherPawn.Id);
+            foreach (var pawn in pawnList)
+                yield return AddPawnRoutine(pawn.Id);
         }
         public IEnumerator NextPhase()
         {
-            foreach (var pawn in Pawns)
+            foreach (var pawn in pawns)
             {
                 PawnId newId = new(pawn.Id.party, pawn.Id.NextType, pawn.Id.canBreathe);
-                if (pawn == Pawns.Last())
+                if (pawn == pawns.Last())
                     yield return pawn.ChangeIdAndRefresh(newId);
                 else
                     pawn.StartCoroutine(pawn.ChangeIdAndRefresh(newId));
@@ -60,15 +60,30 @@ namespace Omnis.TicTacToe
         }
         public IEnumerator AddNextPhaseOf(GridTile other)
         {
-            foreach (var pawn in other.Pawns)
+            foreach (var pawn in other.pawns)
             {
-                if (pawn == other.Pawns.Last())
+                if (pawn == other.pawns.Last())
                     yield return AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType));
                 else
                     StartCoroutine(AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType)));
             }
         }
-        public void RemoveAll() => RemoveAll(ref pawns);
+        public IEnumerator RemoveAllPawns()
+        {
+            if (pawns.Count == 0) yield break;
+            foreach (var pawn in pawns)
+            {
+                if (pawn == pawns.Last())
+                    yield return pawn.DisappearAndDestroy();
+                else
+                    pawn.StartCoroutine(pawn.DisappearAndDestroy());
+            }
+        }
+        // only used in OnDestroy() of class Pawn
+        public void SignOut(Pawn pawn)
+        {
+            pawns.Remove(pawn);
+        }
         #endregion
 
         #region Functions
@@ -91,13 +106,6 @@ namespace Omnis.TicTacToe
                     newPawn.Hide();
                     break;
             }
-        }
-
-        protected void RemoveAll(ref List<Pawn> pawnList)
-        {
-            if (pawnList.Count == 0) return;
-            pawnList.ForEach(pawn => StartCoroutine(pawn.DisappearAndDestroy()));
-            pawnList = new();
         }
         #endregion
 

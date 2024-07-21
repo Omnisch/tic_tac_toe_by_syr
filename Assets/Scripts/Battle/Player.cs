@@ -14,6 +14,7 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Interfaces
+        public GridSet Toolkit => toolkit;
         public bool Active
         {
             get => active;

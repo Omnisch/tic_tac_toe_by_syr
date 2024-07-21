@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -12,6 +10,7 @@ namespace Omnis.TicTacToe
 
         #region Fields
         private Player player;
+        private bool controllable;
         #endregion
 
         #region Interfaces
@@ -20,6 +19,15 @@ namespace Omnis.TicTacToe
         {
             get => player;
             set => player = value;
+        }
+        public bool Controllable
+        {
+            get => controllable;
+            set
+            {
+                controllable = value;
+                SendMessage("SetInputEnabled", controllable);
+            }
         }
         #endregion
 

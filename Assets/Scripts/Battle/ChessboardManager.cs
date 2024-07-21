@@ -23,24 +23,42 @@ namespace Omnis.TicTacToe
         public List<GridSet> BoardSets => boardSets;
         public List<GridSet> ToolkitSets => toolkitSets;
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
-        public IEnumerator MultiPhases(GridTile tile)
+        public IEnumerator AddMultiPhases(GridTile tile)
         {
-            for (int i = 0; i < boardSets.Count; i++)
-            {
-                for (int j = 0; j < boardSets[i].GridTiles.Count; j++)
-                {
-                    if (boardSets[i].GridTiles[j] == tile)
+            for (int i = 0; i < BoardSets.Count; i++)
+                for (int j = 0; j < BoardSets[i].GridTiles.Count; j++)
+                    if (BoardSets[i].GridTiles[j] == tile)
                     {
-                        for (int remain = i + 1; remain < boardSets.Count; remain++)
+                        for (int rest = i + 1; rest < BoardSets.Count; rest++)
                         {
-                            if (boardSets[remain].GridTiles[j].Pawns.Count > 0) break;
-                            yield return boardSets[remain].GridTiles[j].AddNextPhaseOf(tile);
-                            tile = boardSets[remain].GridTiles[j];
+                            if (BoardSets[rest].GridTiles[j].Pawns.Count > 0) yield break;
+                            yield return BoardSets[rest].GridTiles[j].AddNextPhaseOf(tile);
+                            tile = BoardSets[rest].GridTiles[j];
                         }
-                        break;
+                        yield break;
                     }
-                }
-            }
+        }
+        public IEnumerator RemoveMultiPhases(GridTile tile)
+        {
+            for (int i = 0; i < BoardSets.Count; i++)
+                for (int j = 0; j < BoardSets[i].GridTiles.Count; j++)
+                    if (BoardSets[i].GridTiles[j] == tile)
+                    {
+                        for (int rest = i + 1; rest < BoardSets.Count; rest++)
+                        {
+                            GridTile currTile = BoardSets[rest].GridTiles[j];
+                            if (currTile.Pawns.Count == 0) yield break;
+                            if (currTile.Pawns[0].Id.party == tile.Pawns[0].Id.party &&
+                                currTile.Pawns[0].Id.type == tile.Pawns[0].Id.NextType)
+                            {
+                                yield return currTile.RemoveAllPawns();
+                                tile = currTile;
+                            }
+                            else
+                                yield break;
+                        }
+                        yield break;
+                    }
         }
         #endregion
 
@@ -49,8 +67,8 @@ namespace Omnis.TicTacToe
         {
             boardSets = new();
             toolkitSets = new();
-            boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, boardSets));
-            toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, toolkitSets));
+            boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, BoardSets));
+            toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, ToolkitSets));
         }
         private void CreateGridSet(GameObject prefab, Transform pivot, List<GridSet> gridSet)
         {
@@ -61,11 +79,11 @@ namespace Omnis.TicTacToe
         private IEnumerator InitStartup(GameMode mode)
         {
             var pawnIds = GameManager.Instance.Settings.startups.startupSets.Find(startup => startup.mode == mode).pawnIds;
-            for (int i = 0; i < toolkitSets.Count; i++)
+            for (int i = 0; i < ToolkitSets.Count; i++)
             {
-                for (int j = 0; j < toolkitSets[0].GridTiles.Count; j++)
+                for (int j = 0; j < ToolkitSets[0].GridTiles.Count; j++)
                 {
-                    toolkitSets[i].GridTiles[j].AddPawn(pawnIds[toolkitSets[0].GridTiles.Count * i + j]);
+                    ToolkitSets[i].GridTiles[j].AddPawn(pawnIds[ToolkitSets[0].GridTiles.Count * i + j]);
                     yield return new WaitForSeconds(0.4f);
                 }
             }

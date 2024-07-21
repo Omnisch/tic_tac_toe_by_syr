@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
 namespace Omnis.TicTacToe
 {
     public class ToolkitTile : GridTile
@@ -35,13 +30,13 @@ namespace Omnis.TicTacToe
                 selected = value;
                 if (selected)
                 {
-                    pawns.ForEach(pawn => StartCoroutine(pawn.Highlight()));
+                    pawns.ForEach(pawn => pawn.StartCoroutine(pawn.Highlight()));
                     hintPawns.Find(pawn => pawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Show();
                 }
                 else
                 {
-                    pawns.ForEach(pawn => StartCoroutine(pawn.ToNeutralScale()));
-                    hintPawns.ForEach(hintPawn => StartCoroutine(hintPawn.Disappear()));
+                    pawns.ForEach(pawn => pawn.StartCoroutine(pawn.ToNeutralScale()));
+                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Disappear()));
                     hintPawns.Find(pawn => pawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Hide();
                 }
             }

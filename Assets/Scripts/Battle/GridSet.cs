@@ -27,6 +27,8 @@ namespace Omnis.TicTacToe
             if (background) background.color = new Color(1f, 1f, 1f, 0.5f);
             gridTiles.ForEach(gridTile => gridTile.Interactable = false);
         }
+
+        public GridTile FindFirstAvailable() => gridTiles.Find(tile => tile.Pawns.Count == 0);
         #endregion
 
         #region Unity Methods

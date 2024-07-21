@@ -17,32 +17,29 @@ namespace Omnis.TicTacToe
         private IEnumerator PlayerMove()
         {
             Player player = GameManager.Instance.Player;
+            playerMoveSucceeded = true;
             switch (player.FirstTile.Pawns[0].Id.party)
             {
                 case Party.Nature:
-                    yield return Transport();
-                    yield return chessboard.MultiPhases(player.SecondTile);
+                    yield return Transport(player.FirstTile, player.SecondTile);
+                    yield return chessboard.AddMultiPhases(player.SecondTile);
                     break;
                 case Party.Artifact:
-                    yield return Transport();
-                    yield return chessboard.MultiPhases(player.SecondTile);
+                    yield return Transport(player.FirstTile, player.SecondTile);
+                    yield return chessboard.AddMultiPhases(player.SecondTile);
                     break;
                 case Party.Tool:
                     {
                         switch ((ToolType)player.FirstTile.Pawns[0].Id.type)
                         {
                             case ToolType.Shovel1:
-                                DigBack(player, player.FirstTile);
+                                yield return DigBack(player, player.SecondTile);
                                 break;
                             case ToolType.Shovel2:
-                                DigBack(player, player.FirstTile);
-                                break;
-                            default:
+                                yield return DigBack(player, player.SecondTile);
                                 break;
                         }
                     }
-                    break;
-                default:
                     break;
             }
             DeselectAll();
@@ -52,20 +49,30 @@ namespace Omnis.TicTacToe
         private void DeselectAll()
         {
             Player player = GameManager.Instance.Player;
-            player.SecondTile = null;
             player.FirstTile = null;
+            player.SecondTile = null;
         }
 
-        private IEnumerator Transport()
+        private IEnumerator Transport(GridTile fromTile, GridTile toTile)
         {
-            Player player = GameManager.Instance.Player;
-            yield return player.SecondTile.CopyPawnsFrom(player.FirstTile);
-            player.FirstTile.RemoveAll();
+            List<Pawn> tempPawnList = fromTile.Pawns;
+            fromTile.StartCoroutine(fromTile.RemoveAllPawns());
+            yield return toTile.CopyPawnsFrom(tempPawnList);
         }
 
-        private void DigBack(Player player, GridTile toDig)
+        private IEnumerator DigBack(Player player, GridTile toDig)
         {
-
+            GridTile toPut = player.Toolkit.FindFirstAvailable();
+            if (!toPut)
+            {
+                playerMoveSucceeded = false;
+                yield break;
+            }
+            else
+            {
+                yield return chessboard.RemoveMultiPhases(toDig);
+                yield return Transport(toDig, toPut);
+            }
         }
 
         private IEnumerator TimePass()

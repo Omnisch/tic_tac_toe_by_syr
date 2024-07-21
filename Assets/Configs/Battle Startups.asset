@@ -17,41 +17,25 @@ MonoBehaviour:
     pawnIds:
     - party: 3
       type: 0
-      parent: {fileID: 0}
       canBreathe: 1
-      canHighlight: 0
     - party: 1
       type: 0
-      parent: {fileID: 0}
       canBreathe: 1
-      canHighlight: 0
     - party: 1
       type: 0
-      parent: {fileID: 0}
       canBreathe: 1
-      canHighlight: 0
     - party: 1
       type: 0
-      parent: {fileID: 0}
       canBreathe: 1
-      canHighlight: 0
     - party: 2
       type: 0
-      parent: {fileID: 0}
       canBreathe: 1
-      canHighlight: 0
     - party: 2
       type: 0
-      parent: {fileID: 0}
       canBreathe: 1
-      canHighlight: 0
     - party: 2
       type: 0
-      parent: {fileID: 0}
       canBreathe: 1
-      canHighlight: 0
     - party: 3
-      type: 0
-      parent: {fileID: 0}
+      type: 1
       canBreathe: 1
-      canHighlight: 0

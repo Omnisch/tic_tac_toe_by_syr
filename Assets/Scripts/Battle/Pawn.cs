@@ -83,7 +83,7 @@ namespace Omnis.TicTacToe
         public IEnumerator DisappearAndDestroy()
         {
             yield return Disappear();
-            Destroy(gameObject);
+            StartCoroutine(DestroyAfterPlayerMove());
         }
 
         public IEnumerator ToNeutralScale()
@@ -171,6 +171,13 @@ namespace Omnis.TicTacToe
                 return true;
             }
         }
+
+        private IEnumerator DestroyAfterPlayerMove()
+        {
+            yield return new WaitUntil(() => GameManager.Instance.Controllable);
+            StopAllCoroutines();
+            Destroy(gameObject);
+        }
         #endregion
 
         #region Unity Methods
@@ -185,6 +192,11 @@ namespace Omnis.TicTacToe
         {
             if (id.canBreathe && doBreathe)
                 SpriteScale = GameManager.Instance.PawnBreatheScale;
+        }
+
+        private void OnDestroy()
+        {
+            GetComponentInParent<GridTile>()?.SignOut(this);
         }
         #endregion
     }
