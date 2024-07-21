@@ -42,6 +42,13 @@ namespace Omnis.TicTacToe
             }
         }
 
+        public IEnumerator ChangeIdAndRefresh(PawnId newId)
+        {
+            yield return Disappear();
+            Id = newId;
+            yield return Appear();
+        }
+
         public IEnumerator Appear()
         {
             doBreathe = false;

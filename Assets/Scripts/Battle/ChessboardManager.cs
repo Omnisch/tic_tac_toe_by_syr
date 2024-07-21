@@ -23,7 +23,7 @@ namespace Omnis.TicTacToe
         public List<GridSet> BoardSets => boardSets;
         public List<GridSet> ToolkitSets => toolkitSets;
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
-        public void MultiPhases(GridTile tile)
+        public IEnumerator MultiPhases(GridTile tile)
         {
             for (int i = 0; i < boardSets.Count; i++)
             {
@@ -34,7 +34,7 @@ namespace Omnis.TicTacToe
                         for (int remain = i + 1; remain < boardSets.Count; remain++)
                         {
                             if (boardSets[remain].GridTiles[j].Pawns.Count > 0) break;
-                            boardSets[remain].GridTiles[j].AddNextPhaseOf(tile);
+                            yield return boardSets[remain].GridTiles[j].AddNextPhaseOf(tile);
                             tile = boardSets[remain].GridTiles[j];
                         }
                         break;

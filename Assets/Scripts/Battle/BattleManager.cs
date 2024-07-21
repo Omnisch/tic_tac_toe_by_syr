@@ -55,6 +55,7 @@ namespace Omnis.TicTacToe
                 yield return PlayerMove();
                 postTurnCallback[currPlayerIndex].Invoke();
                 CurrPlayerIndex++;
+                if (CurrPlayerIndex == 0) yield return TimePass();
             }
         }
         private IEnumerator CreateStartup()

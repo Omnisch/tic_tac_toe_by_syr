@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -20,11 +21,11 @@ namespace Omnis.TicTacToe
             {
                 case Party.Nature:
                     yield return Transport();
-                    chessboard.MultiPhases(player.SecondTile);
+                    yield return chessboard.MultiPhases(player.SecondTile);
                     break;
                 case Party.Artifact:
                     yield return Transport();
-                    chessboard.MultiPhases(player.SecondTile);
+                    yield return chessboard.MultiPhases(player.SecondTile);
                     break;
                 case Party.Tool:
                     {
@@ -65,6 +66,20 @@ namespace Omnis.TicTacToe
         private void DigBack(Player player, GridTile toDig)
         {
 
+        }
+
+        private IEnumerator TimePass()
+        {
+            foreach (var boardSet in chessboard.BoardSets)
+            {
+                foreach (var boardTile in boardSet.GridTiles)
+                {
+                    if (boardSet == chessboard.BoardSets.Last() && boardTile == boardSet.GridTiles.Last())
+                        yield return boardTile.NextPhase();
+                    else
+                        boardTile.StartCoroutine(boardTile.NextPhase());
+                }
+            }
         }
         #endregion
     }

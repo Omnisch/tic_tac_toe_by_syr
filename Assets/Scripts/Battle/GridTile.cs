@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -46,8 +47,27 @@ namespace Omnis.TicTacToe
             foreach (var otherPawn in other.Pawns)
                 yield return AddPawnRoutine(otherPawn.Id);
         }
-        //public void NextPhase() => 
-        public void AddNextPhaseOf(GridTile other) => other.Pawns.ForEach(pawn => this.AddPawn(new(pawn.Id.party, pawn.Id.NextType)));
+        public IEnumerator NextPhase()
+        {
+            foreach (var pawn in Pawns)
+            {
+                PawnId newId = new(pawn.Id.party, pawn.Id.NextType, pawn.Id.canBreathe);
+                if (pawn == Pawns.Last())
+                    yield return pawn.ChangeIdAndRefresh(newId);
+                else
+                    pawn.StartCoroutine(pawn.ChangeIdAndRefresh(newId));
+            }
+        }
+        public IEnumerator AddNextPhaseOf(GridTile other)
+        {
+            foreach (var pawn in other.Pawns)
+            {
+                if (pawn == other.Pawns.Last())
+                    yield return AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType));
+                else
+                    StartCoroutine(AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType)));
+            }
+        }
         public void RemoveAll() => RemoveAll(ref pawns);
         #endregion
 
