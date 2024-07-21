@@ -7,7 +7,7 @@ namespace Omnis.TicTacToe
     public partial class Player
     {
         #region Fields
-        private GridSet toolkit;
+        private readonly GridSet toolkit;
         private bool active;
         private GridTile firstTile;
         private GridTile secondTile;
@@ -39,7 +39,30 @@ namespace Omnis.TicTacToe
             get => secondTile;
             set
             {
-                if (!FirstTile) return;
+                if (value == null)
+                {
+                    secondTile = value;
+                    return;
+                }
+                if (!FirstTile)
+                {
+                    return;
+                }
+                {
+                    PawnId firstTileId = FirstTile.Pawns[0].Id;
+                    PawnId secondTileId;
+                    if (value.Pawns.Count > 0)
+                        secondTileId = value.Pawns[0].Id;
+                    else 
+                        secondTileId = new(Party.Null);
+                    PartySettings firstTilePartySetting = GameManager.Instance.Settings.partySettings[(int)firstTileId.party];
+                    if (!firstTilePartySetting.targets[firstTileId.type].interactableParty.Contains(secondTileId.party))
+                    {
+                        Camera.main.GetComponentInParent<ChildrenDither>().Stroke();
+                        return;
+                    }
+                }
+
                 if (secondTile) secondTile.Selected = false;
                 secondTile = value;
                 if (secondTile) secondTile.Selected = true;

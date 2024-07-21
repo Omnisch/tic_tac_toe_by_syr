@@ -7,7 +7,7 @@ namespace Omnis
     public class ChildrenDither : MonoBehaviour
     {
         #region Interfaces
-        public void Stroke(float force)
+        public void Stroke(float force = 100f)
         {
             transform.GetComponentsInChildren<Rigidbody>().ToList().ForEach(child => child.AddForce(force * new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f).normalized));
         }

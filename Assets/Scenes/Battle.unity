@@ -1029,19 +1029,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   callback:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1161498384}
-        m_TargetAssemblyTypeName: Omnis.ChildrenDither, Assembly-CSharp
-        m_MethodName: Stroke
-        m_Mode: 4
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 100
-          m_StringArgument: Tick
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1569675557
 GameObject:
   m_ObjectHideFlags: 0

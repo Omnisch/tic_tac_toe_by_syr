@@ -15,13 +15,20 @@ namespace Omnis.TicTacToe
         [Space]
         public float scalingSpeed;
         public float highlightScale;
-        public List<PartySprites> partySprites;
+        public List<PartySettings> partySettings;
     }
 
     [Serializable]
-    public class PartySprites
+    public class PartySettings
     {
         public Party partyName;
-        [SerializeField] public Sprite[] sprites;
+        [SerializeField] public List<Sprite> sprites;
+        [SerializeField] public List<PartyTarget> targets;
+    }
+
+    [Serializable]
+    public struct PartyTarget
+    {
+        public List<Party> interactableParty;
     }
 }
