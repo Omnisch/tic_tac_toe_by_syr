@@ -64,8 +64,8 @@ namespace Omnis.TicTacToe
             }
             else
             {
-                yield return chessboard.RemoveMultiPhases(toDig);
                 yield return Transport(toDig, toPut);
+                yield return chessboard.RemoveMultiPhases(toDig);
             }
         }
 

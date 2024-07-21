@@ -51,11 +51,12 @@ namespace Omnis.TicTacToe
 
             yield return CreateStartup();
 
-            while (winnerParty == Party.Null)
+            while (true)
             {
                 if (playerMoveSucceeded)
                 {
                     chessboard.CheckWinningParty(out winnerParty);
+                    if (winnerParty != Party.Null) break;
                     postTurnCallback[CurrPlayerIndex].Invoke();
                     CurrPlayerIndex++;
                     if (CurrPlayerIndex == 0) yield return TimePass();
@@ -67,7 +68,8 @@ namespace Omnis.TicTacToe
             }
 
             // settle
-            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(1.5f);
+            winningCallback[(int)winnerParty - 1].Invoke();
         }
         private IEnumerator CreateStartup()
         {
