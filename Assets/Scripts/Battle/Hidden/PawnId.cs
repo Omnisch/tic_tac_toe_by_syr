@@ -74,6 +74,9 @@ namespace Omnis.TicTacToe
         Tool,
         ToolInteracted,
         Lock,
+        Skip,
+        Confirm,
+        ConfirmHighlighted,
     }
 
     public enum BreathType
