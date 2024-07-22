@@ -960,7 +960,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e82580cc5e84404b93d3399c0002242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 0
+  gameMode: 1
   chessboard: {fileID: 1569675559}
   postTurnCallback:
   - m_PersistentCalls:

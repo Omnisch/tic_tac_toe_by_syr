@@ -25,10 +25,12 @@ namespace Omnis.TicTacToe
                         switch ((ToolType)player.FirstTile.Pawns[0].Id.type)
                         {
                             case ToolType.Shovel1:
-                                yield return DigBack(player, player.SecondTile);
-                                break;
                             case ToolType.Shovel2:
                                 yield return DigBack(player, player.SecondTile);
+                                break;
+                            case ToolType.Hammer1:
+                            case ToolType.Hammer2:
+                                yield return Erase(player.SecondTile);
                                 break;
                         }
                     }
@@ -66,6 +68,12 @@ namespace Omnis.TicTacToe
                 yield return chessboard.RemoveMultiPhases(toDig);
             }
         }
+
+        private IEnumerator Erase(GridTile toErase)
+        {
+            yield return toErase.RemoveAllPawns();
+            yield return chessboard.RemoveMultiPhases(toErase);
+        }    
 
         private IEnumerator TimePass()
         {
