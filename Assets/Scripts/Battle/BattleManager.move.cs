@@ -91,7 +91,7 @@ namespace Omnis.TicTacToe
                         boardTile.StartCoroutine(boardTile.NextPhase());
                 }
             }
-            if (gameMode == GameMode.Blindfold) chessboard.BlindfoldSet++;
+            if (gameMode == GameMode.Blindfold) chessboard.BlindfoldSetIndex++;
         }
         #endregion
     }

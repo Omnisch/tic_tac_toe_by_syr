@@ -25,7 +25,7 @@ namespace Omnis.TicTacToe
         public List<GridSet> BoardSets => boardSets;
         public List<GridSet> ToolkitSets => toolkitSets;
 
-        public int BlindfoldSet
+        public int BlindfoldSetIndex
         {
             get => blindfoldSetIndex;
             set
@@ -108,7 +108,7 @@ namespace Omnis.TicTacToe
             boardSets = new();
             toolkitSets = new();
             finishBoardMarks = new();
-            BlindfoldSet = -1;
+            BlindfoldSetIndex = -1;
 
             boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, BoardSets));
             toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, ToolkitSets));
