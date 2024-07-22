@@ -108,7 +108,7 @@ namespace Omnis.TicTacToe
 
         private IEnumerator InitStartup(GameMode mode)
         {
-            var pawnIds = GameManager.Instance.Settings.startups.startupSets.Find(startup => startup.mode == mode).pawnIds;
+            var pawnIds = GameManager.Instance.Settings.gameModeSettings.Find(gameMode => gameMode.modeName == mode).startup;
             for (int i = 0; i < ToolkitSets.Count; i++)
             {
                 for (int j = 0; j < ToolkitSets[0].GridTiles.Count; j++)

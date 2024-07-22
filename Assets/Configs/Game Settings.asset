@@ -12,11 +12,98 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464eec925fab3864d9530b238f75d137, type: 3}
   m_Name: Game Settings
   m_EditorClassIdentifier: 
-  startups: {fileID: 11400000, guid: 87485fb7e9b34b84db9d1563123cf23f, type: 2}
   amplitude: 0.08
   frequency: 0.25
   scalingSpeed: 8
   highlightScale: 1.2
+  gameModeSettings:
+  - modeName: 0
+    allowSkip: 0
+    reloadWhenSkip: 0
+    doBlindfold: 0
+    startup:
+    - party: 3
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 3
+      type: 1
+      breathType: 1
+  - modeName: 1
+    allowSkip: 1
+    reloadWhenSkip: 1
+    doBlindfold: 0
+    startup:
+    - party: 3
+      type: 2
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 3
+      type: 3
+      breathType: 1
+  - modeName: 2
+    allowSkip: 1
+    reloadWhenSkip: 0
+    doBlindfold: 1
+    startup:
+    - party: 3
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 3
+      type: 1
+      breathType: 1
   partySettings:
   - partyName: 0
     sprites:
