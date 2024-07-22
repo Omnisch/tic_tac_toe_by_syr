@@ -10,6 +10,7 @@ namespace Omnis.TicTacToe
         #region Serialized Fields
         public GameMode gameMode;
         public ChessboardManager chessboard;
+        [SerializeField] private ClockTile clock;
         [SerializeField] private List<UnityEvent> postTurnCallback;
         [SerializeField] private List<PartyCallback> winnerCallback;
         #endregion
@@ -48,6 +49,7 @@ namespace Omnis.TicTacToe
             players.Add(player0);
             players.Add(player1);
             CurrPlayerIndex = players.Count - 1;
+            clock.Locked = !GameManager.Instance.Settings.gameModeSettings.Find(gameModeSetting => gameModeSetting.modeName == gameMode).allowSkip;
 
             yield return CreateStartup();
 

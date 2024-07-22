@@ -41,11 +41,7 @@ namespace Omnis.TicTacToe
         public virtual bool Locked
         {
             get => locked;
-            set
-            {
-                locked = value;
-                if (locked) StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Lock, BreathType.Rolling), PawnInitState.Concentrate));
-            }
+            set => locked = value;
         }
 
         public void AddPawn(PawnId pawnId, PawnInitState pawnInitState = PawnInitState.Appear) => StartCoroutine(AddPawn(pawns, pawnId, pawnInitState));

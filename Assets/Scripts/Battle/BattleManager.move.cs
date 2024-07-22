@@ -34,6 +34,8 @@ namespace Omnis.TicTacToe
                             case ToolType.Hammer2:
                                 yield return Erase(player.SecondTile);
                                 break;
+                            case ToolType.Clock:
+                                break;
                         }
                     }
                     break;
@@ -83,7 +85,7 @@ namespace Omnis.TicTacToe
             {
                 foreach (var boardTile in boardSet.GridTiles)
                 {
-                    if (boardSet == chessboard.BoardSets.Last() && boardTile == boardSet.GridTiles.Last())
+                    if (boardTile == boardSet.GridTiles.Last())
                         yield return boardTile.NextPhase();
                     else
                         boardTile.StartCoroutine(boardTile.NextPhase());

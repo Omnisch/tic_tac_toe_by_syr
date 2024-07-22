@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: a2f50cf97aaa8cd40b1a63c1115d602d, type: 3}
+    - target: {fileID: 2970767761413131917, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1f045d3d9036876498cff44723a605af, type: 2}
     - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -528,6 +532,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 4317b9343c3bedb43a0300e475b331bc, type: 3}
+    - target: {fileID: 2970767761413131917, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1f045d3d9036876498cff44723a605af, type: 2}
     - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -705,150 +713,6 @@ Transform:
   - {fileID: 1384702093}
   m_Father: {fileID: 2059628106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &751197143
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 857029469}
-    m_Modifications:
-    - target: {fileID: 2970767761413131917, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: d1687bfda13fb7040b8baeef7496f2b2, type: 3}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -6.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_Name
-      value: Clock
-      objectReference: {fileID: 0}
-    - target: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8991361498019081127, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      propertyPath: id.breathType
-      value: 3
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 751197146}
-    - targetCorrespondingSourceObject: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 751197150}
-  m_SourcePrefab: {fileID: 100100000, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
---- !u!4 &751197144 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5316367964450099674, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-  m_PrefabInstance: {fileID: 751197143}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &751197145 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-  m_PrefabInstance: {fileID: 751197143}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &751197146
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 751197145}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8f7f1ae5748a49f41a840491c397aa30, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &751197147 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8991361498019081127, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-  m_PrefabInstance: {fileID: 751197143}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 751197145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 68d1f4776e6cc57449cd36cd2818f302, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &751197150
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 751197145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ef7f15463f8a7b4a923b20b99a84914, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  callback:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 751197147}
-        m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
-        m_MethodName: AppearForSerializing
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &857029468
 GameObject:
   m_ObjectHideFlags: 0
@@ -880,7 +744,7 @@ Transform:
   m_Children:
   - {fileID: 1937808905}
   - {fileID: 65189706}
-  - {fileID: 751197144}
+  - {fileID: 3128311147368433386}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &900309750
@@ -962,13 +826,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMode: 1
   chessboard: {fileID: 1569675559}
+  clock: {fileID: 8446610765533187007}
   postTurnCallback:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 751197146}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
+      - m_Target: {fileID: 8446610765533187007}
+        m_TargetAssemblyTypeName: Omnis.TicTacToe.ClockTile, Assembly-CSharp
+        m_MethodName: TriggerTick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -991,10 +856,10 @@ MonoBehaviour:
         m_CallState: 2
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 751197146}
-        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
-        m_MethodName: SetTrigger
-        m_Mode: 5
+      - m_Target: {fileID: 8446610765533187007}
+        m_TargetAssemblyTypeName: Omnis.TicTacToe.ClockTile, Assembly-CSharp
+        m_MethodName: TriggerTick
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3249,6 +3114,73 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!4 &3128311147368433386
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594840217232916334}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -6.7, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 857029469}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6594840217232916334
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3128311147368433386}
+  - component: {fileID: 8446610765533187006}
+  - component: {fileID: 8446610765533187007}
+  m_Layer: 0
+  m_Name: Clock Tile
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &8446610765533187006
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594840217232916334}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8446610765533187007
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6594840217232916334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ebc0a470cd0e7043ab9bd220f441405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pawnPrefab: {fileID: 474826590941408069, guid: 3245206861a48174eb72d302315eea43, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -2,12 +2,6 @@ namespace Omnis.TicTacToe
 {
     public class BoardTile : GridTile
     {
-        #region Serialized Fields
-        #endregion
-
-        #region Fields
-        #endregion
-
         #region Interfaces
         public override bool IsPointed
         {
@@ -30,6 +24,15 @@ namespace Omnis.TicTacToe
             {
                 if (pawns.Count > 0) return;
                 picked = value;
+            }
+        }
+        public override bool Locked
+        {
+            get => locked;
+            set
+            {
+                locked = value;
+                if (locked) StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Lock, BreathType.Rolling), PawnInitState.Concentrate));
             }
         }
         #endregion

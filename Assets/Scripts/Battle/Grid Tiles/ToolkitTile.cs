@@ -2,18 +2,13 @@ namespace Omnis.TicTacToe
 {
     public class ToolkitTile : GridTile
     {
-        #region Serialized Fields
-        #endregion
-
-        #region Fields
-        #endregion
-
         #region Interfaces
         public override bool IsPointed
         {
             get => isPointed;
             set
             {
+                if (Locked) return;
                 isPointed = value;
                 if (isPointed && pawns.Count > 0)
                     hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Appear()));
