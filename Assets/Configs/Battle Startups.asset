@@ -39,3 +39,55 @@ MonoBehaviour:
     - party: 3
       type: 1
       breathType: 1
+  - mode: 1
+    pawnIds:
+    - party: 3
+      type: 2
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 3
+      type: 3
+      breathType: 1
+  - mode: 2
+    pawnIds:
+    - party: 3
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 1
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 2
+      type: 0
+      breathType: 1
+    - party: 3
+      type: 1
+      breathType: 1

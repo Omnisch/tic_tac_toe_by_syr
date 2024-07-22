@@ -49,9 +49,13 @@ MonoBehaviour:
     sprites:
     - {fileID: 21300000, guid: 3f8ccc89dfbf7664fa0f584588541913, type: 3}
     - {fileID: 21300000, guid: 3f8ccc89dfbf7664fa0f584588541913, type: 3}
+    - {fileID: 21300000, guid: 3f8ccc89dfbf7664fa0f584588541913, type: 3}
+    - {fileID: 21300000, guid: 3f8ccc89dfbf7664fa0f584588541913, type: 3}
     targets:
     - interactableParty: 01000000
     - interactableParty: 02000000
+    - interactableParty: 02000000
+    - interactableParty: 01000000
   - partyName: 4
     sprites:
     - {fileID: 21300000, guid: 849df13f4d7cb6442ba98f5a48281389, type: 3}

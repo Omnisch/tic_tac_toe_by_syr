@@ -73,7 +73,7 @@ namespace Omnis.TicTacToe
         private IEnumerator CreateStartup()
         {
             GameManager.Instance.Controllable = false;
-            yield return chessboard.InitStartupByMode(GameMode.Standard);
+            yield return chessboard.InitStartupByMode(gameMode);
             GameManager.Instance.Controllable = true;
         }
         #endregion

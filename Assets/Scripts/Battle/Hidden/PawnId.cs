@@ -63,6 +63,8 @@ namespace Omnis.TicTacToe
     {
         Shovel1,
         Shovel2,
+        Hammer1,
+        Hammer2,
     }
 
     public enum HintType

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace Omnis.TicTacToe
 {
@@ -19,6 +18,8 @@ namespace Omnis.TicTacToe
 
     public enum GameMode
     {
-        Standard,
+        Relax,
+        NoDraw,
+        Blindfold,
     }
 }
