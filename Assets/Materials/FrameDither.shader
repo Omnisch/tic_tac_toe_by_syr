@@ -3,7 +3,6 @@ Shader "Custom/FrameDither"
     Properties
     {
         _MainTex ("BaseMap", 2D) = "white" {}
-        _PostTex ("SubBaseMap", 2D) = "white" {}
         _NoiseTex ("NoiseMap", 2D) = "white" {}
         _NoiseScale ("Noise Scale", Range(-0.5, 0.5)) = 0.01
         _Frequency("Frequency", Range(0.1, 1)) = 0.33
@@ -23,6 +22,7 @@ Shader "Custom/FrameDither"
         {
             CGPROGRAM
             #include "UnityCG.cginc"
+            #include "DispersedDither.cginc"
             #pragma vertex vert_img
             #pragma fragment frag
 
@@ -42,14 +42,10 @@ Shader "Custom/FrameDither"
 
             float4 frag(v2f i) : SV_Target
             {
-                float distort = (uint)(_Time.y / _Frequency) % _FrameCount;
-                float2 cycle = float2(cos(distort), sin(distort + 3.14));
-                float4 cNoise = tex2D(_NoiseTex, i.uv + cycle);
-                float4 cMain = tex2D(_MainTex, i.uv + _NoiseScale * cNoise.rg);
-                float4 cPost = tex2D(_PostTex, i.uv);
-                float4 c = cMain * cPost;
-
-                return c;
+                float4 cNoise = tex2D(_NoiseTex, i.uv + DispersedDither(_Frequency, _FrameCount));
+                cNoise = saturate(cNoise) - 0.5;
+                float4 cMain = tex2D(_MainTex, i.uv + _NoiseScale * cNoise.gb);
+                return cMain;
             }
             ENDCG
         }

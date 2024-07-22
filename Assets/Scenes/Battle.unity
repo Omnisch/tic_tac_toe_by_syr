@@ -426,6 +426,7 @@ GameObject:
   m_Component:
   - component: {fileID: 315192889}
   - component: {fileID: 315192890}
+  - component: {fileID: 315192891}
   m_Layer: 0
   m_Name: Nature Win
   m_TagString: Untagged
@@ -468,7 +469,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b3c6230c218bc4aa9b6b71ee1485c5, type: 2}
+  - {fileID: 2100000, guid: d2467d9104813af44848dff237e31a70, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -500,6 +501,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &315192891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 315192888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bf9391a878f104c9807531e0492efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: d2467d9104813af44848dff237e31a70, type: 2}
+  nameOfSetFloat: _DisplayPercentage
+  lerpSpeed: 0.01
 --- !u!1001 &581902438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1016,6 +1032,18 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 1
           m_CallState: 2
+        - m_Target: {fileID: 315192891}
+          m_TargetAssemblyTypeName: Omnis.PassFloatToMaterial, Assembly-CSharp
+          m_MethodName: LerpFromZeroToOne
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
   - party: 2
     callback:
       m_PersistentCalls:
@@ -1024,6 +1052,18 @@ MonoBehaviour:
           m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: SetActive
           m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+        - m_Target: {fileID: 1808695719}
+          m_TargetAssemblyTypeName: Omnis.PassFloatToMaterial, Assembly-CSharp
+          m_MethodName: LerpFromZeroToOne
+          m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1937,7 +1977,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   callback:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 315192888}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 315192891}
+        m_TargetAssemblyTypeName: Omnis.PassFloatToMaterial, Assembly-CSharp
+        m_MethodName: LerpFromZeroToOne
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1569675557
 GameObject:
   m_ObjectHideFlags: 0
@@ -2549,6 +2613,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1808695717}
   - component: {fileID: 1808695718}
+  - component: {fileID: 1808695719}
   m_Layer: 0
   m_Name: Artifact Win
   m_TagString: Untagged
@@ -2591,7 +2656,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 93b3c6230c218bc4aa9b6b71ee1485c5, type: 2}
+  - {fileID: 2100000, guid: d2467d9104813af44848dff237e31a70, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2623,6 +2688,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1808695719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1808695716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9bf9391a878f104c9807531e0492efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: d2467d9104813af44848dff237e31a70, type: 2}
+  nameOfSetFloat: _DisplayPercentage
+  lerpSpeed: 0.01
 --- !u!1001 &1857452020
 PrefabInstance:
   m_ObjectHideFlags: 0
