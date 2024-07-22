@@ -8,6 +8,7 @@ namespace Omnis.TicTacToe
     public class GameSettings : ScriptableObject
     {
         [Header("Pawn")]
+        public GameObject pawnPrefab;
         public float amplitude;
         public float frequency;
         [Space]

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 464eec925fab3864d9530b238f75d137, type: 3}
   m_Name: Game Settings
   m_EditorClassIdentifier: 
+  pawnPrefab: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
   amplitude: 0.08
   frequency: 0.25
   scalingSpeed: 8

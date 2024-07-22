@@ -7,10 +7,6 @@ namespace Omnis.TicTacToe
 {
     public class GridTile : PointerBase
     {
-        #region Serialized Fields
-        [SerializeField] private GameObject pawnPrefab;
-        #endregion
-
         #region Fields
         protected List<Pawn> pawns;
         protected List<Pawn> hintPawns;
@@ -95,7 +91,7 @@ namespace Omnis.TicTacToe
 
         protected IEnumerator AddPawn(List<Pawn> pawnList, PawnId pawnId, PawnInitState pawnInitState)
         {
-            var newPawn = Instantiate(pawnPrefab, transform).GetComponent<Pawn>();
+            var newPawn = Instantiate(GameManager.Instance.Settings.pawnPrefab, transform).GetComponent<Pawn>();
             pawnList.Add(newPawn);
             newPawn.Id = pawnId;
             newPawn.transform.position -= new Vector3(0, 0, 1 + (hintPawns.Count + pawns.Count));
