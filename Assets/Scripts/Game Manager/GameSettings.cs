@@ -9,11 +9,11 @@ namespace Omnis.TicTacToe
     {
         [Header("Pawn")]
         public GameObject pawnPrefab;
-        public float amplitude;
-        public float frequency;
+        [Min(0f)] public float breathAmplitude;
+        [Min(0.01f)] public float breathFrequency;
         [Space]
-        public float scalingSpeed;
-        public float highlightScale;
+        [Range(1f, 100f)] public float lerpSpeed;
+        [Range(0f,   2f)] public float highlightScale;
         [Header("Rule Settings")]
         public List<GameModeSetting> gameModeSettings;
         public List<PartySettings> partySettings;

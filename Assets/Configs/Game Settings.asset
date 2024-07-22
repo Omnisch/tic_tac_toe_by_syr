@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Game Settings
   m_EditorClassIdentifier: 
   pawnPrefab: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
-  amplitude: 0.08
-  frequency: 0.25
-  scalingSpeed: 20
+  breathAmplitude: 0.08
+  breathFrequency: 0.25
+  lerpSpeed: 20
   highlightScale: 1.2
   gameModeSettings:
   - modeName: 0

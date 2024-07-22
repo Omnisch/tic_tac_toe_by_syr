@@ -28,7 +28,7 @@ namespace Omnis.TicTacToe
             set => transform.GetComponent<SpriteRenderer>().color = new Color(1f, 1f, 1f, value);
         }
         private int easePriority;
-        private IEnumerator easeRoutine;
+        private IEnumerator scalingRoutine;
         #endregion
 
         #region Interfaces
@@ -54,19 +54,26 @@ namespace Omnis.TicTacToe
         {
             doBreathe = false;
             if (EaseIsPrior(1))
-                easeRoutine = LerpScale(1f);
-            yield return easeRoutine;
+                scalingRoutine = LerpScale(1f);
+            yield return scalingRoutine;
             doBreathe = true;
         }
 
         public void DisappearForSerializing() => StartCoroutine(Disappear());
-        public IEnumerator Disappear(bool destroy = false)
+        public IEnumerator Disappear()
         {
             doBreathe = false;
             if (EaseIsPrior(1))
-                easeRoutine = LerpScale(0f);
-            yield return easeRoutine;
-            if (destroy) StartCoroutine(DestroyAfterPlayerMove());
+                scalingRoutine = LerpScale(0f);
+            yield return scalingRoutine;
+        }
+        public IEnumerator DisappearAndDestroy()
+        {
+            doBreathe = false;
+            if (EaseIsPrior(2))
+                scalingRoutine = LerpScale(0f);
+            yield return scalingRoutine;
+            StartCoroutine(DestroyAfterPlayerMove());
         }
 
         public IEnumerator Cover(float fromScale)
@@ -76,10 +83,10 @@ namespace Omnis.TicTacToe
             doBreathe = false;
             if (EaseIsPrior(1))
             {
-                easeRoutine = LerpScale(1f);
+                scalingRoutine = LerpScale(1f);
                 StartCoroutine(LerpAlpha(1f));
             }
-            yield return easeRoutine;
+            yield return scalingRoutine;
             doBreathe = true;
         }
 
@@ -90,18 +97,18 @@ namespace Omnis.TicTacToe
             doBreathe = false;
             if (EaseIsPrior(1))
             {
-                easeRoutine = LerpScale(toScale);
+                scalingRoutine = LerpScale(toScale);
                 StartCoroutine(LerpAlpha(0f));
             }
-            yield return easeRoutine;
+            yield return scalingRoutine;
         }
 
         public IEnumerator ToNeutralScale()
         {
             doBreathe = false;
             if (EaseIsPrior(0))
-                easeRoutine = LerpScale(1f);
-            yield return easeRoutine;
+                scalingRoutine = LerpScale(1f);
+            yield return scalingRoutine;
             doBreathe = true;
         }
 
@@ -109,8 +116,8 @@ namespace Omnis.TicTacToe
         {
             doBreathe = false;
             if (EaseIsPrior(0))
-                easeRoutine = LerpScale(GameManager.Instance.Settings.highlightScale);
-            yield return easeRoutine;
+                scalingRoutine = LerpScale(GameManager.Instance.Settings.highlightScale);
+            yield return scalingRoutine;
         }
 
         public void Show()
@@ -130,9 +137,9 @@ namespace Omnis.TicTacToe
         #endregion
 
         #region Functions
-        private IEnumerator LerpScale(float destScale, float speed = -1f)
+        private IEnumerator LerpScale(float destScale)
         {
-            if (speed < 0f) speed = GameManager.Instance.Settings.scalingSpeed;
+            float speed = GameManager.Instance.Settings.lerpSpeed;
             float epsilon = speed * Time.deltaTime;
             while (Mathf.Abs(SpriteScale - destScale) > epsilon)
             {
@@ -146,20 +153,13 @@ namespace Omnis.TicTacToe
 
         private IEnumerator LerpAlpha(float destAlpha, float speed = -1f)
         {
-            if (speed < 0f) speed = GameManager.Instance.Settings.scalingSpeed;
-            float epsilon = 2f * speed * Time.deltaTime;
-            if (SpriteAlpha < destAlpha)
-                while (SpriteAlpha < destAlpha - epsilon)
-                {
-                    SpriteAlpha += speed * Time.deltaTime;
-                    yield return new WaitForSecondsRealtime(Time.deltaTime);
-                }
-            else
-                while (SpriteAlpha > destAlpha + epsilon)
-                {
-                    SpriteAlpha -= speed * Time.deltaTime;
-                    yield return new WaitForSecondsRealtime(Time.deltaTime);
-                }
+            if (speed < 0f) speed = GameManager.Instance.Settings.lerpSpeed;
+            float epsilon = speed * Time.deltaTime;
+            while (Mathf.Abs(SpriteAlpha - destAlpha) > epsilon)
+            {
+                SpriteAlpha = Mathf.Lerp(SpriteAlpha, destAlpha, speed * Time.deltaTime);
+                yield return new WaitForSecondsRealtime(Time.deltaTime);
+            }
             SpriteAlpha = destAlpha;
 
             easePriority = 0;
@@ -170,7 +170,7 @@ namespace Omnis.TicTacToe
             if (priority < easePriority) return false;
             else
             {
-                if (easeRoutine != null) StopCoroutine(easeRoutine);
+                if (scalingRoutine != null) StopCoroutine(scalingRoutine);
                 easePriority = priority;
                 return true;
             }
@@ -190,7 +190,7 @@ namespace Omnis.TicTacToe
             doBreathe = false;
             SpriteScale = 0f;
             easePriority = 0;
-            easeRoutine = null;
+            scalingRoutine = null;
         }
         private void Update()
         {
