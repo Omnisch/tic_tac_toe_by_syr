@@ -11,12 +11,15 @@ namespace Omnis.TicTacToe
         [SerializeField] private GameObject boardSetPrefab;
         [SerializeField] private List<Transform> toolkitPivots;
         [SerializeField] private GameObject toolkitPrefab;
+        [SerializeField] private List<Transform> blindfoldPivots;
+        [SerializeField] private GameObject blindfoldPrefab;
         [SerializeField] private List<GridSetCallback> finishBoardCallback;
         #endregion
 
         #region Fields
         private List<GridSet> boardSets;
         private List<GridSet> toolkitSets;
+        private List<GridSet> blindfoldSets;
         private List<Party> finishBoardMarks;
         private int blindfoldSetIndex;
         #endregion
@@ -24,6 +27,7 @@ namespace Omnis.TicTacToe
         #region Interfaces
         public List<GridSet> BoardSets => boardSets;
         public List<GridSet> ToolkitSets => toolkitSets;
+        public List<GridSet> BlindfoldSets => blindfoldSets;
 
         public int BlindfoldSetIndex
         {
@@ -107,11 +111,13 @@ namespace Omnis.TicTacToe
         {
             boardSets = new();
             toolkitSets = new();
+            blindfoldSets = new();
             finishBoardMarks = new();
             BlindfoldSetIndex = -1;
 
             boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, BoardSets));
             toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, ToolkitSets));
+            blindfoldPivots.ForEach(pivot => CreateGridSet(blindfoldPrefab, pivot, BlindfoldSets));
 
             BoardSets.ForEach(boardset => finishBoardMarks.Add(Party.Null));
         }

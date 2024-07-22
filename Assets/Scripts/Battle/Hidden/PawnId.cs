@@ -77,6 +77,8 @@ namespace Omnis.TicTacToe
         Skip,
         Confirm,
         ConfirmHighlighted,
+        BlindfoldHover,
+        Blindfold,
     }
 
     public enum BreathType

@@ -42,12 +42,9 @@ namespace Omnis.TicTacToe
         {
             StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Board), PawnInitState.DoNotAppear));
         }
-        #endregion
-
-        #region Handlers
-        protected override void OnInteract()
+        protected override void OnInteracted()
         {
-            if (Locked || !Interactable) return;
+            if (Locked) return;
 
             GameManager.Instance.Player.SecondTile = this;
         }

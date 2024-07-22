@@ -39,12 +39,9 @@ namespace Omnis.TicTacToe
             StartCoroutine(AddPawn(pawns, new(Party.Tool, ToolType.Clock, BreathType.Rolling), PawnInitState.Appear));
             StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Skip, BreathType.None), PawnInitState.DoNotAppear));
         }
-        #endregion
-
-        #region Handlers
-        protected override void OnInteract()
+        protected override void OnInteracted()
         {
-            if (Locked || !Interactable) return;
+            if (Locked) return;
 
             GameManager.Instance.Player.FirstTile = this;
             GameManager.Instance.Player.SecondTile = this;

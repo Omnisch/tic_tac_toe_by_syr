@@ -44,13 +44,8 @@ namespace Omnis.TicTacToe
             StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Tool), PawnInitState.DoNotAppear));
             StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted), PawnInitState.Transparent));
         }
-        #endregion
-
-        #region Handlers
-        protected override void OnInteract()
+        protected override void OnInteracted()
         {
-            if (!Interactable) return;
-
             GameManager.Instance.Player.FirstTile = this;
         }
         #endregion

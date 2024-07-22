@@ -22,6 +22,10 @@ namespace Omnis.TicTacToe
         }
         #endregion
 
+        #region Functions
+        protected virtual void OnInteracted() {}
+        #endregion
+
         #region Unity Methods
         protected virtual void Start()
         {
@@ -45,7 +49,12 @@ namespace Omnis.TicTacToe
             IsPointed = false;
         }
 
-        protected virtual void OnInteract() {}
+        private void OnInteract()
+        {
+            if (!Interactable) return;
+
+            OnInteracted();
+        }
         #endregion
     }
 }

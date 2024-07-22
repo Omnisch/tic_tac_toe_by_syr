@@ -77,9 +77,9 @@ namespace Omnis.TicTacToe
             foreach (var pawn in pawns)
             {
                 if (pawn == pawns.Last())
-                    yield return pawn.DisappearAndDestroy();
+                    yield return pawn.Disappear(destroy: true);
                 else
-                    pawn.StartCoroutine(pawn.DisappearAndDestroy());
+                    pawn.StartCoroutine(pawn.Disappear(destroy: true));
             }
         }
         // only used in OnDestroy() of class Pawn
@@ -101,7 +101,7 @@ namespace Omnis.TicTacToe
                     yield return newPawn.Appear();
                     break;
                 case PawnInitState.Concentrate:
-                    yield return newPawn.Concentrate();
+                    yield return newPawn.Cover(2f);
                     break;
                 case PawnInitState.DoNotAppear:
                     break;

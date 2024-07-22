@@ -15,7 +15,7 @@ MonoBehaviour:
   pawnPrefab: {fileID: 5898890688130211342, guid: c1addfb7cbdf51c40bac45f002cc636e, type: 3}
   amplitude: 0.08
   frequency: 0.25
-  scalingSpeed: 8
+  scalingSpeed: 20
   highlightScale: 1.2
   gameModeSettings:
   - modeName: 0
@@ -155,7 +155,11 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 8c6f93fe951a4734dbb3952604c446bc, type: 3}
     - {fileID: 21300000, guid: 25c9cd7abee904940a2f9865db5aafca, type: 3}
     - {fileID: 21300000, guid: 48f327bb5cceefc41bea57c9718fbecd, type: 3}
+    - {fileID: 21300000, guid: 812ecfd103a1f5247bb8b78d97dd840d, type: 3}
+    - {fileID: 21300000, guid: 239fabd870b555243a429c4dd5857ac7, type: 3}
     targets:
+    - interactableParty: 
+    - interactableParty: 
     - interactableParty: 
     - interactableParty: 
     - interactableParty: 
