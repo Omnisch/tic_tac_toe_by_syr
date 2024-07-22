@@ -18,11 +18,25 @@ namespace Omnis.TicTacToe
         private List<GridSet> boardSets;
         private List<GridSet> toolkitSets;
         private List<Party> finishBoardMarks;
+        private int blindfoldSetIndex;
         #endregion
 
         #region Interfaces
         public List<GridSet> BoardSets => boardSets;
         public List<GridSet> ToolkitSets => toolkitSets;
+
+        public int BlindfoldSet
+        {
+            get => blindfoldSetIndex;
+            set
+            {
+                if (value < 0 || BoardSets.Count == 0) return;
+                boardSets[blindfoldSetIndex].Active = true;
+                blindfoldSetIndex = value % boardSets.Count;
+                boardSets[blindfoldSetIndex].Active = false;
+            }
+        }
+
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
 
         public IEnumerator AddMultiPhases(GridTile tile, System.Func<bool> stopCase = null)
@@ -94,6 +108,7 @@ namespace Omnis.TicTacToe
             boardSets = new();
             toolkitSets = new();
             finishBoardMarks = new();
+            BlindfoldSet = -1;
 
             boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, BoardSets));
             toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, ToolkitSets));
@@ -132,7 +147,7 @@ namespace Omnis.TicTacToe
                     if (isFilled && IsThreeInARow(pawnIdInARow))
                     {
                         for (int j = 0; j < rowList[rowIndex].indices.Count; j++)
-                            BoardSets[i].GridTiles[rowList[rowIndex].indices[j]].LockDown();
+                            BoardSets[i].GridTiles[rowList[rowIndex].indices[j]].Locked = true;
                         finishBoardMarks[i] = pawnIdInARow[0].party;
                         hasFinishBoard = true;
                         finishBoardCallback[i].partyCallbacks.Find(callback => callback.party == finishBoardMarks[i]).callback.Invoke();

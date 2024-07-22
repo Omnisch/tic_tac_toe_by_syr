@@ -12,6 +12,8 @@ namespace Omnis.TicTacToe
         {
             Player player = GameManager.Instance.Player;
             playerMoveSucceeded = true;
+            if (player.FirstTile == null) yield break;
+
             switch (player.FirstTile.Pawns[0].Id.party)
             {
                 case Party.Nature:
@@ -87,6 +89,7 @@ namespace Omnis.TicTacToe
                         boardTile.StartCoroutine(boardTile.NextPhase());
                 }
             }
+            if (gameMode == GameMode.Blindfold) chessboard.BlindfoldSet++;
         }
         #endregion
     }

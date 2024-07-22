@@ -17,15 +17,13 @@ namespace Omnis.TicTacToe
         #region Interfaces
         public List<GridTile> GridTiles => gridTiles;
 
-        public void ActiveAll()
+        public bool Active
         {
-            if (background) background.color = new Color(1f, 1f, 1f, 1f);
-            gridTiles.ForEach(gridTile => gridTile.Interactable = true);
-        }
-        public void DeactiveAll()
-        {
-            if (background) background.color = new Color(1f, 1f, 1f, 0.5f);
-            gridTiles.ForEach(gridTile => gridTile.Interactable = false);
+            set
+            {
+                if (background) background.color = new Color(1f, 1f, 1f, value ? 1f : 0.5f);
+                gridTiles.ForEach(gridTile => gridTile.Interactable = value);
+            }
         }
 
         public GridTile FindFirstAvailable() => gridTiles.Find(tile => tile.Pawns.Count == 0);

@@ -23,13 +23,13 @@ namespace Omnis.TicTacToe
             }
         }
 
-        public override bool Selected
+        public override bool Picked
         {
-            get => selected;
+            get => picked;
             set
             {
                 if (pawns.Count > 0) return;
-                selected = value;
+                picked = value;
             }
         }
         #endregion

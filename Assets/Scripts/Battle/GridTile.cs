@@ -14,7 +14,7 @@ namespace Omnis.TicTacToe
         #region Fields
         protected List<Pawn> pawns;
         protected List<Pawn> hintPawns;
-        protected bool selected;
+        protected bool picked;
         protected bool locked;
         #endregion
 
@@ -33,15 +33,19 @@ namespace Omnis.TicTacToe
                     pawns.ForEach(pawn => pawn.HalfShow());
             }
         }
-        public virtual bool Selected
+        public virtual bool Picked
         {
-            get => selected;
-            set => selected = value;
+            get => picked;
+            set => picked = value;
         }
         public virtual bool Locked
         {
             get => locked;
-            set => locked = value;
+            set
+            {
+                locked = value;
+                if (locked) StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Lock, BreathType.Rolling), PawnInitState.Concentrate));
+            }
         }
 
         public void AddPawn(PawnId pawnId, PawnInitState pawnInitState = PawnInitState.Appear) => StartCoroutine(AddPawn(pawns, pawnId, pawnInitState));
@@ -87,15 +91,7 @@ namespace Omnis.TicTacToe
             }
         }
         // only used in OnDestroy() of class Pawn
-        public void SignOut(Pawn pawn)
-        {
-            pawns.Remove(pawn);
-        }
-        public void LockDown()
-        {
-            Locked = true;
-            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Lock, BreathType.Rolling), PawnInitState.Concentrate));
-        }
+        public void SignOut(Pawn pawn) => pawns.Remove(pawn);
         #endregion
 
         #region Functions

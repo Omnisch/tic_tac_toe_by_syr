@@ -17,18 +17,18 @@ namespace Omnis.TicTacToe
                 isPointed = value;
                 if (isPointed && pawns.Count > 0)
                     hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Appear()));
-                else if (!selected)
+                else if (!picked)
                     hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Disappear()));
             }
         }
 
-        public override bool Selected
+        public override bool Picked
         {
-            get => selected;
+            get => picked;
             set
             {
-                selected = value;
-                if (selected)
+                picked = value;
+                if (picked)
                 {
                     pawns.ForEach(pawn => pawn.StartCoroutine(pawn.Highlight()));
                     hintPawns.Find(pawn => pawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Show();
