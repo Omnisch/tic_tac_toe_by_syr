@@ -66,6 +66,8 @@ namespace Omnis.TicTacToe
         Hammer1,
         Hammer2,
         Clock,
+        BlindfoldHover,
+        Blindfold,
     }
 
     public enum HintType
@@ -76,9 +78,6 @@ namespace Omnis.TicTacToe
         Lock,
         Skip,
         Confirm,
-        ConfirmHighlighted,
-        BlindfoldHover,
-        Blindfold,
     }
 
     public enum BreathType

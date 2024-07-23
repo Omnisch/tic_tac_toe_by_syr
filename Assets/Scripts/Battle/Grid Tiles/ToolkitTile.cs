@@ -11,9 +11,9 @@ namespace Omnis.TicTacToe
                 if (Locked) return;
                 isPointed = value;
                 if (isPointed && pawns.Count > 0)
-                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Appear()));
-                else if (!picked)
-                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Disappear()));
+                    hintPawns.ForEach(hintPawn => hintPawn.Appear = true);
+                else if (!Picked)
+                    hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
             }
         }
 
@@ -23,17 +23,9 @@ namespace Omnis.TicTacToe
             set
             {
                 picked = value;
-                if (picked)
-                {
-                    pawns.ForEach(pawn => pawn.StartCoroutine(pawn.Highlight()));
-                    hintPawns.Find(pawn => pawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Show();
-                }
-                else
-                {
-                    pawns.ForEach(pawn => pawn.StartCoroutine(pawn.ToNeutralScale()));
-                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Disappear()));
-                    hintPawns.Find(pawn => pawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Hide();
-                }
+                pawns.ForEach(pawn => pawn.Highlight = picked);
+                hintPawns.Find(hintPawn => hintPawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Display = picked;
+                if (!picked) hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
             }
         }
         #endregion
@@ -42,7 +34,7 @@ namespace Omnis.TicTacToe
         protected override void OnStart()
         {
             StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.Tool), PawnInitState.DoNotAppear));
-            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted), PawnInitState.Transparent));
+            StartCoroutine(AddPawn(hintPawns, new(Party.Hint, HintType.ToolInteracted), PawnInitState.Hide));
         }
         protected override void OnInteracted()
         {

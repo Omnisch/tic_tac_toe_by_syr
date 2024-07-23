@@ -24,9 +24,9 @@ namespace Omnis.TicTacToe
                 if (locked) return;
                 interactable = value;
                 if (interactable)
-                    pawns.ForEach(pawn => pawn.Show());
+                    pawns.ForEach(pawn => pawn.SetAlpha(1f));
                 else
-                    pawns.ForEach(pawn => pawn.HalfShow());
+                    pawns.ForEach(pawn => pawn.SetAlpha(0.5f));
             }
         }
         public virtual bool Picked
@@ -77,9 +77,9 @@ namespace Omnis.TicTacToe
             foreach (var pawn in pawns)
             {
                 if (pawn == pawns.Last())
-                    yield return pawn.DisappearAndDestroy();
+                    yield return pawn.IDisappearAndDestroy();
                 else
-                    pawn.StartCoroutine(pawn.DisappearAndDestroy());
+                    pawn.StartCoroutine(pawn.IDisappearAndDestroy());
             }
         }
         // only used in OnDestroy() of class Pawn
@@ -98,15 +98,15 @@ namespace Omnis.TicTacToe
             switch (pawnInitState)
             {
                 case PawnInitState.Appear:
-                    yield return newPawn.Appear();
+                    yield return newPawn.IAppear();
                     break;
                 case PawnInitState.Concentrate:
-                    yield return newPawn.Cover(2f);
+                    yield return newPawn.ICover(2f);
                     break;
                 case PawnInitState.DoNotAppear:
                     break;
-                case PawnInitState.Transparent:
-                    newPawn.Hide();
+                case PawnInitState.Hide:
+                    newPawn.Display = false;
                     break;
             }
         }
@@ -117,7 +117,7 @@ namespace Omnis.TicTacToe
         {
             pawns = new();
             hintPawns = new();
-            Locked = false;
+            locked = false;
             OnStart();
             base.Start();
         }

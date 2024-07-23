@@ -29,8 +29,8 @@ namespace Omnis.TicTacToe
         #region Unity Methods
         protected virtual void Start()
         {
-            Interactable = true;
-            IsPointed = false;
+            interactable = true;
+            isPointed = false;
         }
         #endregion
 

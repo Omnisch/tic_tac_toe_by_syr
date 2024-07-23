@@ -36,12 +36,19 @@ namespace Omnis.TicTacToe
             {
                 if (value < 0 || BoardSets.Count == 0) return;
                 boardSets[blindfoldSetIndex].Active = true;
+                blindfoldSets.ForEach(set => set.GridTiles[blindfoldSetIndex].Pawns.ForEach(pawn => pawn.Appear = false));
                 blindfoldSetIndex = value % boardSets.Count;
                 boardSets[blindfoldSetIndex].Active = false;
+                blindfoldSets.ForEach(set => set.GridTiles[blindfoldSetIndex].Pawns.ForEach(pawn => pawn.Appear = true));
             }
         }
 
         public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
+        public void CreateBlindfoldSets()
+        {
+            blindfoldSets = new();
+            blindfoldPivots.ForEach(pivot => CreateGridSet(blindfoldPrefab, pivot, BlindfoldSets));
+        }
 
         public IEnumerator AddMultiPhases(GridTile tile, System.Func<bool> stopCase = null)
         {
@@ -111,13 +118,11 @@ namespace Omnis.TicTacToe
         {
             boardSets = new();
             toolkitSets = new();
-            blindfoldSets = new();
             finishBoardMarks = new();
             BlindfoldSetIndex = -1;
 
             boardSetPivots.ForEach(pivot => CreateGridSet(boardSetPrefab, pivot, BoardSets));
             toolkitPivots.ForEach(pivot => CreateGridSet(toolkitPrefab, pivot, ToolkitSets));
-            blindfoldPivots.ForEach(pivot => CreateGridSet(blindfoldPrefab, pivot, BlindfoldSets));
 
             BoardSets.ForEach(boardset => finishBoardMarks.Add(Party.Null));
         }

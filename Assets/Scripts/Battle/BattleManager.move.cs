@@ -7,7 +7,23 @@ namespace Omnis.TicTacToe
 {
     public partial class BattleManager
     {
+        #region Fields
+        private bool playerMoveSucceeded;
+        #endregion
+
         #region Functions
+        private IEnumerator WaitUntilPlayerMoved()
+        {
+            playerMoveSucceeded = false;
+            while (!playerMoveSucceeded)
+            {
+                GameManager.Instance.Controllable = true;
+                yield return new WaitUntil(() => GameManager.Instance.Player.SecondTile != null);
+                GameManager.Instance.Controllable = false;
+                yield return PlayerMove();
+            }
+        }
+
         private IEnumerator PlayerMove()
         {
             Player player = GameManager.Instance.Player;
@@ -28,13 +44,23 @@ namespace Omnis.TicTacToe
                         {
                             case ToolType.Shovel1:
                             case ToolType.Shovel2:
-                                yield return DigBack(player, player.SecondTile);
+                                yield return Dig(player, player.SecondTile);
                                 break;
                             case ToolType.Hammer1:
                             case ToolType.Hammer2:
                                 yield return Erase(player.SecondTile);
                                 break;
                             case ToolType.Clock:
+                                break;
+                            case ToolType.BlindfoldHover:
+                                if (player.FirstTile != player.SecondTile)
+                                {
+                                    playerMoveSucceeded = false;
+                                    break;
+                                }
+                                chessboard.BoardSets.ForEach(boardSet => boardSet.Active = true);
+                                chessboard.BlindfoldSetIndex = chessboard.BlindfoldSets[0].GridTiles.FindIndex(tile => tile == player.FirstTile);
+                                chessboard.BlindfoldSets.ForEach(set => set.GridTiles.ForEach(tile => tile.Locked = true));
                                 break;
                         }
                     }
@@ -58,7 +84,7 @@ namespace Omnis.TicTacToe
             yield return toTile.CopyPawnsFrom(tempPawnList);
         }
 
-        private IEnumerator DigBack(Player player, GridTile toDig)
+        private IEnumerator Dig(Player player, GridTile toDig)
         {
             GridTile toPut = player.Toolkit.FindFirstAvailable();
             if (!toPut)
@@ -83,9 +109,11 @@ namespace Omnis.TicTacToe
         {
             foreach (var boardSet in chessboard.BoardSets)
             {
+                if (boardSet.GridTiles.Where(boardTile => boardTile.Pawns.Count == 0).Count() == boardSet.GridTiles.Count)
+                    continue;
                 foreach (var boardTile in boardSet.GridTiles)
                 {
-                    if (boardTile == boardSet.GridTiles.Last())
+                    if (boardTile == boardSet.GridTiles.Last(tile => tile.Pawns.Count > 0))
                         yield return boardTile.NextPhase();
                     else
                         boardTile.StartCoroutine(boardTile.NextPhase());

@@ -11,7 +11,6 @@ namespace Omnis.TicTacToe
         public GameObject pawnPrefab;
         [Min(0f)] public float breathAmplitude;
         [Min(0.01f)] public float breathFrequency;
-        [Space]
         [Range(1f, 100f)] public float lerpSpeed;
         [Range(0f,   2f)] public float highlightScale;
         [Header("Rule Settings")]

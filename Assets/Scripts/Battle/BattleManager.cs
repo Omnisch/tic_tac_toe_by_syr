@@ -11,6 +11,8 @@ namespace Omnis.TicTacToe
         public GameMode gameMode;
         public ChessboardManager chessboard;
         [SerializeField] private ClockTile clock;
+        [SerializeField] private List<GameModeCallback> beforePlayingStartCallback;
+        [SerializeField] private List<GameModeCallback> beforePlayingFinishCallback;
         [SerializeField] private List<UnityEvent> postTurnCallback;
         [SerializeField] private List<PartyCallback> winnerCallback;
         #endregion
@@ -29,7 +31,6 @@ namespace Omnis.TicTacToe
                 players.ForEach(player => player.Active = player == GameManager.Instance.Player);
             }
         }
-        private bool playerMoveSucceeded;
         #endregion
 
         #region Interfaces
@@ -40,7 +41,6 @@ namespace Omnis.TicTacToe
         {
             winnerParty = Party.Null;
             players = new();
-            playerMoveSucceeded = true;
 
             yield return new WaitForFixedUpdate();
 
@@ -48,35 +48,48 @@ namespace Omnis.TicTacToe
             Player player1 = new(chessboard.ToolkitSets[1]);
             players.Add(player0);
             players.Add(player1);
-            CurrPlayerIndex = players.Count - 1;
+            CurrPlayerIndex = 0;
             clock.Locked = !GameManager.Instance.Settings.gameModeSettings.Find(gameModeSetting => gameModeSetting.modeName == gameMode).allowSkip;
 
             yield return CreateStartup();
 
+            yield return ActionBeforePlaying();
+
             while (true)
             {
-                if (playerMoveSucceeded)
-                {
-                    if (winnerParty != Party.Null) break;
-                    postTurnCallback[CurrPlayerIndex].Invoke();
-                    CurrPlayerIndex++;
-                    if (CurrPlayerIndex == 0) yield return TimePass();
-                }
-                GameManager.Instance.Controllable = true;
-                yield return new WaitUntil(() => GameManager.Instance.Player.SecondTile != null);
-                GameManager.Instance.Controllable = false;
-                yield return PlayerMove();
+                yield return WaitUntilPlayerMoved();
+                if (winnerParty != Party.Null) break;
+                postTurnCallback[CurrPlayerIndex].Invoke();
+                CurrPlayerIndex++;
+                if (CurrPlayerIndex == 0) yield return TimePass();
             }
 
             // settle
             yield return new WaitForSecondsRealtime(1.5f);
-            winnerCallback?.Find(callback => callback.party == winnerParty).callback.Invoke();
+            winnerCallback.Find(callback => callback.party == winnerParty).callback.Invoke();
         }
         private IEnumerator CreateStartup()
         {
             GameManager.Instance.Controllable = false;
             yield return chessboard.InitStartupByMode(gameMode);
             GameManager.Instance.Controllable = true;
+        }
+        private IEnumerator ActionBeforePlaying()
+        {
+            beforePlayingStartCallback.Find(callback => callback.modeName == gameMode).callback?.Invoke();
+            switch (gameMode)
+            {
+                case GameMode.Relax:
+                    break;
+                case GameMode.NoDraw:
+                    break;
+                case GameMode.Blindfold:
+                    chessboard.CreateBlindfoldSets();
+                    chessboard.BoardSets.ForEach(boardSet => boardSet.Active = false);
+                    yield return WaitUntilPlayerMoved();
+                    break;
+            }
+            beforePlayingFinishCallback.Find(callback => callback.modeName == gameMode).callback?.Invoke();
         }
         #endregion
 
@@ -86,6 +99,13 @@ namespace Omnis.TicTacToe
             StartCoroutine(BattleRoutine());
         }
         #endregion
+    }
+
+    [System.Serializable]
+    public struct GameModeCallback
+    {
+        public GameMode modeName;
+        public UnityEvent callback;
     }
 
     [System.Serializable]

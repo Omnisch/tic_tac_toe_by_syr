@@ -140,11 +140,15 @@ MonoBehaviour:
     - {fileID: 21300000, guid: cfeb6aa56fb16834d92167cadae9afab, type: 3}
     - {fileID: 21300000, guid: 1bec82f520d303b41aea3ad925af616b, type: 3}
     - {fileID: 21300000, guid: d1687bfda13fb7040b8baeef7496f2b2, type: 3}
+    - {fileID: 21300000, guid: 812ecfd103a1f5247bb8b78d97dd840d, type: 3}
+    - {fileID: 21300000, guid: 239fabd870b555243a429c4dd5857ac7, type: 3}
     targets:
     - interactableParty: 01000000
     - interactableParty: 02000000
     - interactableParty: 02000000
     - interactableParty: 01000000
+    - interactableParty: 03000000
+    - interactableParty: 03000000
     - interactableParty: 03000000
   - partyName: 4
     sprites:
@@ -153,14 +157,8 @@ MonoBehaviour:
     - {fileID: 21300000, guid: e35d388f800e7d64a80ad305414a1f05, type: 3}
     - {fileID: 21300000, guid: 6064ac2d4c611f94197372298827b68b, type: 3}
     - {fileID: 21300000, guid: 8c6f93fe951a4734dbb3952604c446bc, type: 3}
-    - {fileID: 21300000, guid: 25c9cd7abee904940a2f9865db5aafca, type: 3}
     - {fileID: 21300000, guid: 48f327bb5cceefc41bea57c9718fbecd, type: 3}
-    - {fileID: 21300000, guid: 812ecfd103a1f5247bb8b78d97dd840d, type: 3}
-    - {fileID: 21300000, guid: 239fabd870b555243a429c4dd5857ac7, type: 3}
     targets:
-    - interactableParty: 
-    - interactableParty: 
-    - interactableParty: 
     - interactableParty: 
     - interactableParty: 
     - interactableParty: 

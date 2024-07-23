@@ -16,10 +16,7 @@ namespace Omnis.TicTacToe
             {
                 if (Locked) return;
                 isPointed = value;
-                if (isPointed)
-                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Appear()));
-                else
-                    hintPawns.ForEach(hintPawn => hintPawn.StartCoroutine(hintPawn.Disappear()));
+                hintPawns.ForEach(hintPawn => hintPawn.Appear = isPointed);
             }
         }
         public void TriggerTick()
