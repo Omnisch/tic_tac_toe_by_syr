@@ -6,6 +6,7 @@ namespace Omnis.TicTacToe
     {
         #region Serialized Fields
         [SerializeField] private GameSettings settings;
+        public GameMode gameMode;
         #endregion
 
         #region Fields

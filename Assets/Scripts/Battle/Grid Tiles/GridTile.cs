@@ -50,6 +50,29 @@ namespace Omnis.TicTacToe
             foreach (var pawn in pawnList)
                 yield return AddPawnRoutine(pawn.Id);
         }
+        public IEnumerator Replace(List<PawnId> newPawnIds)
+        {
+            for (int i = 0; i < Mathf.Max(pawns.Count, newPawnIds.Count) - 1; i++)
+            {
+                if (i < pawns.Count)
+                {
+                    if (i < newPawnIds.Count) pawns[i].StartCoroutine(pawns[i].ChangeIdAndRefresh(newPawnIds[i]));
+                    else pawns[i].StartCoroutine(pawns[i].IDisappearAndDestroy());
+                }
+                else
+                    AddPawn(newPawnIds[i]);
+            }
+            {
+                int i = Mathf.Max(pawns.Count, newPawnIds.Count) - 1;
+                if (i < pawns.Count)
+                {
+                    if (i < newPawnIds.Count) yield return pawns[i].ChangeIdAndRefresh(newPawnIds[i]);
+                    else yield return pawns[i].IDisappearAndDestroy();
+                }
+                else
+                    yield return AddPawnRoutine(newPawnIds[i]);
+            }
+        }
         public IEnumerator NextPhase()
         {
             foreach (var pawn in pawns)
@@ -68,7 +91,7 @@ namespace Omnis.TicTacToe
                 if (pawn == other.pawns.Last())
                     yield return AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType, pawn.Id.breathType));
                 else
-                    StartCoroutine(AddPawnRoutine(new(pawn.Id.party, pawn.Id.NextType, pawn.Id.breathType)));
+                    AddPawn(new(pawn.Id.party, pawn.Id.NextType, pawn.Id.breathType));
             }
         }
         public IEnumerator RemoveAllPawns()

@@ -8,16 +8,16 @@ namespace Omnis.TicTacToe
     public partial class BattleManager : MonoBehaviour
     {
         #region Serialized Fields
-        public GameMode gameMode;
         public ChessboardManager chessboard;
         [SerializeField] private ClockTile clock;
         [SerializeField] private List<GameModeCallback> beforePlayingStartCallback;
         [SerializeField] private List<GameModeCallback> beforePlayingFinishCallback;
-        [SerializeField] private List<UnityEvent> postTurnCallback;
+        [SerializeField] private List<UnityEvent> preTurnCallback;
         [SerializeField] private List<PartyCallback> winnerCallback;
         #endregion
 
         #region Fields
+        private GameMode gameMode;
         private Party winnerParty;
         private List<Player> players;
         private int currPlayerIndex;
@@ -44,35 +44,32 @@ namespace Omnis.TicTacToe
 
             yield return new WaitForFixedUpdate();
 
+            GameManager.Instance.Controllable = false;
+
             Player player0 = new(chessboard.ToolkitSets[0]);
             Player player1 = new(chessboard.ToolkitSets[1]);
             players.Add(player0);
             players.Add(player1);
-            CurrPlayerIndex = 0;
-            clock.Locked = !GameManager.Instance.Settings.gameModeSettings.Find(gameModeSetting => gameModeSetting.modeName == gameMode).allowSkip;
+            CurrPlayerIndex = players.Count - 1;
 
-            yield return CreateStartup();
+            clock.Locked = !GameManager.Instance.Settings.gameModeSettings.Find(setting => setting.modeName == gameMode).allowSkip;
+
+            yield return chessboard.InitStartup();
 
             yield return ActionBeforePlaying();
 
             while (true)
             {
+                CurrPlayerIndex++;
+                preTurnCallback[CurrPlayerIndex].Invoke();
+                if (CurrPlayerIndex == 0) yield return TimePass();
                 yield return WaitUntilPlayerMoved();
                 if (winnerParty != Party.Null) break;
-                postTurnCallback[CurrPlayerIndex].Invoke();
-                CurrPlayerIndex++;
-                if (CurrPlayerIndex == 0) yield return TimePass();
             }
 
             // settle
             yield return new WaitForSecondsRealtime(1.5f);
             winnerCallback.Find(callback => callback.party == winnerParty).callback.Invoke();
-        }
-        private IEnumerator CreateStartup()
-        {
-            GameManager.Instance.Controllable = false;
-            yield return chessboard.InitStartupByMode(gameMode);
-            GameManager.Instance.Controllable = true;
         }
         private IEnumerator ActionBeforePlaying()
         {
@@ -96,6 +93,7 @@ namespace Omnis.TicTacToe
         #region Unity Methods
         private void Start()
         {
+            gameMode = GameManager.Instance.gameMode;
             StartCoroutine(BattleRoutine());
         }
         #endregion

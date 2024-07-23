@@ -626,20 +626,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 581902443}
         m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
-        m_MethodName: DisappearForSerializing
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 21252017}
-        m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
-        m_MethodName: AppearForSerializing
-        m_Mode: 1
+        m_MethodName: set_Appear
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -647,6 +635,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 21252017}
+        m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
+        m_MethodName: set_Appear
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &711317280
 GameObject:
@@ -824,7 +824,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e82580cc5e84404b93d3399c0002242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMode: 2
   chessboard: {fileID: 1569675559}
   clock: {fileID: 8446610765533187007}
   beforePlayingStartCallback:
@@ -877,7 +876,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-  postTurnCallback:
+  preTurnCallback:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8446610765533187007}
@@ -892,7 +891,7 @@ MonoBehaviour:
           m_StringArgument: Tick
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 635397156}
+      - m_Target: {fileID: 2119232038}
         m_TargetAssemblyTypeName: Omnis.Logic, Assembly-CSharp
         m_MethodName: Invoke
         m_Mode: 1
@@ -918,7 +917,7 @@ MonoBehaviour:
           m_StringArgument: Tick
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2119232038}
+      - m_Target: {fileID: 635397156}
         m_TargetAssemblyTypeName: Omnis.Logic, Assembly-CSharp
         m_MethodName: Invoke
         m_Mode: 1
@@ -3048,6 +3047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 54c80005940a1834fa4d170360816100, type: 2}
+  gameMode: 1
 --- !u!114 &2099084480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3141,8 +3141,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 581902443}
         m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
-        m_MethodName: AppearForSerializing
-        m_Mode: 1
+        m_MethodName: set_Appear
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3153,8 +3153,8 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 21252017}
         m_TargetAssemblyTypeName: Omnis.TicTacToe.Pawn, Assembly-CSharp
-        m_MethodName: DisappearForSerializing
-        m_Mode: 1
+        m_MethodName: set_Appear
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

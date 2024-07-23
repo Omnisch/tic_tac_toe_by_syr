@@ -51,6 +51,8 @@ namespace Omnis.TicTacToe
                                 yield return Erase(player.SecondTile);
                                 break;
                             case ToolType.Clock:
+                                if (GameManager.Instance.Settings.gameModeSettings.Find(settings => settings.modeName == gameMode).reloadWhenSkip)
+                                    StartCoroutine(chessboard.ReloadToolkit(CurrPlayerIndex));
                                 break;
                             case ToolType.BlindfoldHover:
                                 if (player.FirstTile != player.SecondTile)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Omnis.TicTacToe
@@ -43,11 +44,33 @@ namespace Omnis.TicTacToe
             }
         }
 
-        public IEnumerator InitStartupByMode(GameMode gameMode) => InitStartup(gameMode);
+        public IEnumerator InitStartup()
+        {
+            var pawnIds = GameManager.Instance.Settings.gameModeSettings.Find(gameMode => gameMode.modeName == GameManager.Instance.gameMode).startup;
+            for (int i = 0; i < ToolkitSets.Count; i++)
+            {
+                for (int j = 0; j < ToolkitSets[0].GridTiles.Count; j++)
+                {
+                    yield return ToolkitSets[i].GridTiles[j].AddPawnRoutine(pawnIds[ToolkitSets[0].GridTiles.Count * i + j]);
+                }
+            }
+        }
         public void CreateBlindfoldSets()
         {
             blindfoldSets = new();
             blindfoldPivots.ForEach(pivot => CreateGridSet(blindfoldPrefab, pivot, BlindfoldSets));
+        }
+        public IEnumerator ReloadToolkit(int toolkitSetIndex)
+        {
+            var pawnIds = GameManager.Instance.Settings.gameModeSettings.Find(gameMode => gameMode.modeName == GameManager.Instance.gameMode).startup;
+            List<GridTile> toolkitTiles = ToolkitSets[toolkitSetIndex].GridTiles;
+            for (int i = 0; i < toolkitTiles.Count; i++)
+            {
+                if (i == toolkitTiles.Count - 1)
+                    yield return toolkitTiles[i].Replace(pawnIds.GetRange(toolkitSetIndex * toolkitTiles.Count + i, 1));
+                else
+                    toolkitTiles[i].StartCoroutine(toolkitTiles[i].Replace(pawnIds.GetRange(toolkitSetIndex * toolkitTiles.Count + i, 1)));
+            }
         }
 
         public IEnumerator AddMultiPhases(GridTile tile, System.Func<bool> stopCase = null)
@@ -130,19 +153,6 @@ namespace Omnis.TicTacToe
         {
             var go = Instantiate(prefab, pivot);
             gridSets.Add(go.GetComponent<GridSet>());
-        }
-
-        private IEnumerator InitStartup(GameMode mode)
-        {
-            var pawnIds = GameManager.Instance.Settings.gameModeSettings.Find(gameMode => gameMode.modeName == mode).startup;
-            for (int i = 0; i < ToolkitSets.Count; i++)
-            {
-                for (int j = 0; j < ToolkitSets[0].GridTiles.Count; j++)
-                {
-                    ToolkitSets[i].GridTiles[j].AddPawn(pawnIds[ToolkitSets[0].GridTiles.Count * i + j]);
-                    yield return new WaitForSeconds(0.4f);
-                }
-            }
         }
 
         private bool CheckFinishBoard()
