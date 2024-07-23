@@ -16,10 +16,11 @@ namespace Omnis
             get => mute;
             set => mute = value;
         }
-        public void PlaySE(SoundEffectName byName)
+        public void PlaySE(string seName) => PlaySE(System.Enum.Parse<SoundEffectName>(seName));
+        public void PlaySE(SoundEffectName seName)
         {
             if (!Mute)
-                source.PlayOneShot(TicTacToe.GameManager.Instance.SeSettings.soundEffects.Find(se => se.name == byName).se);
+                source.PlayOneShot(TicTacToe.GameManager.Instance.SeSettings.soundEffects.Find(se => se.name == seName).se);
         }
         #endregion
 

@@ -84,6 +84,7 @@ namespace Omnis.TicTacToe
 
         private IEnumerator Transport(GridTile fromTile, GridTile toTile)
         {
+            AudioManager.Instance.PlaySE(CurrPlayerIndex == 0 ? SoundEffectName.NatureKick : SoundEffectName.ArtifactKick);
             List<Pawn> tempPawnList = fromTile.Pawns;
             fromTile.StartCoroutine(fromTile.RemoveAllPawns());
             yield return toTile.CopyPawnsFrom(tempPawnList);

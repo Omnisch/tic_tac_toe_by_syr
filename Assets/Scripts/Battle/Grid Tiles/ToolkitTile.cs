@@ -28,7 +28,10 @@ namespace Omnis.TicTacToe
                 picked = value;
                 pawns.ForEach(pawn => pawn.Highlight = picked);
                 hintPawns.Find(hintPawn => hintPawn.Id.SameWith(new(Party.Hint, HintType.ToolInteracted))).Display = picked;
-                if (!picked) hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
+                if (picked)
+                    AudioManager.Instance.PlaySE(SoundEffectName.SetKick);
+                else
+                    hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
             }
         }
 

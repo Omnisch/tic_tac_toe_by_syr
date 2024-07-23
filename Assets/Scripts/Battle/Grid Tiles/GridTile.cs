@@ -32,9 +32,14 @@ namespace Omnis.TicTacToe
         public virtual bool Picked { get => picked; set => picked = value; }
         public virtual bool Locked { get => locked; set => locked = value; }
 
-        public void AddPawn(PawnId pawnId, PawnInitState pawnInitState = PawnInitState.Appear) => StartCoroutine(AddPawn(pawns, pawnId, pawnInitState));
+        public void AddPawn(PawnId pawnId, PawnInitState pawnInitState = PawnInitState.Appear)
+        {
+            AudioManager.Instance.PlaySE(SoundEffectName.Blip);
+            StartCoroutine(AddPawn(pawns, pawnId, pawnInitState));
+        }
         public IEnumerator AddPawnRoutine(PawnId pawnId)
         {
+            AudioManager.Instance.PlaySE(SoundEffectName.Blip);
             yield return AddPawn(pawns, pawnId, PawnInitState.Appear);
         }
         public IEnumerator CopyPawnsFrom(List<Pawn> pawnList)
