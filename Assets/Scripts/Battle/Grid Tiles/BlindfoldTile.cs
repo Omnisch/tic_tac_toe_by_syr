@@ -54,7 +54,7 @@ namespace Omnis.TicTacToe
             set
             {
                 locked = value;
-                pawns.Find(pawn => pawn.Id.SameWith(new(Party.Tool, ToolType.Blindfold))).Display = locked;
+                pawns.ForEach(pawn => pawn.Display = locked);
             }
         }
         #endregion
