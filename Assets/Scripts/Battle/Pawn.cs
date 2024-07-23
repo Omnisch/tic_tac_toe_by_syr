@@ -78,7 +78,6 @@ namespace Omnis.TicTacToe
             StartCoroutine(DestroyAfterPlayerMove());
         }
 
-        public void Cover(float fromScale) => StartCoroutine(ICover(fromScale));
         public IEnumerator ICover(float fromScale)
         {
             if (soonDestroyed) yield break;
@@ -95,7 +94,6 @@ namespace Omnis.TicTacToe
             yield return scaleRoutine;
             doBreathe = true;
         }
-        public void Uncover(float toScale) => StartCoroutine(IUncover(toScale));
         public IEnumerator IUncover(float toScale)
         {
             SpriteScale = 1f;
@@ -111,7 +109,7 @@ namespace Omnis.TicTacToe
         }
 
         public bool Highlight { set => StartCoroutine(value ? IHighlight() : IToNeutralScale()); }
-        public bool Display { set => GetComponent<SpriteRenderer>().enabled = value; }
+        public bool Display { set => SpriteAlpha = value ? 1f : 0f; }
         public void SetAlpha(float value) => SpriteAlpha = value;
         #endregion
 

@@ -13,16 +13,16 @@ namespace Omnis.TicTacToe
                 if (isPointed)
                 {
                     if (Picked)
-                        hintPawns.ForEach(hintPawn => hintPawn.Cover(1.05f));
+                        hintPawns.ForEach(hintPawn => hintPawn.Appear = true);
                     else
-                        pawns.ForEach(pawn => pawn.Cover(1.05f));
+                        pawns.ForEach(pawn => pawn.Appear = true);
                 }
                 else
                 {
                     if (Picked)
-                        hintPawns.ForEach(hintPawn => hintPawn.Uncover(1.05f));
+                        hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
                     else
-                        pawns.ForEach(pawn => pawn.Uncover(1.05f));
+                        pawns.ForEach(pawn => pawn.Appear = false);
                 }
             }
         }
@@ -38,12 +38,12 @@ namespace Omnis.TicTacToe
                 hintPawns.Find(hintPawn => hintPawn.Id.SameWith(new(Party.Hint, HintType.Confirm))).Display = picked;
                 if (picked)
                 {
-                    hintPawns.ForEach(hintPawn => hintPawn.Cover(1.05f));
+                    hintPawns.ForEach(hintPawn => hintPawn.Appear = true);
                 }
                 else
                 {
-                    pawns.ForEach(pawn => pawn.Uncover(1.05f));
-                    hintPawns.ForEach(hintPawn => hintPawn.Uncover(1.05f));
+                    pawns.ForEach(pawn => pawn.Appear = false);
+                    hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
                 }
             }
         }
