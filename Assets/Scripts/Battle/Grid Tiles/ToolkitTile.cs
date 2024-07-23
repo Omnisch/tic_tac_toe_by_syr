@@ -28,6 +28,18 @@ namespace Omnis.TicTacToe
                 if (!picked) hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
             }
         }
+
+        public System.Collections.IEnumerator LockInNextTurns(int turns)
+        {
+            var currPlayer = GameManager.Instance.Player;
+            for (int i = 0; i < turns + 1; i++)
+            {
+                Interactable = false;
+                yield return new UnityEngine.WaitUntil(() => GameManager.Instance.Player != currPlayer);
+                yield return new UnityEngine.WaitUntil(() => GameManager.Instance.Player == currPlayer);
+            }
+            Interactable = true;
+        }
         #endregion
 
         #region Functions
@@ -38,6 +50,8 @@ namespace Omnis.TicTacToe
         }
         protected override void OnInteracted()
         {
+            if (Locked) return;
+
             GameManager.Instance.Player.FirstTile = this;
         }
         #endregion

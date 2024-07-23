@@ -29,16 +29,8 @@ namespace Omnis.TicTacToe
                     pawns.ForEach(pawn => pawn.SetAlpha(0.5f));
             }
         }
-        public virtual bool Picked
-        {
-            get => picked;
-            set => picked = value;
-        }
-        public virtual bool Locked
-        {
-            get => locked;
-            set => locked = value;
-        }
+        public virtual bool Picked { get => picked; set => picked = value; }
+        public virtual bool Locked { get => locked; set => locked = value; }
 
         public void AddPawn(PawnId pawnId, PawnInitState pawnInitState = PawnInitState.Appear) => StartCoroutine(AddPawn(pawns, pawnId, pawnInitState));
         public IEnumerator AddPawnRoutine(PawnId pawnId)

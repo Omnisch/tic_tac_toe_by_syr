@@ -48,6 +48,8 @@ namespace Omnis.TicTacToe
                                 break;
                             case ToolType.Hammer1:
                             case ToolType.Hammer2:
+                                if (player.FirstTile.TryGetComponent<ToolkitTile>(out var toolkitTile))
+                                    toolkitTile.StartCoroutine(toolkitTile.LockInNextTurns(1));
                                 yield return Erase(player.SecondTile);
                                 break;
                             case ToolType.Clock:
