@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Omnis.TicTacToe
+namespace Omnis
 {
     public abstract class PointerBase : MonoBehaviour
     {

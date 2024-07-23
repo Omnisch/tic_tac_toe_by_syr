@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Omnis.TicTacToe
+namespace Omnis
 {
     public class PlayerInputHandler : MonoBehaviour
     {

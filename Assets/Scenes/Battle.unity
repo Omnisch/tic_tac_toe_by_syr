@@ -3047,7 +3047,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 54c80005940a1834fa4d170360816100, type: 2}
-  gameMode: 1
+  gameMode: 2
 --- !u!114 &2099084480
 MonoBehaviour:
   m_ObjectHideFlags: 0

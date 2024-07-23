@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Omnis.TicTacToe
 {
@@ -29,6 +30,11 @@ namespace Omnis.TicTacToe
                 controllable = value;
                 SendMessage("SetInputEnabled", controllable);
             }
+        }
+        public void SetGameMode(string modeName)
+        {
+            gameMode = System.Enum.Parse<GameMode>(modeName);
+            SceneManager.LoadScene("Battle");
         }
         #endregion
 
