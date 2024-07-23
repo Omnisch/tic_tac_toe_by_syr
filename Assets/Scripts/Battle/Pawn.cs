@@ -30,6 +30,7 @@ namespace Omnis.TicTacToe
         private int lerpPriority;
         private IEnumerator scaleRoutine;
         private IEnumerator alphaRoutine;
+        private bool soonDestroyed;
         #endregion
 
         #region Interfaces
@@ -53,6 +54,8 @@ namespace Omnis.TicTacToe
         public bool Appear { set => StartCoroutine(value ? IAppear() : IDisappear()); }
         public IEnumerator IAppear()
         {
+            if (soonDestroyed) yield break;
+
             doBreathe = false;
             if (LerpIsPrior(1))
                 scaleRoutine = LerpScale(1f);
@@ -78,6 +81,8 @@ namespace Omnis.TicTacToe
         public void Cover(float fromScale) => StartCoroutine(ICover(fromScale));
         public IEnumerator ICover(float fromScale)
         {
+            if (soonDestroyed) yield break;
+
             SpriteScale = fromScale;
             SpriteAlpha = 0f;
             doBreathe = false;
@@ -153,6 +158,8 @@ namespace Omnis.TicTacToe
 
         private IEnumerator IToNeutralScale()
         {
+            if (soonDestroyed) yield break;
+
             doBreathe = false;
             if (LerpIsPrior(0))
                 scaleRoutine = LerpScale(1f);
@@ -161,6 +168,8 @@ namespace Omnis.TicTacToe
         }
         private IEnumerator IHighlight()
         {
+            if (soonDestroyed) yield break;
+
             doBreathe = false;
             if (LerpIsPrior(0))
                 scaleRoutine = LerpScale(GameManager.Instance.Settings.highlightScale);
@@ -169,6 +178,7 @@ namespace Omnis.TicTacToe
 
         private IEnumerator DestroyAfterPlayerMove()
         {
+            soonDestroyed = true;
             yield return new WaitUntil(() => GameManager.Instance.Controllable);
             StopAllCoroutines();
             Destroy(gameObject);
@@ -182,6 +192,8 @@ namespace Omnis.TicTacToe
             SpriteScale = 0f;
             lerpPriority = 0;
             scaleRoutine = null;
+            alphaRoutine = null;
+            soonDestroyed = false;
         }
         private void Update()
         {
