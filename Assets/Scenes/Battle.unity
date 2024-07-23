@@ -879,18 +879,6 @@ MonoBehaviour:
   preTurnCallback:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8446610765533187007}
-        m_TargetAssemblyTypeName: Omnis.TicTacToe.ClockTile, Assembly-CSharp
-        m_MethodName: TriggerTick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tick
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 2119232038}
         m_TargetAssemblyTypeName: Omnis.Logic, Assembly-CSharp
         m_MethodName: Invoke
@@ -905,18 +893,6 @@ MonoBehaviour:
         m_CallState: 2
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8446610765533187007}
-        m_TargetAssemblyTypeName: Omnis.TicTacToe.ClockTile, Assembly-CSharp
-        m_MethodName: TriggerTick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Tick
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 635397156}
         m_TargetAssemblyTypeName: Omnis.Logic, Assembly-CSharp
         m_MethodName: Invoke

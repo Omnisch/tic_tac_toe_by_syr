@@ -22,6 +22,7 @@ namespace Omnis.TicTacToe
                 GameManager.Instance.Controllable = false;
                 yield return PlayerMove();
             }
+            clock.TriggerTick();
         }
 
         private IEnumerator PlayerMove()

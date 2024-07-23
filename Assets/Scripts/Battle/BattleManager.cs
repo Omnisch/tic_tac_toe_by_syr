@@ -62,9 +62,9 @@ namespace Omnis.TicTacToe
             {
                 CurrPlayerIndex++;
                 preTurnCallback[CurrPlayerIndex].Invoke();
-                if (CurrPlayerIndex == 0) yield return TimePass();
                 yield return WaitUntilPlayerMoved();
                 if (winnerParty != Party.Null) break;
+                if (CurrPlayerIndex == players.Count - 1) yield return TimePass();
             }
 
             // settle
