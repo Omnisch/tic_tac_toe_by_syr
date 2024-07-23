@@ -72,6 +72,16 @@ namespace Omnis
                 if (hit) hit.SendMessage("OnPointerEnter", options: SendMessageOptions.DontRequireReceiver);
             PointerHits = newHits;
         }
+
+        protected void OnEscape()
+        {
+#if UNITY_STANDALONE
+            Application.Quit();
+#endif
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        }
         #endregion
+        }
     }
-}
