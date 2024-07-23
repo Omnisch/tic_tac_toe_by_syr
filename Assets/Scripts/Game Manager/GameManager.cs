@@ -7,6 +7,7 @@ namespace Omnis.TicTacToe
     {
         #region Serialized Fields
         [SerializeField] private GameSettings settings;
+        [SerializeField] private SoundEffectSettings seSettings;
         public GameMode gameMode;
         #endregion
 
@@ -17,6 +18,7 @@ namespace Omnis.TicTacToe
 
         #region Interfaces
         public GameSettings Settings => settings;
+        public SoundEffectSettings SeSettings => seSettings;
         public Player Player
         {
             get => player;
@@ -36,9 +38,6 @@ namespace Omnis.TicTacToe
             gameMode = System.Enum.Parse<GameMode>(modeName);
             SceneManager.LoadScene("Battle");
         }
-        #endregion
-
-        #region Functions
         #endregion
 
         #region Unity Methods

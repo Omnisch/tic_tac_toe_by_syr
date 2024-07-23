@@ -11,7 +11,10 @@ namespace Omnis.TicTacToe
                 if (Locked) return;
                 isPointed = value;
                 if (isPointed && pawns.Count > 0)
+                {
                     hintPawns.ForEach(hintPawn => hintPawn.Appear = true);
+                    AudioManager.Instance.PlaySE(SoundEffectName.Blip);
+                }
                 else if (!Picked)
                     hintPawns.ForEach(hintPawn => hintPawn.Appear = false);
             }
