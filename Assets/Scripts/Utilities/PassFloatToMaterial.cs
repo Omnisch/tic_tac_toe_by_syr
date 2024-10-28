@@ -1,8 +1,14 @@
+// author: Omnistudio
+// version: 2024.10.28
+
 using System.Collections;
 using UnityEngine;
 
 namespace Omnis
 {
+    /// <summary>
+    /// Use SetFloat() or LerpTo() to pass a float to <i>material</i>
+    /// </summary>
     public class PassFloatToMaterial : MonoBehaviour
     {
         #region Serialized Fields
@@ -25,15 +31,11 @@ namespace Omnis
         #endregion
 
         #region Interfaces
-        public void LerpFromZeroToOne()
+        public void SetFloat(float value) => FloatToPass = value;
+        public void LerpTo(float value)
         {
             StopAllCoroutines();
-            StartCoroutine(Lerp(0f, 1f));
-        }
-        public void LerpFromOneToZero()
-        {
-            StopAllCoroutines();
-            StartCoroutine(Lerp(1f, 0f));
+            StartCoroutine(Lerp(FloatToPass, value));
         }
         #endregion
 
